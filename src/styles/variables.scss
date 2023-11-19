@@ -1,0 +1,23 @@
+$theam-color: #6a59d1;
+
+@mixin bg-theam() {
+    background-color: $theam-color !important;
+}
+
+@mixin text-theam() {
+    color: $theam-color !important;
+}
+
+.bg-theam {
+    @include bg-theam();
+}
+
+.text-theam {
+    @include text-theam();
+}
+
+@mixin center-center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
