@@ -1,6 +1,6 @@
 import React from 'react'
-import { BtnBig, IcoBtn } from '../components/Utility'
-import { FaLinkedinIn, FaFacebookF, FaInstagram } from 'react-icons/fa'
+import { BtnBig, IcoBtn, ShadowText } from '../components/Utility'
+import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload } from 'react-icons/fa'
 import { BsMouseFill } from 'react-icons/bs'
 import { TbBrandMailgun } from 'react-icons/tb'
 import { linkedin, insta, facebook } from '../enviroments'
@@ -53,13 +53,72 @@ const Home = () => {
                     </div>
 
                     <div className='mt-5 d-flex justify-content-center align-items-center d-xxl-flex d-md-flex d-sm-none d-none'>
-                        <span className='fw-medium'>
-                            Scroll
+                        <span className='fw-medium border-bottom border-color-theam border-2'>
+                            &nbsp;Scroll
                         </span>
                         <BsMouseFill className='fs-3 text-theam' />
-                        <span className='fw-medium'>
+                        <span className='fw-medium border-bottom border-color-theam border-2'>
                             Down
+                            &nbsp;
                         </span>
+                    </div>
+                </div>
+            </section>
+
+            <section className='user-select-none'>
+                <ShadowText text1="know More" text2="About Me" />
+
+                <div className='container mt-3 d-flex gap-5 justify-content-center flex-wrap'>
+                    <div className='rounded-4 overflow-hidden width-fit'>
+                        <img src="https://picsum.photos/500/400/" alt="" />
+                    </div>
+
+                    <div className='col-xxl-6 col-lg-6 col-md-7 col-sm-12 col-12'>
+                        <span className="d-block fw-bold fs-2">My Profile</span>
+                        <p className='fs-4 fw-medium line-height-1-1'>
+                            A Lead <span className="text-theam fw-bold">MERN Stack Developer</span>
+                            <br />
+                            based in India
+                        </p>
+                        <p className='mt-4'>
+                            We design and develop services for customers specializing creating stylish, modern websites, web services and online stores. My passion is to design digital user experiences through meaningful interactions. Check out my Portfolio
+                        </p>
+
+                        <div className='w-100 border'></div>
+
+                        <div className='mt-2'>
+                            <ul className='w-100 d-flex flex-wrap justify-content-between pe-4'>
+                                <li className='col-xxl-3 col-md-3 col-sm-12 col-12 d-flex align-items-center gap-2'>
+                                    <div>
+                                        <span className='fw-bold fs-2'>5+</span>
+                                    </div>
+                                    <div>
+                                        <span className='fw-medium'>Years of Experience</span>
+                                    </div>
+                                </li>
+                                <li className='col-xxl-3 col-md-3 col-sm-12 col-12 d-flex align-items-center gap-2'>
+                                    <div>
+                                        <span className='fw-bold fs-2'>5+</span>
+                                    </div>
+                                    <div>
+                                        <span className='fw-medium'>Years of Experience</span>
+                                    </div>
+                                </li>
+                                <li className='col-xxl-3 col-md-3 col-sm-12 col-12 d-flex align-items-center gap-2'>
+                                    <div>
+                                        <span className='fw-bold fs-2'>5+</span>
+                                    </div>
+                                    <div>
+                                        <span className='fw-medium'>Years of Experience</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="my-3">
+                            <BtnBig text="Download CV" icon={<FaDownload className='me-1' />} link="" />
+                        </div>
+
                     </div>
                 </div>
             </section>

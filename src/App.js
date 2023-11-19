@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import './styles/main.scss'
 import Home from './pages/Home'
+import './styles/responsive.scss'
 
 const App = () => {
   return (
