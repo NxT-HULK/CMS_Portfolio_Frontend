@@ -7,7 +7,7 @@ import { facebook, insta, linkedin } from '../enviroments'
 const Navbar = () => {
     return (
         <>
-            <nav className="navbar navbar-expand-lg mainNav position-fixed w-100 z-1">
+            <nav className="navbar navbar-expand-lg mainNav position-sticky top-0 w-100 z-1">
                 <div className="container-fluid">
                     <Link className="navbar-brand fw-bold" to="/">Shivam Kashyap</Link>
 

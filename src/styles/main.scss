@@ -5,6 +5,11 @@
     font-family: "Poppins", sans-serif !important;
 }
 
+*::selection {
+    background-color: $theam-color;
+    color: #fff;
+}
+
 .btn-reset {
     all: unset;
     cursor: pointer;
@@ -36,7 +41,7 @@ ul {
     width: 35px;
     border-radius: 5px;
     box-shadow: 3px 3px 0 rgba($color: $theam-color, $alpha: 0.5);
-    transition: 0.5s;
+    transition: 0.1s;
 
     span {
         line-height: 1;
@@ -46,7 +51,7 @@ ul {
 
     &:hover {
         transform: scale(1.1);
-        transition: 0.25s;
+        transition: 0.1s;
     }
 }
 
@@ -62,7 +67,8 @@ ul {
     display: flex;
     gap: 3px;
     width: fit-content;
-    transition: 0.3s;
+    box-shadow: 3px 3px 0 rgba($color: $theam-color, $alpha: 0.5);
+    transition: 0.1s;
 
     span {
         color: #fff;
@@ -76,8 +82,8 @@ ul {
     }
 
     &:hover {
-        box-shadow: 3px 3px 0 rgba($color: $theam-color, $alpha: 0.5);
-        transition: 0.3s;
+        transform: scale(1.1);
+        transition: 0.1s;
     }
 }
 
@@ -141,4 +147,13 @@ ul {
 
 .user-select-none {
     user-select: none;
+}
+
+.home-scren-1st-vh {
+    height: calc(100vh - 56px);
+
+    img {
+        width: 80%;
+        object-position: center;
+    }
 }

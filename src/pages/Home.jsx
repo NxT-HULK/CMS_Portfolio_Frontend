@@ -10,9 +10,9 @@ const Home = () => {
 
     return (
         <>
-            <section className='vh-100'>
-                <div className="h-100 d-flex flex-column justify-content-center pt-xxl-0 pt-md-0 pt-sm-5 pt-5">
-                    <div className="container d-flex align-items-center flex-xxl-row flex-md-row flex-sm-column-reverse flex-column-reverse gap-xxl-0 gap-md-0 gap-sm-5 gap-5">
+            <section className='d-flex align-items-center justify-content-center home-scren-1st-vh' id='intro'>
+                <div className="d-flex flex-column justify-content-center">
+                    <div className="container d-flex align-items-center flex-xxl-row flex-md-row flex-sm-column-reverse flex-column-reverse">
                         <div className='mt-3 col-2 p-3 d-flex align-items-center justify-content-start d-xxl-block d-md-block d-sm-none d-none'>
                             <ul className='p-0 m-0 d-flex flex-column gap-3'>
                                 <li><IcoBtn link={linkedin} icon={<FaLinkedinIn />} /></li>
@@ -47,25 +47,27 @@ const Home = () => {
                             </div>
                         </div>
 
-                        <div className='col-xxl-4 col-md-4 col-sm-7 col-7'>
-                            <img src={require('../assets/profile_pic.png')} alt="" className='h-100 w-100 position-relative' />
+                        <div className='col-xxl-4 col-md-4 col-sm-7 col-7 d-flex justify-content-center'>
+                            <img src={require('../assets/profile_pic.png')} alt="" />
                         </div>
                     </div>
 
-                    <div className='mt-5 d-flex justify-content-center align-items-center d-xxl-flex d-md-flex d-sm-none d-none'>
-                        <span className='fw-medium border-bottom border-color-theam border-2'>
-                            &nbsp;Scroll
-                        </span>
-                        <BsMouseFill className='fs-3 text-theam' />
-                        <span className='fw-medium border-bottom border-color-theam border-2'>
-                            Down
-                            &nbsp;
-                        </span>
-                    </div>
+                    <a href="#about_me" className='text-decoration-none text-dark'>
+                        <div className='d-flex justify-content-center align-items-center d-xxl-flex d-md-flex d-sm-none d-none user-select-none'>
+                            <span className='fw-medium border-bottom border-color-theam border-2'>
+                                &nbsp;Scroll
+                            </span>
+                            <BsMouseFill className='fs-3 text-theam' />
+                            <span className='fw-medium border-bottom border-color-theam border-2'>
+                                Down
+                                &nbsp;
+                            </span>
+                        </div>
+                    </a>
                 </div>
             </section>
 
-            <section className='user-select-none'>
+            <section id='about_me'>
                 <ShadowText text1="know More" text2="About Me" />
 
                 <div className='container mt-3 d-flex gap-5 justify-content-center flex-wrap'>
@@ -121,6 +123,10 @@ const Home = () => {
 
                     </div>
                 </div>
+            </section>
+
+            <section>
+
             </section>
         </>
     )
