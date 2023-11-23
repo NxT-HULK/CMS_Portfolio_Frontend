@@ -1,4 +1,6 @@
 $theam-color: #6a59d1;
+$gray-light: #e3e1ef;
+$custom-gray: #808080;
 
 @mixin bg-theam() {
     background-color: $theam-color !important;

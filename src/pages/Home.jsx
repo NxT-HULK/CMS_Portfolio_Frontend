@@ -1,9 +1,11 @@
 import React from 'react'
-import { BtnBig, IcoBtn, ShadowText } from '../components/Utility'
-import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload } from 'react-icons/fa'
+import { BtnBig, DetailBox, IcoBtn, ShadowText, SkillBox, SkillBoxContainer } from '../components/Utility'
+import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaGem, FaPython } from 'react-icons/fa'
 import { BsMouseFill } from 'react-icons/bs'
 import { TbBrandMailgun } from 'react-icons/tb'
 import { linkedin, insta, facebook } from '../enviroments'
+import { SiExpress, SiMongodb } from 'react-icons/si'
+import { GrCertificate, GrMysql } from 'react-icons/gr'
 import Typewriter from 'typewriter-effect';
 
 const Home = () => {
@@ -67,7 +69,7 @@ const Home = () => {
                 </div>
             </section>
 
-            <section id='about_me'>
+            <section id='about_me' className='my-5 min-vh-100'>
                 <ShadowText text1="know More" text2="About Me" />
 
                 <div className='container mt-3 d-flex gap-5 justify-content-center flex-wrap'>
@@ -125,8 +127,67 @@ const Home = () => {
                 </div>
             </section>
 
-            <section>
+            <section className='my-5 min-vh-100 d-flex align-items-center justify-content-center' id='skills'>
+                <div className="container py-3 d-flex justify-content-center gap-5 align-items-stretch flex-wrap">
 
+                    <div className="col-xl-5 col-lg-6 col-md-10 col-12">
+                        <div className='mb-3 shaded-box p-4 rounded d-flex gap-3 align-items-center justify-content-center'>
+                            <span><FaReact style={{ color: '#61dafb' }} className='fs-1 animate-spin' /></span>
+                            <span className="fs-2 fw-bold text-capitalize">
+                                Know What i can do
+                            </span>
+                        </div>
+
+                        <SkillBoxContainer>
+                            <SkillBox icon={<FaReact />} text="React" svgColor="#61dafb" link={'https://coursera.org/share/ef11a848540093bac99330b9217c99ad'} />
+                            <SkillBox icon={<FaJava />} text="Java" svgColor="#116149" link={'https://infyspringboard.onwingspan.com/public-assets/infosysheadstart/cert/lex_auth_012880464547618816347_shared/1-8590f483-13a7-4235-a4b5-f3d520c01d63.pdf'} />
+                            <SkillBox icon={<GrMysql />} text="MySQL" svgColor="#116149" link={'https://coursera.org/share/093d86f23e17ec8bea2889cb349c2353'} />
+                            <SkillBox icon={<FaPython />} text="Python" svgColor="#113527" link={'https://coursera.org/share/c8c7f01f1f6734fba44ba4752be1d345'} />
+                            <SkillBox icon={<SiMongodb />} text="MonogoDB" svgColor="#116149" />
+                            <SkillBox icon={<SiExpress />} text="Express" svgColor="#f1c617" />
+                            <SkillBox icon={<FaNodeJs />} text="Node" svgColor="#8fc708" />
+                            <SkillBox icon={<FaSass />} text="SCSS" svgColor="#cf6c9c" />
+                            <SkillBox icon={<FaGitAlt />} text="Git" svgColor="#f05539" />
+                        </SkillBoxContainer>
+                    </div>
+
+                    <div className='col-xl-6 col-lg-8 col-md-10 col-12 d-flex flex-column gap-3'>
+                        <div className='shaded-box p-4 rounded d-flex gap-3 align-items-center justify-content-center'>
+                            <span className="fs-2 fw-bold text-capitalize">
+                            <GrCertificate className='fs-1 text-theam' /> Education / Awards
+                            </span>
+                        </div>
+
+                        <div className='mb-3 shaded-box p-4 rounded'>
+                            <ul class="nav nav-pills mb-3 align-items-center gap-2" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="btn-reset-0 active" id="pills-awards-tab" data-bs-toggle="pill" data-bs-target="#pills-awards" type="button" role="tab" aria-controls="pills-awards" aria-selected="false">AWARDS</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="btn-reset-0" id="pills-education-tab" data-bs-toggle="pill" data-bs-target="#pills-education" type="button" role="tab" aria-controls="pills-education" aria-selected="true">EDUCATION</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-4" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-awards" role="tabpanel" aria-labelledby="pills-awards-tab" tabindex="0">
+
+                                    <div className="d-flex flex-column gap-3">
+                                        <DetailBox title={'React'} para={'Front-End Web Development with React'} link={'https://coursera.org/share/ef11a848540093bac99330b9217c99ad'} />
+                                        <DetailBox title={'Java'} para={'Programming using Java'} link={'https://infyspringboard.onwingspan.com/public-assets/infosysheadstart/cert/lex_auth_012880464547618816347_shared/1-8590f483-13a7-4235-a4b5-f3d520c01d63.pdf'} />
+                                        <DetailBox title={'MySQL'} para={'Database Structures and Management with MySQL'} link={'https://coursera.org/share/093d86f23e17ec8bea2889cb349c2353'} />
+                                        <DetailBox title={'Python'} para={'Crash Course on Python'} link={'https://coursera.org/share/c8c7f01f1f6734fba44ba4752be1d345'} />
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="pills-education" role="tabpanel" aria-labelledby="pills-education-tab" tabindex="0">
+                                    <div className="d-flex flex-column gap-2">
+                                        <DetailBox year={'2018 - 2021'} title={'Diploma'} para={'Government Polytechnic, Ranchi - Jharkhand India'} />
+                                        <DetailBox year={'Current'} title={'B.Tech'} para={'LNCT, Bhopal - Madhya Pradesh India'} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </>
     )

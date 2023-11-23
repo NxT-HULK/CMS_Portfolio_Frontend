@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { IcoBtn } from './Utility'
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa'
+import { SiGmail } from 'react-icons/si'
 import { facebook, insta, linkedin } from '../enviroments'
 
 const Navbar = () => {
@@ -18,13 +19,16 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
+                                <NavLink className="nav-link" aria-current="page" to="/">Portfolio</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/course">Courses</NavLink>
+                                <NavLink className="nav-link" to="/work">Work</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/blog">Blog</NavLink>
+                                <NavLink className="nav-link" to="/course">Course</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/blogs">Blogs</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/contact">Contact</NavLink>
@@ -45,13 +49,16 @@ const Navbar = () => {
                 <div class="offcanvas-body">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0" data-bs-dismiss="offcanvas">
                         <li className="nav-item border my-2 py-0 px-2 rounded bg-body-tertiary">
-                            <NavLink className="nav-link fw-medium " aria-current="page" to="/">Home</NavLink>
+                            <NavLink className="nav-link fw-medium " aria-current="page" to="/">Portfolio</NavLink>
+                        </li>
+                        <li className="nav-item border my-2 py-0 px-2 rounded bg-body-tertiary">
+                            <NavLink className="nav-link fw-medium " to="/work">Work</NavLink>
                         </li>
                         <li className="nav-item border my-2 py-0 px-2 rounded bg-body-tertiary">
                             <NavLink className="nav-link fw-medium " to="/course">Courses</NavLink>
                         </li>
                         <li className="nav-item border my-2 py-0 px-2 rounded bg-body-tertiary">
-                            <NavLink className="nav-link fw-medium " to="/blog">Blog</NavLink>
+                            <NavLink className="nav-link fw-medium " to="/blogs">Blogs</NavLink>
                         </li>
                         <li className="nav-item border my-2 py-0 px-2 rounded bg-body-tertiary">
                             <NavLink className="nav-link fw-medium " to="/contact">Contact</NavLink>
@@ -62,9 +69,10 @@ const Navbar = () => {
                     <div className='mt-4'>
                         <span className='fw-bold fs-5 d-block mb-2'>Meet me on Social</span>
                         <ul className='p-0 m-0 d-flex gap-3'>
+                            <li><IcoBtn link={'mailto:shivamkumarkashyap12@gmail.com'} icon={<SiGmail />} /></li>
                             <li><IcoBtn link={linkedin} icon={<FaLinkedinIn />} /></li>
-                            <li><IcoBtn link={facebook} icon={<FaFacebookF />} /></li>
                             <li><IcoBtn link={insta} icon={<FaInstagram />} /></li>
+                            <li><IcoBtn link={facebook} icon={<FaFacebookF />} /></li>
                         </ul>
                     </div>
                 </div>

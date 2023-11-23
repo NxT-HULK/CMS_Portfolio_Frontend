@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import './styles/main.scss'
 import Home from './pages/Home'
 import './styles/responsive.scss'
+import './styles/scroller.scss'
 
 const App = () => {
   return (
@@ -11,7 +12,9 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/about' element={<>About page</>} />
+        <Route path='/work' element={<>Work page</>} />
+        <Route path='/course' element={<>Course page</>} />
+        <Route path='/blogs' element={<>Blogs page</>} />
         <Route path='/contact' element={<>contact page</>} />
       </Routes>
     </BrowserRouter>
