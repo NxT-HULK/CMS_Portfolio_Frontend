@@ -1,6 +1,6 @@
 import React from 'react'
-import { BtnBig, DetailBox, IcoBtn, ShadowText, SkillBox, SkillBoxContainer } from '../components/Utility'
-import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaGem, FaPython } from 'react-icons/fa'
+import { BtnBig, DetailBox, ExperienceCard, IcoBtn, ShadowText, SkillBox, SkillBoxContainer } from '../components/Utility'
+import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython } from 'react-icons/fa'
 import { BsMouseFill } from 'react-icons/bs'
 import { TbBrandMailgun } from 'react-icons/tb'
 import { linkedin, insta, facebook } from '../enviroments'
@@ -139,10 +139,10 @@ const Home = () => {
                         </div>
 
                         <SkillBoxContainer>
-                            <SkillBox icon={<FaReact />} text="React" svgColor="#61dafb" link={'https://coursera.org/share/ef11a848540093bac99330b9217c99ad'} />
-                            <SkillBox icon={<FaJava />} text="Java" svgColor="#116149" link={'https://infyspringboard.onwingspan.com/public-assets/infosysheadstart/cert/lex_auth_012880464547618816347_shared/1-8590f483-13a7-4235-a4b5-f3d520c01d63.pdf'} />
-                            <SkillBox icon={<GrMysql />} text="MySQL" svgColor="#116149" link={'https://coursera.org/share/093d86f23e17ec8bea2889cb349c2353'} />
-                            <SkillBox icon={<FaPython />} text="Python" svgColor="#113527" link={'https://coursera.org/share/c8c7f01f1f6734fba44ba4752be1d345'} />
+                            <SkillBox icon={<FaReact />} text="React" svgColor="#61dafb" />
+                            <SkillBox icon={<FaJava />} text="Java" svgColor="#116149" />
+                            <SkillBox icon={<GrMysql />} text="MySQL" svgColor="#116149" />
+                            <SkillBox icon={<FaPython />} text="Python" svgColor="#113527" />
                             <SkillBox icon={<SiMongodb />} text="MonogoDB" svgColor="#116149" />
                             <SkillBox icon={<SiExpress />} text="Express" svgColor="#f1c617" />
                             <SkillBox icon={<FaNodeJs />} text="Node" svgColor="#8fc708" />
@@ -154,21 +154,21 @@ const Home = () => {
                     <div className='col-xl-6 col-lg-8 col-md-10 col-12 d-flex flex-column gap-3'>
                         <div className='shaded-box p-4 rounded d-flex gap-3 align-items-center justify-content-center'>
                             <span className="fs-2 fw-bold text-capitalize">
-                            <GrCertificate className='fs-1 text-theam' /> Education / Awards
+                                <GrCertificate className='fs-1 text-theam' /> Education / Awards
                             </span>
                         </div>
 
                         <div className='mb-3 shaded-box p-4 rounded'>
-                            <ul class="nav nav-pills mb-3 align-items-center gap-2" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="btn-reset-0 active" id="pills-awards-tab" data-bs-toggle="pill" data-bs-target="#pills-awards" type="button" role="tab" aria-controls="pills-awards" aria-selected="false">AWARDS</button>
+                            <ul className="nav nav-pills mb-3 align-items-center gap-2" id="pills-tab" role="tablist">
+                                <li className="nav-item" role="presentation">
+                                    <button className="btn-reset-0 active" id="pills-awards-tab" data-bs-toggle="pill" data-bs-target="#pills-awards" type="button" role="tab" aria-controls="pills-awards" aria-selected="false">AWARDS</button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="btn-reset-0" id="pills-education-tab" data-bs-toggle="pill" data-bs-target="#pills-education" type="button" role="tab" aria-controls="pills-education" aria-selected="true">EDUCATION</button>
+                                <li className="nav-item" role="presentation">
+                                    <button className="btn-reset-0" id="pills-education-tab" data-bs-toggle="pill" data-bs-target="#pills-education" type="button" role="tab" aria-controls="pills-education" aria-selected="true">EDUCATION</button>
                                 </li>
                             </ul>
-                            <div class="tab-content mt-4" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-awards" role="tabpanel" aria-labelledby="pills-awards-tab" tabindex="0">
+                            <div className="tab-content mt-4" id="pills-tabContent">
+                                <div className="tab-pane fade show active" id="pills-awards" role="tabpanel" aria-labelledby="pills-awards-tab" tabindex="0">
 
                                     <div className="d-flex flex-column gap-3">
                                         <DetailBox title={'React'} para={'Front-End Web Development with React'} link={'https://coursera.org/share/ef11a848540093bac99330b9217c99ad'} />
@@ -178,13 +178,39 @@ const Home = () => {
                                     </div>
 
                                 </div>
-                                <div class="tab-pane fade" id="pills-education" role="tabpanel" aria-labelledby="pills-education-tab" tabindex="0">
-                                    <div className="d-flex flex-column gap-2">
+                                <div className="tab-pane fade" id="pills-education" role="tabpanel" aria-labelledby="pills-education-tab" tabindex="0">
+                                    <div className="d-flex flex-column gap-3">
                                         <DetailBox year={'2018 - 2021'} title={'Diploma'} para={'Government Polytechnic, Ranchi - Jharkhand India'} />
                                         <DetailBox year={'Current'} title={'B.Tech'} para={'LNCT, Bhopal - Madhya Pradesh India'} />
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className='my-5'>
+                <ShadowText text1="Work" text2="Experience" />
+                <div className='container'>
+
+                    <div id="workExpCarousel" className="carousel slide" data-bs-ride="carousel">
+                        <div className="carousel-inner">
+                            <div className="carousel-item active">
+                                <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
+                            </div>
+                            <div className="carousel-item">
+                                <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
+                            </div>
+                            <div className="carousel-item">
+                                <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
+                            </div>
+                        </div>
+
+                        <div className="carousel-indicators position-relative">
+                            <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="0" className="custom-indicators active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="1" className='custom-indicators' aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="2" className='custom-indicators' aria-label="Slide 3"></button>
                         </div>
                     </div>
                 </div>
