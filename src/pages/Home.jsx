@@ -1,6 +1,7 @@
 import React from 'react'
-import { BtnBig, DetailBox, ExperienceCard, IcoBtn, ShadowText, SkillBox, SkillBoxContainer } from '../components/Utility'
-import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython } from 'react-icons/fa'
+import { BtnBig, DetailBox, ExperienceCard, FirstLetterEffectText, IcoBtn, ProvideCard, ShadowText, SkillBox, SkillBoxContainer } from '../components/Utility'
+import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython, FaPencilRuler, FaPhotoVideo, FaFileCode } from 'react-icons/fa'
+import { FaBarsStaggered } from 'react-icons/fa6'
 import { BsMouseFill } from 'react-icons/bs'
 import { TbBrandMailgun } from 'react-icons/tb'
 import { linkedin, insta, facebook } from '../enviroments'
@@ -191,7 +192,7 @@ const Home = () => {
             </section>
 
             <section className='my-5'>
-                <ShadowText text1="Work" text2="Experience" />
+                <ShadowText text1="Feature" text2="Work Experience" />
                 <div className='container'>
 
                     <div id="workExpCarousel" className="carousel slide" data-bs-ride="carousel">
@@ -207,11 +208,23 @@ const Home = () => {
                             </div>
                         </div>
 
-                        <div className="carousel-indicators position-relative">
+                        <div className="carousel-indicators position-relative z-0">
                             <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="0" className="custom-indicators active" aria-current="true" aria-label="Slide 1"></button>
                             <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="1" className='custom-indicators' aria-label="Slide 2"></button>
                             <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="2" className='custom-indicators' aria-label="Slide 3"></button>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className='my-5'>
+                <div className="container">
+                    <FirstLetterEffectText text="What I Provide" />
+                    <div className="d-flex gap-4 justify-content-center flex-wrap my-3">
+                        <ProvideCard icon={<FaPencilRuler />} text={'UI/UX Consultency'} modalId="testing" />
+                        <ProvideCard icon={<FaPhotoVideo />} text={'Branding & Design'} modalId={'testing'} />
+                        <ProvideCard icon={<FaFileCode />} text={'Web Development'} modalId={'testing'} />
+                        <ProvideCard icon={<FaBarsStaggered />} text={'Content Writing'} modalId={'testing'} />
                     </div>
                 </div>
             </section>

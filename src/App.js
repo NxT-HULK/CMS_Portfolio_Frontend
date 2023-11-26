@@ -1,8 +1,9 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import './styles/main.scss'
 import Home from './pages/Home'
+import BootstrapModal from './components/BootstrapModal'
+import './styles/main.scss'
 import './styles/responsive.scss'
 import './styles/scroller.scss'
 
@@ -10,6 +11,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Navbar />
+      <BootstrapModal />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/work' element={<>Work page</>} />
