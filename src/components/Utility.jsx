@@ -25,6 +25,17 @@ export const BtnBig = ({ text, icon, link }) => {
   )
 }
 
+export const CustomBtn = ({ text, icon, type }) => {
+  return (
+    <>
+      <button type={type === 'submit' ? 'submit' : 'button'} className='btn-reset theam-btn-big user-select-none'>
+        <span>{icon}</span>
+        <span>{text}</span>
+      </button>
+    </>
+  )
+}
+
 export const ShadowText = ({ text1, text2 }) => {
   return (
     <>
@@ -127,10 +138,20 @@ export const ProvideCard = ({ icon, text, modalId }) => {
       <div className="whatIProvideCard">
         <span className="icon">{icon}</span>
         <span className="fs-4 fw-bold">{text}</span>
-        <button type="button" className='d-flex gap-2 align-items-center' data-bs-toggle="modal" data-bs-target={`#${modalId}`}>
+        <button type="button" className='d-flex gap-2 align-items-center px-2 py-1 rounded' data-bs-toggle="modal" data-bs-target={`#${modalId}`}>
           Know More <FaLongArrowAltRight />
         </button>
       </div>
     </>
+  )
+}
+
+export const TestimonialCard = ({ message, name, date }) => {
+  return (
+    <div className="testimonial-card-custom">
+      <p>{message}</p>
+      <span>{name}</span>
+      <span className="date mt-2">{date}</span>
+    </div>
   )
 }

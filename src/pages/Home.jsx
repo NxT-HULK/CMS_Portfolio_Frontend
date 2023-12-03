@@ -1,8 +1,8 @@
 import React from 'react'
-import { BtnBig, DetailBox, ExperienceCard, FirstLetterEffectText, IcoBtn, ProvideCard, ShadowText, SkillBox, SkillBoxContainer } from '../components/Utility'
+import { BtnBig, CustomBtn, DetailBox, ExperienceCard, FirstLetterEffectText, IcoBtn, ProvideCard, ShadowText, SkillBox, SkillBoxContainer, TestimonialCard } from '../components/Utility'
 import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython, FaPencilRuler, FaPhotoVideo, FaFileCode } from 'react-icons/fa'
 import { FaBarsStaggered } from 'react-icons/fa6'
-import { BsMouseFill } from 'react-icons/bs'
+import { BsFillSendFill, BsMouseFill } from 'react-icons/bs'
 import { TbBrandMailgun } from 'react-icons/tb'
 import { linkedin, insta, facebook } from '../enviroments'
 import { SiExpress, SiMongodb } from 'react-icons/si'
@@ -29,7 +29,7 @@ const Home = () => {
                                 Hi, I'm
                                 <Typewriter
                                     options={{
-                                        strings: ['Shivam Kashyap', 'Developer', 'YouTuber'],
+                                        strings: ['Website Developer', 'Software Developer', 'YouTuber', 'Bloger'],
                                         autoStart: true,
                                         loop: true,
                                         deleteSpeed: 50
@@ -42,7 +42,7 @@ const Home = () => {
                             </span>
 
                             <p className='fw-medium mt-3'>
-                                I create stunning websites for your business, Highly experienced in web design and development.
+                                I create stunning websites for your business,<br /> Highly experienced in web design and development.
                             </p>
 
                             <div>
@@ -169,7 +169,7 @@ const Home = () => {
                                 </li>
                             </ul>
                             <div className="tab-content mt-4" id="pills-tabContent">
-                                <div className="tab-pane fade show active" id="pills-awards" role="tabpanel" aria-labelledby="pills-awards-tab" tabindex="0">
+                                <div className="tab-pane fade show active" id="pills-awards" role="tabpanel" aria-labelledby="pills-awards-tab" tabIndex="0">
 
                                     <div className="d-flex flex-column gap-3">
                                         <DetailBox title={'React'} para={'Front-End Web Development with React'} link={'https://coursera.org/share/ef11a848540093bac99330b9217c99ad'} />
@@ -179,7 +179,7 @@ const Home = () => {
                                     </div>
 
                                 </div>
-                                <div className="tab-pane fade" id="pills-education" role="tabpanel" aria-labelledby="pills-education-tab" tabindex="0">
+                                <div className="tab-pane fade" id="pills-education" role="tabpanel" aria-labelledby="pills-education-tab" tabIndex="0">
                                     <div className="d-flex flex-column gap-3">
                                         <DetailBox year={'2018 - 2021'} title={'Diploma'} para={'Government Polytechnic, Ranchi - Jharkhand India'} />
                                         <DetailBox year={'Current'} title={'B.Tech'} para={'LNCT, Bhopal - Madhya Pradesh India'} />
@@ -191,40 +191,92 @@ const Home = () => {
                 </div>
             </section>
 
-            <section className='my-5'>
-                <ShadowText text1="Feature" text2="Work Experience" />
-                <div className='container'>
 
-                    <div id="workExpCarousel" className="carousel slide" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
-                            </div>
-                            <div className="carousel-item">
-                                <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
-                            </div>
-                            <div className="carousel-item">
-                                <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
-                            </div>
-                        </div>
+            <section className="min-vh-100 d-flex flex-column justify-content-center">
+                <section className='my-5'>
+                    <ShadowText text1="Feature" text2="Work Experience" />
+                    <div className='container'>
 
-                        <div className="carousel-indicators position-relative z-0">
-                            <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="0" className="custom-indicators active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="1" className='custom-indicators' aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="2" className='custom-indicators' aria-label="Slide 3"></button>
+                        <div id="workExpCarousel" className="carousel slide" data-bs-ride="carousel">
+                            <div className="carousel-inner">
+                                <div className="carousel-item active">
+                                    <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
+                                </div>
+                                <div className="carousel-item">
+                                    <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
+                                </div>
+                                <div className="carousel-item">
+                                    <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
+                                </div>
+                            </div>
+
+                            <div className="carousel-indicators position-relative z-0">
+                                <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="0" className="custom-indicators active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="1" className='custom-indicators' aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="2" className='custom-indicators' aria-label="Slide 3"></button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
+
+                <section className='my-5'>
+                    <div className="container">
+                        <FirstLetterEffectText text="What I Provide" />
+                        <div className="d-flex gap-4 justify-content-center flex-wrap my-3">
+                            <ProvideCard icon={<FaPencilRuler />} text={'UI/UX Consultency'} modalId="testing" />
+                            <ProvideCard icon={<FaPhotoVideo />} text={'Branding & Design'} modalId={'testing'} />
+                            <ProvideCard icon={<FaFileCode />} text={'Web Development'} modalId={'testing'} />
+                            <ProvideCard icon={<FaBarsStaggered />} text={'Content Writing'} modalId={'testing'} />
+                        </div>
+                    </div>
+                </section>
             </section>
 
-            <section className='my-5'>
-                <div className="container">
-                    <FirstLetterEffectText text="What I Provide" />
-                    <div className="d-flex gap-4 justify-content-center flex-wrap my-3">
-                        <ProvideCard icon={<FaPencilRuler />} text={'UI/UX Consultency'} modalId="testing" />
-                        <ProvideCard icon={<FaPhotoVideo />} text={'Branding & Design'} modalId={'testing'} />
-                        <ProvideCard icon={<FaFileCode />} text={'Web Development'} modalId={'testing'} />
-                        <ProvideCard icon={<FaBarsStaggered />} text={'Content Writing'} modalId={'testing'} />
+            <section className='my-5 min-vh-100 d-flex align-items-center justify-content-center' id='homeTestimonialSection'>
+                <div className="container-fluid py-5 px-md-5 px-0">
+                    <span className='testimonial-custom-font mb-4'>Golden Feedback</span>
+                    <div className='d-flex gap-5 flex-md-row flex-column-reverse justify-content-center'>
+                        <div className="col-md-6 col-12">
+                            <span className="text-white d-block mb-3 ms-2 font-cursive fs-2 text-md-start text-center">We highly appreciate your thought, <br />Fell Free to say anything</span>
+                            <form className='px-4 py-3 rounded-3 transparent-effect m-2'>
+                                <div className="mb-2">
+                                    <input type="text" className="rounded-1 custom-input-style" aria-describedby="NameHelp" placeholder="Your Name*" required />
+                                </div>
+                                <div className="mb-2">
+                                    <input type="email" className="rounded-1 custom-input-style" aria-describedby="emailHelp" placeholder="youremail@domain.com (Optional)" />
+                                </div>
+                                <div className="mb-2">
+                                    <textarea name="message" id="" cols="3" rows="3" className='w-100 custom-input-style rounded-1' placeholder="Your Message*" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" required />
+                                </div>
+                                <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} />
+                            </form>
+                        </div>
+
+                        <div className="col-md-5 col-12">
+
+                            <div id="Testimonial" className="carousel slide">
+                                <div className="carousel-inner">
+                                    <div className="carousel-item active">
+                                        <TestimonialCard message={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
+                                    </div>
+                                    <div className="carousel-item">
+                                        <TestimonialCard message={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
+                                    </div>
+                                    <div className="carousel-item">
+                                        <TestimonialCard message={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
+                                    </div>
+                                </div>
+                                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span className="visually-hidden">Previous</span>
+                                </button>
+                                <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span className="visually-hidden">Next</span>
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </section>

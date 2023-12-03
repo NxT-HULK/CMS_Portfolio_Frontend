@@ -39,7 +39,7 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="mainNavOffCanvas" aria-labelledby="mainNavOffCanvasLabel" >
+            <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabIndex="-1" id="mainNavOffCanvas" aria-labelledby="mainNavOffCanvasLabel" >
                 <div className="offcanvas-header border-bottom ">
                     <Link to="/" className="offcanvas-title text-decoration-none fs-4 fw-bold text-dark" id="mainNavOffCanvasLabel">
                         Shivam Kashyap

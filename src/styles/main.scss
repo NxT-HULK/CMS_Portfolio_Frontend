@@ -1,14 +1,31 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+// font-family: 'Great Vibes', cursive;
 @import "./variables.scss";
 @import "./animation.scss";
 
 * {
-    font-family: "Poppins", sans-serif !important;
+    font-family: "Poppins", sans-serif;
 }
 
 *::selection {
     background-color: $theam-color;
     color: #fff;
+}
+
+@mixin font-cursive() {
+    font-family: "Great Vibes", cursive;
+}
+
+.font-cursive {
+    @include font-cursive();
+}
+
+.testimonial-custom-font {
+    @include font-cursive();
+    color: #fff;
+    font-size: 4rem;
+    letter-spacing: 3px;
+    display: block;
 }
 
 .btn-reset {
@@ -82,7 +99,9 @@ ul {
         }
     }
 
-    &:hover {
+    &:hover,
+    &:target,
+    &:focus {
         transform: scale(1.03);
         transition: 0.1s;
     }
@@ -332,7 +351,7 @@ ul {
     padding: 20px 25px;
     border-radius: 8px;
     box-shadow:
-        0 3px 0 rgba($color: $theam-color, $alpha: 1),
+        0 3px 0 rgba($color: $theam-color, $alpha: 0.3),
         0 0 10px rgba($color: #000000, $alpha: 0.3);
     position: relative;
     top: 0px;
@@ -349,6 +368,15 @@ ul {
         font-weight: bold;
         color: $custom-gray;
         font-size: 15px;
+        border: 1px solid transparent;
+        transition: all 0.3s;
+
+        &:hover {
+            background-color: $theam-color;
+            box-shadow: none;
+            color: #fff;
+            transition: all 0.3s;
+        }
     }
 
     &:hover {
@@ -357,5 +385,82 @@ ul {
             0 6px 0 rgba($color: $theam-color, $alpha: 1),
             0 0 10px rgba($color: #000000, $alpha: 0.3);
         transition: 0.15s;
+
+        button {
+            border-color: rgba($color: #ccc, $alpha: 0.5);
+            box-shadow:
+                1px 1px 3px rgba($color: #ccc, $alpha: 0.5),
+                inset 2px 2px 1px rgba($color: #ccc, $alpha: 0.2);
+        }
+    }
+}
+
+// testimonial section starts here
+#homeTestimonialSection {
+    background-image: url("../assets/testimonialBackground.svg");
+    background-attachment: fixed;
+    min-height: 80dvh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.transparent-effect {
+    background-color: rgba($color: #fff, $alpha: 0.35);
+    backdrop-filter: blur(10px);
+}
+
+.custom-input-style {
+    background-color: rgba($color: #fff, $alpha: 0.3);
+    width: 100%;
+    outline: none;
+    border: 1px solid $theam-color;
+    padding: 8px 7px;
+    color: $theam-color;
+    transition: 0.3s;
+
+    &::placeholder {
+        color: rgba($color: #fff, $alpha: 0.5);
+    }
+
+    &:focus {
+        background-color: rgba($color: $theam-color, $alpha: 0.3);
+        transition: 0.3s;
+        color: #fff;
+    }
+}
+
+.testimonial-card-custom {
+    background-color: rgba($color: #fff, $alpha: 0.3);
+    backdrop-filter: blur(10px);
+    min-height: 400px;
+    padding: 10px;
+    border-radius: 3px;
+    width: 75%;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    font-size: 1.1rem;
+
+    p {
+        text-align: center;
+
+        &::first-letter {
+            font-size: 1.8rem;
+            font-weight: 550;
+        }
+    }
+
+    span {
+        @include font-cursive();
+        font-size: 2rem;
+        display: block;
+    }
+
+    .date {
+        font-family: monospace;
+        font-size: 1rem;
+        text-align: right;
+        display: block;
+        margin-top: auto;
     }
 }
