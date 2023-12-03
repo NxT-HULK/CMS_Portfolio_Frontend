@@ -254,23 +254,23 @@ const Home = () => {
 
                         <div className="col-md-5 col-12">
 
-                            <div id="Testimonial" className="carousel slide">
+                            <div id="testimonialCarousel" className="carousel slide" data-bd-rede="carousel">
                                 <div className="carousel-inner">
                                     <div className="carousel-item active">
-                                        <TestimonialCard message={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
+                                        <TestimonialCard message={'Slide 1 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
                                     </div>
                                     <div className="carousel-item">
-                                        <TestimonialCard message={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
+                                        <TestimonialCard message={'Slide 2 ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
                                     </div>
                                     <div className="carousel-item">
-                                        <TestimonialCard message={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
+                                        <TestimonialCard message={'Slide 3 ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
                                     </div>
                                 </div>
-                                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                <button className="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
                                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span className="visually-hidden">Previous</span>
                                 </button>
-                                <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                <button className="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
                                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span className="visually-hidden">Next</span>
                                 </button>
