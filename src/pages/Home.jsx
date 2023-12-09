@@ -191,7 +191,6 @@ const Home = () => {
                 </div>
             </section>
 
-
             <section className="min-vh-100 d-flex flex-column justify-content-center">
                 <section className='my-5'>
                     <ShadowText text1="Feature" text2="Work Experience" />
@@ -232,12 +231,12 @@ const Home = () => {
                 </section>
             </section>
 
-            <section className='my-5 min-vh-100 d-flex align-items-center justify-content-center' id='homeTestimonialSection'>
+            <section className='mt-5 min-vh-100 d-flex align-items-center justify-content-center' id='homeTestimonialSection'>
                 <div className="container-fluid py-5 px-md-5 px-0">
                     <span className='testimonial-custom-font mb-4'>Golden Feedback</span>
                     <div className='d-flex gap-5 flex-md-row flex-column-reverse justify-content-center'>
                         <div className="col-md-6 col-12">
-                            <span className="text-white d-block mb-3 ms-2 font-cursive fs-2 text-md-start text-center">We highly appreciate your thought, <br />Fell Free to say anything</span>
+                            <span className="text-white d-block mb-3 ms-2 font-cursive fs-2 text-md-start text-center">We highly appreciate your thoughts, <br />Feel Free to say anything</span>
                             <form className='px-4 py-3 rounded-3 transparent-effect m-2'>
                                 <div className="mb-2">
                                     <input type="text" className="rounded-1 custom-input-style" aria-describedby="NameHelp" placeholder="Your Name*" required />

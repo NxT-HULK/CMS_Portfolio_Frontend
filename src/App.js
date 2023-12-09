@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import BootstrapModal from './components/BootstrapModal'
+import Footer from './components/Footer'
 import './styles/main.scss'
 import './styles/responsive.scss'
 import './styles/scroller.scss'
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/blogs' element={<>Blogs page</>} />
         <Route path='/contact' element={<>contact page</>} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }

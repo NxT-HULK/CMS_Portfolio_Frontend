@@ -409,6 +409,11 @@ ul {
     backdrop-filter: blur(10px);
 }
 
+.transparent-effect-thin {
+    background-color: rgba($color: $theam-color, $alpha: 0.35);
+    backdrop-filter: blur(6px);
+}
+
 .custom-input-style {
     background-color: rgba($color: #fff, $alpha: 0.3);
     width: 100%;
@@ -462,5 +467,54 @@ ul {
         text-align: right;
         display: block;
         margin-top: auto;
+    }
+}
+
+.mainFooter {
+    background-image: url("../assets/circle-scatter-haikei.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.shadow-md-white {
+    box-shadow: 0 3px 10px 3px rgba($color: #000, $alpha: 0.25);
+    fill: #201c36;
+}
+
+.newsLetterForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    input,
+    button {
+        border-radius: 10rem;
+        border: 2px solid $theam-color;
+        padding: 10px 20px;
+        font-weight: 350;
+        backdrop-filter: blur(5px);
+        box-shadow: inset 0 -1px 10px rgba($color: #222, $alpha: 0.5);
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    input {
+        border-top-right-radius: 10rem;
+        background-color: rgba($color: $theam-color, $alpha: 0.3);
+        color: #fff;
+        min-width: 300px;
+    }
+
+    button {
+        position: relative;
+        top: -2px;
+        background-color: rgba($color: $theam-color, $alpha: 0.45);
+        color: #fff;
+        text-transform: uppercase;
+        box-shadow: inset 0 -1px 10px rgba($color: #000, $alpha: 0.7);
     }
 }
