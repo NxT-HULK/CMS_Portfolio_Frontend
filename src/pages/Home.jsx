@@ -265,11 +265,11 @@ const Home = () => {
                                         <TestimonialCard message={'Slide 3 ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
                                     </div>
                                 </div>
-                                <button className="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                                <button className="carousel-control-prev z-0" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
                                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span className="visually-hidden">Previous</span>
                                 </button>
-                                <button className="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                                <button className="carousel-control-next z-0" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
                                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span className="visually-hidden">Next</span>
                                 </button>

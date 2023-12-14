@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const CustomList = ({ link, text }) => {
   return (
     <>
-      <li>
+      <li className='custom-footer-links'>
         <Link to={link} className='text-theam d-flex align-items-center gap-2 text-decoration-none'>
           <FaArrowRightLong />
           <span>{text}</span>

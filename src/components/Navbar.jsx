@@ -1,23 +1,26 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { IcoBtn } from './Utility'
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa'
 import { SiGmail } from 'react-icons/si'
 import { facebook, insta, linkedin } from '../enviroments'
 
 const Navbar = () => {
+
+    const { pathname } = useLocation()
+
     return (
         <>
-            <nav className="navbar navbar-expand-lg mainNav position-sticky top-0 w-100 z-1">
+            <nav className={`navbar navbar-expand-lg mainNav ${pathname === '/blogs' ? 'position-fixed' : 'position-sticky'} top-0 w-100 z-3`}>
                 <div className="container-fluid">
-                    <Link className="navbar-brand fw-bold" to="/">Shivam Kashyap</Link>
+                    <Link className={`navbar-brand fw-bold ${pathname === '/blogs' ? 'text-white' : 'text-dark'}`} to="/">Shivam Kashyap</Link>
 
-                    <button className="btn-reset navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNavOffCanvas" aria-controls="mainNavOffCanvas">
+                    <button className={`btn-reset navbar-toggler ${pathname === '/blogs' ? 'text-white' : 'text-dark'} `} type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNavOffCanvas" aria-controls="mainNavOffCanvas">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1.4em" viewBox="0 0 512 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM64 256c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" /></svg>
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <ul className={`navbar-nav ms-auto mb-2 mb-lg-0 ${pathname === '/blogs' ? 'text-white' : 'text-dark'}`}>
                             <li className="nav-item">
                                 <NavLink className="nav-link" aria-current="page" to="/">Portfolio</NavLink>
                             </li>
@@ -39,12 +42,14 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabIndex="-1" id="mainNavOffCanvas" aria-labelledby="mainNavOffCanvasLabel" >
-                <div className="offcanvas-header border-bottom ">
-                    <Link to="/" className="offcanvas-title text-decoration-none fs-4 fw-bold text-dark" id="mainNavOffCanvasLabel">
+            <div className={`offcanvas offcanvas-start ${pathname === '/blogs' ? 'bg-dark' : 'bg-light'}`} data-bs-scroll="true" tabIndex="-1" id="mainNavOffCanvas" aria-labelledby="mainNavOffCanvasLabel" >
+                <div className="offcanvas-header border-bottom">
+                    <Link to="/" className={`offcanvas-title text-decoration-none fs-4 fw-bold ${pathname === '/blogs' ? 'text-light' : 'text-dark'}`} id="mainNavOffCanvasLabel">
                         Shivam Kashyap
                     </Link>
-                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <button type="button" className={`btn-reset ${pathname === '/blogs' ? 'text-white' : 'text-dark'}`} data-bs-dismiss="offcanvas" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="30" width="20" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" /></svg>
+                    </button>
                 </div>
                 <div className="offcanvas-body">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0" data-bs-dismiss="offcanvas">
@@ -67,7 +72,7 @@ const Navbar = () => {
 
                     {/* social iconaddon */}
                     <div className='mt-4'>
-                        <span className='fw-bold fs-5 d-block mb-2'>Meet me on Social</span>
+                        <span className={`fw-bold fs-5 d-block mb-2 ${pathname === '/blogs' ? 'text-white' : 'text-dark'}`}>Meet me on Social</span>
                         <ul className='p-0 m-0 d-flex gap-3'>
                             <li><IcoBtn link={'mailto:shivamkumarkashyap12@gmail.com'} icon={<SiGmail />} /></li>
                             <li><IcoBtn link={linkedin} icon={<FaLinkedinIn />} /></li>

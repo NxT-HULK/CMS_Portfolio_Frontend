@@ -13,7 +13,7 @@
         }
         
         #circle-group circle {
-            animation: glow 3s alternate infinite ease-out;
+            animation: glow 1s alternate infinite ease-out;
         }
     </style>
 
