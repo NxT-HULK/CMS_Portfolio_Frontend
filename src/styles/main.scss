@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-// font-family: 'Great Vibes', cursive;
 @import "./variables.scss";
 @import "./animation.scss";
 
@@ -38,7 +37,7 @@
 }
 
 .mainNav {
-    background-color: rgba($color: #fff, $alpha: 0.3);
+    background-color: rgba($color: #fff, $alpha: 0.15);
     box-shadow: 0 1px 3px rgba($color: #000000, $alpha: 0.3);
     backdrop-filter: blur(5px);
 }
@@ -52,7 +51,8 @@ ul {
     }
 }
 
-.icon-btn-shaded {
+.icon-btn-shaded,
+.icon-btn-shaded-red {
     @include bg-theam();
     @include center-center();
     height: 35px;
@@ -73,6 +73,11 @@ ul {
     }
 }
 
+.icon-btn-shaded-red {
+    @include bg-theam-2();
+    box-shadow: 3px 3px 0 rgba($color: $theam-color-2, $alpha: 0.5) !important;
+}
+
 .line-height-1 {
     line-height: 1;
 }
@@ -86,6 +91,36 @@ ul {
     gap: 3px;
     width: fit-content;
     box-shadow: 3px 3px 0 rgba($color: $theam-color, $alpha: 0.5);
+    transition: 0.1s;
+
+    span {
+        color: #fff;
+        font-size: 23px;
+        line-height: 1;
+
+        &:nth-child(2) {
+            font-size: 16px;
+            @include center-center();
+        }
+    }
+
+    &:hover,
+    &:target,
+    &:focus {
+        transform: scale(1.03);
+        transition: 0.1s;
+    }
+}
+
+.theam-btn-big-2 {
+    @include bg-theam-2();
+    text-decoration: none;
+    padding: 12px 17px;
+    border-radius: 10px;
+    display: flex;
+    gap: 3px;
+    width: fit-content;
+    box-shadow: 3px 3px 0 rgba($color: $theam-color-2, $alpha: 0.5);
     transition: 0.1s;
 
     span {
@@ -338,6 +373,13 @@ ul {
     color: $theam-color;
 }
 
+.firstLetterEffect-red {
+    font-size: 35px !important;
+    font-weight: 650;
+    color: $theam-color-2;
+    text-shadow: 0 0 3px #222;
+}
+
 .custom-indicators {
     height: 12px !important;
     width: 12px !important;
@@ -400,7 +442,6 @@ ul {
     }
 }
 
-// testimonial section starts here
 #homeTestimonialSection {
     background-image: url("../assets/testimonialBackground.svg");
     background-attachment: fixed;
@@ -416,6 +457,11 @@ ul {
 
 .transparent-effect-thin {
     background-color: rgba($color: $theam-color, $alpha: 0.35);
+    backdrop-filter: blur(6px);
+}
+
+.transparent-effect-thin-red {
+    background-color: rgba($color: $theam-color-2, $alpha: 0.35);
     backdrop-filter: blur(6px);
 }
 
@@ -436,6 +482,28 @@ ul {
         background-color: rgba($color: $theam-color, $alpha: 0.3);
         transition: 0.3s;
         color: #fff;
+    }
+}
+
+.custom-input-style-2 {
+    background-color: rgba($color: $theam-color-2, $alpha: 0.1);
+    backdrop-filter: blur(5px);
+    width: 100%;
+    outline: none;
+    border: 1px solid $theam-color-2;
+    padding: 8px 7px;
+    color: #fff;
+    font-weight: 500;
+    transition: 0.3s;
+
+    &:focus {
+        transition: 0.3s;
+        border-color: transparent;
+        box-shadow: 0 0 5px 1px rgba($color: $theam-color-2, $alpha: 1);
+    }
+
+    &::selection {
+        background-color: $theam-color-2;
     }
 }
 
@@ -475,7 +543,8 @@ ul {
     }
 }
 
-.mainFooter {
+.mainFooter,
+.mainFooter-red {
     background-image: url("../assets/circle-scatter-haikei.svg");
     background-position: center;
     background-repeat: no-repeat;
@@ -483,12 +552,18 @@ ul {
     background-attachment: fixed;
 }
 
+.mainFooter-red {
+    // background: #001220;
+    background-image: url('../assets/circle-scatter-haikei-3.svg');
+}
+
 .shadow-md-white {
     box-shadow: 0 3px 10px 3px rgba($color: #000, $alpha: 0.25);
     fill: #201c36;
 }
 
-.newsLetterForm {
+.newsLetterForm,
+.newsLetterForm-red {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -524,6 +599,21 @@ ul {
     }
 }
 
+.newsLetterForm-red {
+    input,
+    button {
+        border-color: $theam-color-2;
+    }
+
+    input {
+        background-color: rgba($color: $theam-color-2, $alpha: 0.3);
+    }
+
+    button {
+        background-color: rgba($color: $theam-color-2, $alpha: 0.45);
+    }
+}
+
 .nav-padding {
     padding-top: 60px;
 }
@@ -552,4 +642,11 @@ ul {
             }
         }
     }
+}
+
+.twinkling-stars-background {
+    background-image: url("../assets/circle-scatter-haikei-2.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }

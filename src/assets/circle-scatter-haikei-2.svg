@@ -1,0 +1,182 @@
+<svg id="visual" viewBox="0 0 900 600" width="900" height="600" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+    <rect x="0" y="0" width="900" height="600" fill="#001220"></rect>
+
+    <style>
+        .circle {
+            fill: inherit;
+            animation: move-the-circle 3s infinite ease-in-out alternate;
+            animation-delay: cal(var(--i)*10ms);
+            transform-origin: center center;
+        }
+        
+        .circle-delayed {
+            fill: inherit;
+            animation: move-the-circle 5s infinite ease-in-out alternate;
+            animation-delay: -500ms;
+            transform-origin: center center;
+        }
+
+        @keyframes move-the-circle {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(20px);
+            }
+        }
+    </style>
+
+    <g fill="#A7233A">
+        <circle style="fill: #fff" class="circle" r="14" cx="319" cy="149"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="1" cx="677" cy="95"></circle>
+        <circle style="fill: #fff" class="circle" r="7" cx="567" cy="119"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="7" cx="810" cy="449"></circle>
+        <circle style="fill: #fff" class="circle" r="8" cx="857" cy="197"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="11" cx="187" cy="202"></circle>
+        <circle style="fill: #fff" class="circle" r="5" cx="62" cy="356"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="5" cx="224" cy="342"></circle>
+        <circle style="fill: #fff" class="circle" r="8" cx="536" cy="448"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="1" cx="758" cy="353"></circle>
+        <circle style="fill: #fff" class="circle" r="11" cx="560" cy="288"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="7" cx="33" cy="145"></circle>
+        <circle style="fill: #fff" class="circle" r="5" cx="706" cy="115"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="3" cx="803" cy="367"></circle>
+        <circle style="fill: #fff" class="circle" r="0" cx="120" cy="251"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="10" cx="55" cy="100"></circle>
+        <circle style="fill: #fff" class="circle" r="5" cx="706" cy="29"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="1" cx="380" cy="288"></circle>
+        <circle style="fill: #fff" class="circle" r="5" cx="617" cy="365"></circle>
+        <circle style="fill: #fff" class="circle-delayed" r="0" cx="459" cy="426"></circle>
+        <circle style="fill: #fff" class="circle" r="10" cx="879" cy="560"></circle>
+        <circle class="circle-delayed" r="5" cx="772" cy="183"></circle>
+        <circle class="circle" r="3" cx="467" cy="540"></circle>
+        <circle class="circle-delayed" r="10" cx="250" cy="297"></circle>
+        <circle class="circle" r="0" cx="95" cy="271"></circle>
+        <circle class="circle-delayed" r="6" cx="834" cy="125"></circle>
+        <circle class="circle" r="3" cx="385" cy="161"></circle>
+        <circle class="circle-delayed" r="3" cx="268" cy="512"></circle>
+        <circle class="circle" r="9" cx="268" cy="452"></circle>
+        <circle class="circle-delayed" r="3" cx="164" cy="147"></circle>
+        <circle class="circle" r="5" cx="275" cy="256"></circle>
+        <circle class="circle-delayed" r="3" cx="544" cy="596"></circle>
+        <circle class="circle" r="12" cx="444" cy="125"></circle>
+        <circle class="circle-delayed" r="12" cx="174" cy="404"></circle>
+        <circle class="circle" r="10" cx="336" cy="17"></circle>
+        <circle class="circle-delayed" r="10" cx="520" cy="91"></circle>
+        <circle class="circle" r="6" cx="552" cy="319"></circle>
+        <circle class="circle-delayed" r="0" cx="499" cy="351"></circle>
+        <circle class="circle" r="7" cx="620" cy="138"></circle>
+        <circle class="circle-delayed" r="11" cx="136" cy="60"></circle>
+        <circle class="circle" r="5" cx="887" cy="62"></circle>
+        <circle class="circle-delayed" r="4" cx="391" cy="322"></circle>
+        <circle class="circle" r="8" cx="248" cy="145"></circle>
+        <circle class="circle-delayed" r="7" cx="397" cy="268"></circle>
+        <circle class="circle" r="10" cx="262" cy="568"></circle>
+        <circle class="circle-delayed" r="10" cx="616" cy="45"></circle>
+        <circle class="circle" r="4" cx="215" cy="480"></circle>
+        <circle class="circle-delayed" r="3" cx="583" cy="89"></circle>
+        <circle class="circle" r="3" cx="82" cy="14"></circle>
+        <circle class="circle-delayed" r="3" cx="517" cy="11"></circle>
+        <circle class="circle" r="2" cx="375" cy="434"></circle>
+        <circle class="circle-delayed" r="3" cx="392" cy="102"></circle>
+        <circle class="circle" r="6" cx="249" cy="108"></circle>
+        <circle class="circle-delayed" r="11" cx="607" cy="594"></circle>
+        <circle class="circle" r="2" cx="364" cy="368"></circle>
+        <circle class="circle-delayed" r="1" cx="254" cy="201"></circle>
+        <circle class="circle" r="3" cx="340" cy="60"></circle>
+        <circle class="circle-delayed" r="8" cx="675" cy="265"></circle>
+        <circle class="circle" r="1" cx="235" cy="74"></circle>
+        <circle class="circle-delayed" r="12" cx="789" cy="333"></circle>
+        <circle class="circle" r="4" cx="601" cy="164"></circle>
+        <circle class="circle-delayed" r="11" cx="765" cy="423"></circle>
+        <circle class="circle" r="8" cx="31" cy="83"></circle>
+        <circle class="circle-delayed" r="10" cx="63" cy="230"></circle>
+        <circle class="circle" r="11" cx="732" cy="95"></circle>
+        <circle class="circle-delayed" r="8" cx="210" cy="445"></circle>
+        <circle class="circle" r="5" cx="645" cy="26"></circle>
+        <circle class="circle-delayed" r="10" cx="791" cy="476"></circle>
+        <circle class="circle" r="10" cx="192" cy="141"></circle>
+        <circle class="circle-delayed" r="10" cx="12" cy="558"></circle>
+        <circle class="circle" r="11" cx="583" cy="386"></circle>
+        <circle class="circle-delayed" r="2" cx="485" cy="193"></circle>
+        <circle class="circle" r="2" cx="702" cy="149"></circle>
+        <circle class="circle-delayed" r="2" cx="773" cy="272"></circle>
+        <circle style="fill: #fff;" class="circle" r="2" cx="688" cy="514"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="10" cx="687" cy="52"></circle>
+        <circle style="fill: #fff;" class="circle" r="2" cx="783" cy="158"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="1" cx="611" cy="257"></circle>
+        <circle style="fill: #fff;" class="circle" r="3" cx="56" cy="535"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="10" cx="273" cy="316"></circle>
+        <circle style="fill: #fff;" class="circle" r="10" cx="657" cy="410"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="8" cx="219" cy="539"></circle>
+        <circle style="fill: #fff;" class="circle" r="11" cx="552" cy="500"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="12" cx="812" cy="288"></circle>
+        <circle style="fill: #fff;" class="circle" r="1" cx="126" cy="189"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="1" cx="742" cy="208"></circle>
+        <circle style="fill: #fff;" class="circle" r="7" cx="573" cy="426"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="2" cx="423" cy="339"></circle>
+        <circle style="fill: #fff;" class="circle" r="10" cx="643" cy="501"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="7" cx="507" cy="120"></circle>
+        <circle style="fill: #fff;" class="circle" r="6" cx="173" cy="63"></circle>
+        <circle style="fill: #fff;" class="circle-delayed" r="8" cx="217" cy="385"></circle>
+        <circle class="circle" r="3" cx="134" cy="546"></circle>
+        <circle class="circle-delayed" r="6" cx="444" cy="477"></circle>
+        <circle class="circle" r="12" cx="435" cy="516"></circle>
+        <circle class="circle-delayed" r="7" cx="777" cy="572"></circle>
+        <circle class="circle" r="5" cx="561" cy="473"></circle>
+        <circle class="circle-delayed" r="8" cx="490" cy="409"></circle>
+        <circle class="circle" r="0" cx="137" cy="7"></circle>
+        <circle class="circle-delayed" r="8" cx="752" cy="51"></circle>
+        <circle class="circle" r="0" cx="15" cy="252"></circle>
+        <circle class="circle-delayed" r="2" cx="453" cy="395"></circle>
+        <circle class="circle" r="0" cx="803" cy="216"></circle>
+        <circle class="circle-delayed" r="6" cx="46" cy="257"></circle>
+        <circle class="circle" r="10" cx="363" cy="43"></circle>
+        <circle class="circle-delayed" r="11" cx="796" cy="396"></circle>
+        <circle class="circle" r="0" cx="290" cy="84"></circle>
+        <circle class="circle-delayed" r="7" cx="800" cy="558"></circle>
+        <circle class="circle" r="6" cx="132" cy="445"></circle>
+        <circle class="circle-delayed" r="3" cx="238" cy="594"></circle>
+        <circle class="circle" r="1" cx="845" cy="487"></circle>
+        <circle class="circle-delayed" r="12" cx="864" cy="514"></circle>
+        <circle class="circle" r="8" cx="870" cy="436"></circle>
+        <circle class="circle-delayed" r="4" cx="428" cy="599"></circle>
+        <circle class="circle" r="11" cx="449" cy="261"></circle>
+        <circle class="circle-delayed" r="10" cx="696" cy="313"></circle>
+        <circle class="circle" r="0" cx="316" cy="523"></circle>
+        <circle class="circle-delayed" r="11" cx="285" cy="110"></circle>
+        <circle class="circle" r="9" cx="152" cy="110"></circle>
+        <circle class="circle-delayed" r="4" cx="709" cy="353"></circle>
+        <circle class="circle" r="8" cx="60" cy="482"></circle>
+        <circle class="circle-delayed" r="4" cx="595" cy="14"></circle>
+        <circle class="circle" r="3" cx="315" cy="574"></circle>
+        <circle class="circle-delayed" r="0" cx="114" cy="511"></circle>
+        <circle class="circle" r="2" cx="39" cy="332"></circle>
+        <circle class="circle-delayed" r="2" cx="86" cy="322"></circle>
+        <circle class="circle" r="7" cx="485" cy="467"></circle>
+        <circle class="circle-delayed" r="4" cx="61" cy="403"></circle>
+        <circle class="circle" r="9" cx="30" cy="503"></circle>
+        <circle class="circle-delayed" r="4" cx="82" cy="44"></circle>
+        <circle class="circle" r="12" cx="577" cy="217"></circle>
+        <circle class="circle-delayed" r="1" cx="618" cy="211"></circle>
+        <circle class="circle" r="7" cx="289" cy="2"></circle>
+        <circle class="circle-delayed" r="11" cx="552" cy="34"></circle>
+        <circle class="circle" r="3" cx="124" cy="368"></circle>
+        <circle class="circle-delayed" r="11" cx="241" cy="410"></circle>
+        <circle class="circle" r="1" cx="387" cy="587"></circle>
+        <circle class="circle-delayed" r="9" cx="33" cy="361"></circle>
+        <circle class="circle" r="2" cx="81" cy="591"></circle>
+        <circle class="circle-delayed" r="11" cx="664" cy="533"></circle>
+        <circle class="circle" r="6" cx="247" cy="365"></circle>
+        <circle class="circle-delayed" r="10" cx="149" cy="220"></circle>
+        <circle class="circle" r="10" cx="94" cy="566"></circle>
+        <circle class="circle-delayed" r="3" cx="155" cy="429"></circle>
+        <circle class="circle" r="3" cx="769" cy="520"></circle>
+        <circle class="circle-delayed" r="7" cx="575" cy="356"></circle>
+        <circle class="circle" r="2" cx="515" cy="375"></circle>
+        <circle class="circle-delayed" r="0" cx="848" cy="552"></circle>
+        <circle class="circle" r="2" cx="879" cy="219"></circle>
+        <circle class="circle-delayed" r="7" cx="4" cy="99"></circle>
+    </g>
+</svg>

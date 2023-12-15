@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaLongArrowAltRight } from 'react-icons/fa'
-import { Link } from 'react-router-dom/dist'
+import { Link, useLocation } from 'react-router-dom/dist'
+import FunctionContext from '../context/function/FunctionContext'
 
 export const IcoBtn = ({ link, icon }) => {
+
+  const { redTheamFlag } = useContext(FunctionContext)
+
   return (
     <>
-      <a href={link} target="_blank" rel="noopener noreferrer" className='icon-btn-shaded user-select-none'>
+      <a href={link} target="_blank" rel="noopener noreferrer" className={`${redTheamFlag === true ? 'icon-btn-shaded-red' : 'icon-btn-shaded'} user-select-none`}>
         <span>
           {icon}
         </span>
@@ -26,9 +30,12 @@ export const BtnBig = ({ text, icon, link }) => {
 }
 
 export const CustomBtn = ({ text, icon, type }) => {
+
+  const { redTheamFlag } = useContext(FunctionContext);
+
   return (
     <>
-      <button type={type === 'submit' ? 'submit' : 'button'} className='btn-reset theam-btn-big user-select-none'>
+      <button type={type === 'submit' ? 'submit' : 'button'} className={`btn-reset user-select-none ${redTheamFlag === true ? 'theam-btn-big-2' : 'theam-btn-big'}`}>
         <span>{icon}</span>
         <span>{text}</span>
       </button>
@@ -106,25 +113,49 @@ export const ExperienceCard = ({ img, role, para }) => {
   )
 }
 
-export const FirstLetterEffectText = ({ text }) => {
+export const FirstLetterEffectText = ({ text, className }) => {
 
+  const { redPages } = useContext(FunctionContext)
+  const pathname = useLocation().pathname
   const [firstLetterEffect, setFirstLetterEffect] = useState("")
-  useEffect(() => {
-    const arr = text.split(" ")
-    let data = arr.map((ele) => {
-      return (
-        <span key={ele}>
-          <span className="firstLetterEffect">
-            {ele[0]}
-          </span>
-          <span className='fs-3'>
-            {ele.substring(1)}&nbsp;
-          </span>
-        </span>
-      )
-    })
 
-    setFirstLetterEffect(data)
+  useEffect(() => {
+
+    const arr = text.split(" ")
+    if (redPages.indexOf(pathname) >= 0) {
+
+      let data = arr.map((ele) => {
+        return (
+          <span key={ele}>
+            <span className={`firstLetterEffect-red`}>
+              {ele[0]}
+            </span>
+            <span className={`fs-3 ${className}`}>
+              {ele.substring(1)}&nbsp;
+            </span>
+          </span>
+        )
+      })
+      setFirstLetterEffect(data)
+
+    } else {
+
+      let data = arr.map((ele) => {
+        return (
+          <span key={ele}>
+            <span className={`firstLetterEffect`}>
+              {ele[0]}
+            </span>
+            <span className={`fs-3 ${className}`}>
+              {ele.substring(1)}&nbsp;
+            </span>
+          </span>
+        )
+      })
+      setFirstLetterEffect(data)
+
+    }
+
   }, [text])
 
   return (

@@ -9,20 +9,24 @@ import './styles/responsive.scss'
 import './styles/scroller.scss'
 import './styles/blog-main.scss'
 import Blogs from './pages/Blogs'
+import Contact from './pages/Contact'
+import FunctionState from './context/function/FunctionState'
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Navbar />
-      <BootstrapModal />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/work' element={<>Work page</>} />
-        <Route path='/course' element={<>Course page</>} />
-        <Route path='/blogs' element={<Blogs />} />
-        <Route path='/contact' element={<>contact page</>} />
-      </Routes>
-      <Footer />
+      <FunctionState>
+        <Navbar />
+        <BootstrapModal />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/work' element={<>Work page</>} />
+          <Route path='/course' element={<>Course page</>} />
+          <Route path='/blogs' element={<Blogs />} />
+          <Route path='/contact' element={<Contact />} />
+        </Routes>
+        <Footer />
+      </FunctionState>
     </BrowserRouter>
   )
 }

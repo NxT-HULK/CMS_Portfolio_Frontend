@@ -2,7 +2,7 @@ import React from 'react'
 
 const Blogs = () => {
 
-    let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+    let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
     return (
         <div id='blogMain' className='nav-padding'>
@@ -19,8 +19,7 @@ const Blogs = () => {
                         </div>
                     )
                 })}
-
-
+                
             </div>
         </div>
     )
