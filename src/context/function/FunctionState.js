@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import FunctionContext from './FunctionContext'
 import { useLocation } from 'react-router-dom'
 
@@ -7,7 +7,7 @@ const FunctionState = (props) => {
     const [redTheamFlag, setRedTheamFlag] = useState(false)
     const pathname = useLocation().pathname
 
-    const redPages = ['/contact']
+    const redPages = useMemo(() => ['/contact'], []);
 
     useEffect(() => {
 
@@ -17,10 +17,7 @@ const FunctionState = (props) => {
             setRedTheamFlag(false)
         }
 
-    }, [pathname])
-
-
-
+    }, [pathname, redPages])
 
     return (
         <FunctionContext.Provider value={{ redTheamFlag, redPages }}>

@@ -156,7 +156,7 @@ export const FirstLetterEffectText = ({ text, className }) => {
 
     }
 
-  }, [text])
+  }, [text, className, pathname, redPages])
 
   return (
     <span className="role block my-2 p-0 fw-bold">{firstLetterEffect}</span>

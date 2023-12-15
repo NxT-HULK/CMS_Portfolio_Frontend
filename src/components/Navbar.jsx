@@ -1,17 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { IcoBtn } from './Utility'
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa'
 import { SiGmail } from 'react-icons/si'
 import { facebook, insta, linkedin } from '../enviroments'
-import FunctionContext from '../context/function/FunctionContext'
 
 const Navbar = () => {
 
     const { pathname } = useLocation()
     const darkPage = ['/blogs', '/contact']
-    
-    const { redTheamFlag } = useContext(FunctionContext);
 
     return (
         <>
