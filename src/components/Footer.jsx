@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { IcoBtn } from './Utility'
 import { FaArrowRightLong, FaLinkedinIn } from 'react-icons/fa6'
 import { FaFacebookF, FaGithub, FaInstagram } from 'react-icons/fa'
-import { facebook, github, insta, linkedin } from '../enviroments'
 import { Link } from 'react-router-dom'
 import FunctionContext from '../context/function/FunctionContext'
+import DataContext from '../context/data/DataContext'
 
 const CustomList = ({ link, text }) => {
 
@@ -13,7 +13,7 @@ const CustomList = ({ link, text }) => {
   return (
     <>
       <li className='custom-footer-links'>
-        <Link to={link} className={`${redTheamFlag === true ? 'text-theam-2' : 'text-theam'} d-flex align-items-center gap-2 text-decoration-none`}>
+        <Link to={link} className={`${redTheamFlag === true ? 'text-theam-2' : 'text-white'} d-flex align-items-center gap-2 text-decoration-none`}>
           <FaArrowRightLong />
           <span>{text}</span>
         </Link>
@@ -25,6 +25,9 @@ const CustomList = ({ link, text }) => {
 const Footer = () => {
 
   const { redTheamFlag } = useContext(FunctionContext)
+  const { socialLinks } = useContext(DataContext)
+
+  const { facebook, github, insta, linkedin } = socialLinks
 
   return (
     <div className={`${redTheamFlag === true ? 'mainFooter-red' : 'mainFooter'}`}>
@@ -75,7 +78,7 @@ const Footer = () => {
 
           <div>
             <form className={`${redTheamFlag === true ? 'newsLetterForm-red' : 'newsLetterForm'} align-items-md-end align-items-center`}>
-              <input type="email" name="newsletter_email" id="newsLetterEmail" placeholder='samplemail@domain.com' />
+              <input type="email" name="newsletter_email" id="newsLetterEmail" placeholder='youremail@domain.com' />
               <button type="submit">Subscribe</button>
             </form>
           </div>

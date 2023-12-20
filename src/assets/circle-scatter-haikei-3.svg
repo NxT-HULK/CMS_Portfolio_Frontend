@@ -3,6 +3,10 @@
     <rect x="0" y="0" width="900" height="600" fill="#001220"></rect>
 
     <style>
+        circle {
+            filter: blur(4px);
+        }
+        
         .circle {
             fill: inherit;
             animation: move-the-circle 3s infinite ease-in-out alternate;
@@ -25,13 +29,9 @@
                 transform: translateY(20px);
             }
         }
-
-        .filterBlur {
-            filter: blur(1px);
-        }
     </style>
 
-    <g fill="transparent" stroke="#A7233A" class="filterBlur">
+    <g fill="transparent" stroke="#A7233A">
         <g fill="transparent" stroke="#fff">
             <circle class="circle" r="14" cx="319" cy="149"></circle>
             <circle class="circle-delayed" r="1" cx="677" cy="95"></circle>

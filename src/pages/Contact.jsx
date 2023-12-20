@@ -8,7 +8,7 @@ const Contact = () => {
             <section className="twinkling-stars-background pt-5">
                 <div className="container py-5">
                     <div className="d-flex">
-                        <div className="col-md-7 col-12 p-md-3 p-0 rounded-4" style={{ backdropFilter: 'blur(5px)', backgroundColor: '#a7233a1a' }}>
+                        <div className="col-md-7 col-12 p-md-3 px-2 pb-4 pt-2 rounded-4" style={{ backdropFilter: 'blur(10px)', backgroundColor: '#a7233a1a' }}>
                             <FirstLetterEffectText text={"Get In Touch"} className="text-white" />
                             <form action="" className='mt-3'>
                                 <div className="mb-2">

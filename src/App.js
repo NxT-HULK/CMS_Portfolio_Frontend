@@ -11,21 +11,24 @@ import './styles/blog-main.scss'
 import Blogs from './pages/Blogs'
 import Contact from './pages/Contact'
 import FunctionState from './context/function/FunctionState'
+import DataState from './context/data/DataState'
 
 const App = () => {
   return (
     <BrowserRouter>
       <FunctionState>
-        <Navbar />
-        <BootstrapModal />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/work' element={<>Work page</>} />
-          <Route path='/course' element={<>Course page</>} />
-          <Route path='/blogs' element={<Blogs />} />
-          <Route path='/contact' element={<Contact />} />
-        </Routes>
-        <Footer />
+        <DataState>
+          <Navbar />
+          <BootstrapModal />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/work' element={<>Work page</>} />
+            <Route path='/course' element={<>Course page</>} />
+            <Route path='/blogs' element={<Blogs />} />
+            <Route path='/contact' element={<Contact />} />
+          </Routes>
+          <Footer />
+        </DataState>
       </FunctionState>
     </BrowserRouter>
   )

@@ -149,11 +149,11 @@ ul {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 150px;
     margin: 0 auto;
 
     span {
         text-transform: capitalize;
+        text-align: center;
 
         &:first-child {
             position: relative;
@@ -417,13 +417,6 @@ ul {
         font-size: 15px;
         border: 1px solid transparent;
         transition: all 0.3s;
-
-        &:hover {
-            background-color: $theam-color;
-            box-shadow: none;
-            color: #fff;
-            transition: all 0.3s;
-        }
     }
 
     &:hover {
@@ -434,20 +427,11 @@ ul {
         transition: 0.15s;
 
         button {
-            border-color: rgba($color: #ccc, $alpha: 0.5);
-            box-shadow:
-                1px 1px 3px rgba($color: #ccc, $alpha: 0.5),
-                inset 2px 2px 1px rgba($color: #ccc, $alpha: 0.2);
+            background-color: $theam-color;
+            color: #fff;
+            transition: all 0.3s;
         }
     }
-}
-
-#homeTestimonialSection {
-    background-image: url("../assets/testimonialBackground.svg");
-    background-attachment: fixed;
-    min-height: 80dvh;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .transparent-effect {
@@ -474,14 +458,9 @@ ul {
     color: $theam-color;
     transition: 0.3s;
 
-    &::placeholder {
-        color: rgba($color: #fff, $alpha: 0.5);
-    }
-
     &:focus {
-        background-color: rgba($color: $theam-color, $alpha: 0.3);
         transition: 0.3s;
-        color: #fff;
+        box-shadow: 0px 2px 3px -1px rgba($color: $theam-color, $alpha: 0.8);
     }
 }
 
@@ -507,54 +486,124 @@ ul {
     }
 }
 
-.testimonial-card-custom {
-    background-color: rgba($color: #fff, $alpha: 0.3);
-    backdrop-filter: blur(10px);
-    min-height: 400px;
-    padding: 10px;
-    border-radius: 3px;
-    width: 75%;
-    margin: 0 auto;
+// .testimonial-card-custom {
+//     background-color: rgba($color: #fff, $alpha: 0.3);
+//     backdrop-filter: blur(10px);
+//     min-height: 400px;
+//     padding: 10px;
+//     border-radius: 3px;
+//     width: 75%;
+//     margin: 0 auto;
+//     display: block;
+//     position: relative;
+//     font-size: 1.1rem;
+
+//     p {
+//         text-align: center;
+
+//         &::first-letter {
+//             font-size: 1.8rem;
+//             font-weight: 550;
+//         }
+//     }
+
+//     span {
+//         @include font-cursive();
+//         font-size: 2rem;
+//         display: block;
+//     }
+
+//     .date {
+//         font-family: monospace;
+//         font-size: 1rem;
+//         text-align: right;
+//         display: block;
+//         margin-top: auto;
+//     }
+// }
+
+.testimonial-card {
+    max-width: 300px;
     display: block;
-    position: relative;
-    font-size: 1.1rem;
+    margin: 0 auto;
 
-    p {
-        text-align: center;
+    .main-container {
+        background-color: $theam-color;
+        padding: 25px 15px;
+        border-top-left-radius: 35%;
+        border-bottom-right-radius: 35%;
+        color: #fff;
 
-        &::first-letter {
-            font-size: 1.8rem;
-            font-weight: 550;
+        .stars-wrapper {
+            svg {
+                fill: #fff;
+                filter: drop-shadow(2px 2px 0 rgba($color: #fff, $alpha: 0.5));
+            }
+        }
+
+        .sign-area {
+            width: 100%;
+            margin-left: -40%;
+
+            span {
+                @include font-cursive();
+                font-size: 23px;
+                letter-spacing: 1px;
+                display: flex;
+                align-items: center;
+                word-break: keep-all;
+                gap: 10px;
+
+                &::before {
+                    content: "";
+                    height: 2px;
+                    width: 25%;
+                    background-image: linear-gradient(to right, #6a59d1, #ffffff);
+                    display: block;
+                }
+            }
         }
     }
 
-    span {
-        @include font-cursive();
-        font-size: 2rem;
+    &::before {
+        content: "";
+        background-image: url("../assets/quotation-mark.svg");
+        background-size: cover;
         display: block;
+        height: 40px;
+        width: 40px;
+        position: relative;
+        transform: translate(0px, 10px);
     }
 
-    .date {
-        font-family: monospace;
-        font-size: 1rem;
-        text-align: right;
+    &::after {
+        content: "";
+        background-image: url("../assets/quotation-mark-reverse.svg");
+        background-size: cover;
         display: block;
-        margin-top: auto;
+        height: 40px;
+        width: 40px;
+        margin-left: auto;
+        position: relative;
+        transform: translate(5px, -5px);
+    }
+
+    *::selection {
+        background: #fff;
+        color: $theam-color;
     }
 }
 
 .mainFooter,
 .mainFooter-red {
-    background-image: url("../assets/circle-scatter-haikei.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+    background: linear-gradient(to bottom, #171717c4, #3b3b3b3f, #77777700, #b9b9b900, #ffffff00), $theam-color;
+    user-select: none;
 }
 
 .mainFooter-red {
-    // background: #001220;
-    background-image: url('../assets/circle-scatter-haikei-3.svg');
+    background-image: url("../assets/circle-scatter-haikei-3.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .shadow-md-white {
@@ -575,7 +624,6 @@ ul {
         padding: 10px 20px;
         font-weight: 350;
         backdrop-filter: blur(5px);
-        box-shadow: inset 0 -1px 10px rgba($color: #222, $alpha: 0.5);
 
         &:focus {
             outline: none;
@@ -587,15 +635,27 @@ ul {
         background-color: rgba($color: $theam-color, $alpha: 0.3);
         color: #fff;
         min-width: 300px;
+        box-shadow:
+            0 0 3px #0000009b,
+            inset 0 -1px 10px rgba($color: #222, $alpha: 0.5);
+
+        &::placeholder {
+            color: #ccc;
+        }
+
+        &::selection {
+            background-color: rgba($color: #fff, $alpha: 0.3);
+        }
     }
 
     button {
-        position: relative;
-        top: -2px;
+        margin-top: 2px;
         background-color: rgba($color: $theam-color, $alpha: 0.45);
         color: #fff;
         text-transform: uppercase;
-        box-shadow: inset 0 -1px 10px rgba($color: #000, $alpha: 0.7);
+        box-shadow:
+            0 0 3px #0000009b,
+            inset 0 -1px 10px rgba($color: #000, $alpha: 0.7);
     }
 }
 

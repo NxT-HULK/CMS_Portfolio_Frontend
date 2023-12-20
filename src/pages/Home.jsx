@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BtnBig, CustomBtn, DetailBox, ExperienceCard, FirstLetterEffectText, IcoBtn, ProvideCard, ShadowText, SkillBox, SkillBoxContainer, TestimonialCard } from '../components/Utility'
 import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython, FaPencilRuler, FaPhotoVideo, FaFileCode } from 'react-icons/fa'
 import { FaBarsStaggered } from 'react-icons/fa6'
 import { BsFillSendFill, BsMouseFill } from 'react-icons/bs'
 import { TbBrandMailgun } from 'react-icons/tb'
-import { linkedin, insta, facebook } from '../enviroments'
 import { SiExpress, SiMongodb } from 'react-icons/si'
 import { GrCertificate, GrMysql } from 'react-icons/gr'
 import Typewriter from 'typewriter-effect';
+import DataContext from '../context/data/DataContext'
 
 const Home = () => {
+
+    const { socialLinks } = useContext(DataContext)
+    const { linkedin, insta, facebook } = socialLinks
 
     return (
         <>
@@ -231,7 +234,8 @@ const Home = () => {
                 </section>
             </section>
 
-            <section className='mt-5 min-vh-100 d-flex align-items-center justify-content-center' id='homeTestimonialSection'>
+            {/* TODO - create new testimoial UI */}
+            {/* <section className='mt-5 min-vh-100 d-flex align-items-center justify-content-center' id='homeTestimonialSection'>
                 <div className="container-fluid py-5 px-md-5 px-0">
                     <span className='testimonial-custom-font mb-4'>Golden Feedback</span>
                     <div className='d-flex gap-5 flex-md-row flex-column-reverse justify-content-center'>
@@ -277,6 +281,70 @@ const Home = () => {
 
                         </div>
                     </div>
+                </div>
+            </section> */}
+
+            <section className="my-5">
+                <ShadowText text1="Golden Feedback" text2="Testimonial" />
+
+                <div className="container mb-3">
+                    <FirstLetterEffectText text="You Feedback Is My Gem" />
+                </div>
+
+                <div className="container-fluid d-flex flex-wrap justify-content-center">
+                    <div className="col-md-4 col-12 p-4 pt-0">
+                        <div id="testimonialCarousel" className="carousel slide" data-bs-ride="carousel">
+                            <div className="carousel-inner">
+                                <div className="carousel-item active">
+                                    <TestimonialCard message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam esse ipsum itaque laboriosam. Assumenda qui voluptatem dolor maiores perspiciatis quos? Ullam nemo praesentium, quisquam ex itaque amet enim libero repellendus quasi fuga numquam nisi repudiandae dignissimos soluta vero quis. Eveniet magnam esse obcaecati doloremque magni qui facilis consequatur placeat quae?" signature="Shivam Kumar" rating={5} />
+                                </div>
+                                <div className="carousel-item">
+                                    <TestimonialCard message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam esse ipsum itaque laboriosam. Assumenda qui voluptatem dolor maiores perspiciatis quos? Ullam nemo praesentium, quisquam ex itaque amet enim libero repellendus quasi fuga numquam nisi repudiandae dignissimos soluta vero quis. Eveniet magnam esse obcaecati doloremque magni qui facilis consequatur placeat quae?" signature="Shivam Kashyap" rating={5} />
+                                </div>
+                                <div className="carousel-item">
+                                    <TestimonialCard message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam esse ipsum itaque laboriosam. Assumenda qui voluptatem dolor maiores perspiciatis quos? Ullam nemo praesentium, quisquam ex itaque amet enim libero repellendus quasi fuga numquam nisi repudiandae dignissimos soluta vero quis. Eveniet magnam esse obcaecati doloremque magni qui facilis consequatur placeat quae?" signature="Developer" rating={5} />
+                                </div>
+                            </div>
+                            {/* <button className="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span className="visually-hidden">Previous</span>
+                            </button>
+                            <button className="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span className="visually-hidden">Next</span>
+                            </button> */}
+                        </div>
+                    </div>
+
+                    <div className="col-md-7 col-12 p-4 mt-3">
+                        <div>
+                            <form className='rounded-3'>
+                                <div className="mb-2 d-flex flex-wrap gap-md-0 gap-2">
+                                    <div className="col-md-6 col-12 pe-md-2 pe-0">
+                                        <input type="text" className="rounded-1 custom-input-style" placeholder="Your Name*" required />
+                                    </div>
+                                    <div className="col-md-6 col-12 ps-md-2 ps-0">
+                                        <select name="rating" id="testimonial-rating" className='rounded-1 custom-input-style'>
+                                            <option value="" className='d-none'>Rate Me</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="mb-2">
+                                    <input type="email" className="rounded-1 custom-input-style" placeholder="youremail@domain.com (Optional)" />
+                                </div>
+                                <div className="mb-2">
+                                    <textarea name="message" id="" cols="3" rows="5" className='w-100 custom-input-style rounded-1' placeholder="I'll appreciate you thought, Feel free to say anything." data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" required />
+                                </div>
+                                <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} />
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </section>
         </>
