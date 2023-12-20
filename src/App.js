@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import BootstrapModal from './components/BootstrapModal'
@@ -15,7 +15,7 @@ import DataState from './context/data/DataState'
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <FunctionState>
         <DataState>
           <Navbar />
@@ -30,7 +30,7 @@ const App = () => {
           <Footer />
         </DataState>
       </FunctionState>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

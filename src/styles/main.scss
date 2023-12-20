@@ -486,42 +486,6 @@ ul {
     }
 }
 
-// .testimonial-card-custom {
-//     background-color: rgba($color: #fff, $alpha: 0.3);
-//     backdrop-filter: blur(10px);
-//     min-height: 400px;
-//     padding: 10px;
-//     border-radius: 3px;
-//     width: 75%;
-//     margin: 0 auto;
-//     display: block;
-//     position: relative;
-//     font-size: 1.1rem;
-
-//     p {
-//         text-align: center;
-
-//         &::first-letter {
-//             font-size: 1.8rem;
-//             font-weight: 550;
-//         }
-//     }
-
-//     span {
-//         @include font-cursive();
-//         font-size: 2rem;
-//         display: block;
-//     }
-
-//     .date {
-//         font-family: monospace;
-//         font-size: 1rem;
-//         text-align: right;
-//         display: block;
-//         margin-top: auto;
-//     }
-// }
-
 .testimonial-card {
     max-width: 300px;
     display: block;

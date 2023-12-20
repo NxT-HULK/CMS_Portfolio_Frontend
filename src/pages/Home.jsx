@@ -234,56 +234,6 @@ const Home = () => {
                 </section>
             </section>
 
-            {/* TODO - create new testimoial UI */}
-            {/* <section className='mt-5 min-vh-100 d-flex align-items-center justify-content-center' id='homeTestimonialSection'>
-                <div className="container-fluid py-5 px-md-5 px-0">
-                    <span className='testimonial-custom-font mb-4'>Golden Feedback</span>
-                    <div className='d-flex gap-5 flex-md-row flex-column-reverse justify-content-center'>
-                        <div className="col-md-6 col-12">
-                            <span className="text-white d-block mb-3 ms-2 font-cursive fs-2 text-md-start text-center">We highly appreciate your thoughts, <br />Feel Free to say anything</span>
-                            <form className='px-4 py-3 rounded-3 transparent-effect m-2'>
-                                <div className="mb-2">
-                                    <input type="text" className="rounded-1 custom-input-style" aria-describedby="NameHelp" placeholder="Your Name*" required />
-                                </div>
-                                <div className="mb-2">
-                                    <input type="email" className="rounded-1 custom-input-style" aria-describedby="emailHelp" placeholder="youremail@domain.com (Optional)" />
-                                </div>
-                                <div className="mb-2">
-                                    <textarea name="message" id="" cols="3" rows="3" className='w-100 custom-input-style rounded-1' placeholder="Your Message*" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" required />
-                                </div>
-                                <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} />
-                            </form>
-                        </div>
-
-                        <div className="col-md-5 col-12">
-
-                            <div id="testimonialCarousel" className="carousel slide" data-bd-rede="carousel">
-                                <div className="carousel-inner">
-                                    <div className="carousel-item active">
-                                        <TestimonialCard message={'Slide 1 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
-                                    </div>
-                                    <div className="carousel-item">
-                                        <TestimonialCard message={'Slide 2 ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
-                                    </div>
-                                    <div className="carousel-item">
-                                        <TestimonialCard message={'Slide 3 ipsum dolor sit amet consectetur, adipisicing elit. Nemo rem assumenda earum eveniet soluta voluptate quasi voluptatem culpa ipsam commodi autem, sed voluptas nostrum nam cumque ipsa consequatur natus quibusdam.'} name={'Shivam Kashyap'} date={'Dec 03 2023'} />
-                                    </div>
-                                </div>
-                                <button className="carousel-control-prev z-0" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span className="visually-hidden">Previous</span>
-                                </button>
-                                <button className="carousel-control-next z-0" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span className="visually-hidden">Next</span>
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </section> */}
-
             <section className="my-5">
                 <ShadowText text1="Golden Feedback" text2="Testimonial" />
 
@@ -305,14 +255,6 @@ const Home = () => {
                                     <TestimonialCard message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam esse ipsum itaque laboriosam. Assumenda qui voluptatem dolor maiores perspiciatis quos? Ullam nemo praesentium, quisquam ex itaque amet enim libero repellendus quasi fuga numquam nisi repudiandae dignissimos soluta vero quis. Eveniet magnam esse obcaecati doloremque magni qui facilis consequatur placeat quae?" signature="Developer" rating={5} />
                                 </div>
                             </div>
-                            {/* <button className="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button className="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Next</span>
-                            </button> */}
                         </div>
                     </div>
 
@@ -344,7 +286,6 @@ const Home = () => {
                             </form>
                         </div>
                     </div>
-
                 </div>
             </section>
         </>
