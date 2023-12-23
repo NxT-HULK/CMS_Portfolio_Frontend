@@ -3,17 +3,13 @@ import { IcoBtn } from './Utility'
 import { FaArrowRightLong, FaLinkedinIn } from 'react-icons/fa6'
 import { FaFacebookF, FaGithub, FaInstagram } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import FunctionContext from '../context/function/FunctionContext'
 import DataContext from '../context/data/DataContext'
 
 const CustomList = ({ link, text }) => {
-
-  const { redTheamFlag } = useContext(FunctionContext)
-
   return (
     <>
       <li className='custom-footer-links'>
-        <Link to={link} className={`${redTheamFlag === true ? 'text-theam-2' : 'text-white'} d-flex align-items-center gap-2 text-decoration-none`}>
+        <Link to={link} className={`text-white d-flex align-items-center gap-2 text-decoration-none`}>
           <FaArrowRightLong />
           <span>{text}</span>
         </Link>
@@ -23,20 +19,18 @@ const CustomList = ({ link, text }) => {
 }
 
 const Footer = () => {
-
-  const { redTheamFlag } = useContext(FunctionContext)
+  
   const { socialLinks } = useContext(DataContext)
-
   const { facebook, github, insta, linkedin } = socialLinks
 
   return (
-    <div className={`${redTheamFlag === true ? 'mainFooter-red' : 'mainFooter'}`}>
+    <div className={`mainFooter`}>
       <div className="mx-md-5 mx-3 py-5 d-flex flex-wrap gap-md-0 gap-5">
         <div className='d-flex flex-column gap-3 col-md-5 col-12'>
-          <div className={`${redTheamFlag === true ? 'transparent-effect-thin-red' : 'transparent-effect-thin'} d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white`}>
+          <div className={`transparent-effect-thin d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white`}>
             <span className="fs-1 fw-bold text-uppercase text-white d-block">Shivam Kashyap</span>
           </div>
-          <div className={`${redTheamFlag === true ? 'transparent-effect-thin-red' : 'transparent-effect-thin'} d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white me-4`}>
+          <div className={`transparent-effect-thin d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white me-4`}>
             <span className="text-white d-block fw-medium fs-5 d-block">
               MERN Stack Developer
             </span>
@@ -52,7 +46,7 @@ const Footer = () => {
         </div>
 
         <div className='d-flex flex-column gap-2 col-md-2 col-12'>
-          <div className={`${redTheamFlag === true ? 'transparent-effect-thin-red' : 'transparent-effect-thin'} d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white me-4`}>
+          <div className={`transparent-effect-thin d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white me-4`}>
             <span className="text-white d-block fw-medium fs-5 d-block">
               Quick Links
             </span>
@@ -70,14 +64,14 @@ const Footer = () => {
         </div>
 
         <div className='d-flex flex-column gap-2 col-md-5 col-12 d-flex flex-column align-items-md-end'>
-          <div className={`${redTheamFlag === true ? 'transparent-effect-thin-red' : 'transparent-effect-thin'} d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white`}>
+          <div className={`transparent-effect-thin d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white`}>
             <span className="text-white d-block fw-medium fs-5 d-block">
               Subscribe to our Newsletter today!
             </span>
           </div>
 
           <div>
-            <form className={`${redTheamFlag === true ? 'newsLetterForm-red' : 'newsLetterForm'} align-items-md-end align-items-center`}>
+            <form className={`newsLetterForm align-items-md-end align-items-center`}>
               <input type="email" name="newsletter_email" id="newsLetterEmail" placeholder='youremail@domain.com' />
               <button type="submit">Subscribe</button>
             </form>

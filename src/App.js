@@ -12,6 +12,7 @@ import Blogs from './pages/Blogs'
 import Contact from './pages/Contact'
 import FunctionState from './context/function/FunctionState'
 import DataState from './context/data/DataState'
+import BlogDetails from './pages/BlogDetails'
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route path='/work' element={<>Work page</>} />
             <Route path='/course' element={<>Course page</>} />
             <Route path='/blogs' element={<Blogs />} />
+            <Route path='/blogs/:id' element={<BlogDetails />} />
             <Route path='/contact' element={<Contact />} />
           </Routes>
           <Footer />

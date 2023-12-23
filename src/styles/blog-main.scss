@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 #blogMain {
     background: url("../assets/blogs-background.svg");
     min-height: 100dvh;
@@ -57,6 +59,26 @@
 
     &:nth-child(2n) {
         height: 300px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #fff;
+        background: $theam-color;
+        width: fit-content;
+        padding: 2px 7px;
+        border-radius: 4px;
+        margin-top: 5px;
+        overflow: hidden;
+        height: 0px;
+        transition: height 0.3s;
+    }
+
+    &:hover {
+        a {
+            height: 28px;
+            transition: height 0.3s;
+        }
     }
 }
 

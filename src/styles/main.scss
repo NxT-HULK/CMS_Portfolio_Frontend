@@ -51,8 +51,7 @@ ul {
     }
 }
 
-.icon-btn-shaded,
-.icon-btn-shaded-red {
+.icon-btn-shaded {
     @include bg-theam();
     @include center-center();
     height: 35px;
@@ -73,11 +72,6 @@ ul {
     }
 }
 
-.icon-btn-shaded-red {
-    @include bg-theam-2();
-    box-shadow: 3px 3px 0 rgba($color: $theam-color-2, $alpha: 0.5) !important;
-}
-
 .line-height-1 {
     line-height: 1;
 }
@@ -91,36 +85,6 @@ ul {
     gap: 3px;
     width: fit-content;
     box-shadow: 3px 3px 0 rgba($color: $theam-color, $alpha: 0.5);
-    transition: 0.1s;
-
-    span {
-        color: #fff;
-        font-size: 23px;
-        line-height: 1;
-
-        &:nth-child(2) {
-            font-size: 16px;
-            @include center-center();
-        }
-    }
-
-    &:hover,
-    &:target,
-    &:focus {
-        transform: scale(1.03);
-        transition: 0.1s;
-    }
-}
-
-.theam-btn-big-2 {
-    @include bg-theam-2();
-    text-decoration: none;
-    padding: 12px 17px;
-    border-radius: 10px;
-    display: flex;
-    gap: 3px;
-    width: fit-content;
-    box-shadow: 3px 3px 0 rgba($color: $theam-color-2, $alpha: 0.5);
     transition: 0.1s;
 
     span {
@@ -373,13 +337,6 @@ ul {
     color: $theam-color;
 }
 
-.firstLetterEffect-red {
-    font-size: 35px !important;
-    font-weight: 650;
-    color: $theam-color-2;
-    text-shadow: 0 0 3px #222;
-}
-
 .custom-indicators {
     height: 12px !important;
     width: 12px !important;
@@ -444,11 +401,6 @@ ul {
     backdrop-filter: blur(6px);
 }
 
-.transparent-effect-thin-red {
-    background-color: rgba($color: $theam-color-2, $alpha: 0.35);
-    backdrop-filter: blur(6px);
-}
-
 .custom-input-style {
     background-color: rgba($color: #fff, $alpha: 0.3);
     width: 100%;
@@ -461,28 +413,6 @@ ul {
     &:focus {
         transition: 0.3s;
         box-shadow: 0px 2px 3px -1px rgba($color: $theam-color, $alpha: 0.8);
-    }
-}
-
-.custom-input-style-2 {
-    background-color: rgba($color: $theam-color-2, $alpha: 0.1);
-    backdrop-filter: blur(5px);
-    width: 100%;
-    outline: none;
-    border: 1px solid $theam-color-2;
-    padding: 8px 7px;
-    color: #fff;
-    font-weight: 500;
-    transition: 0.3s;
-
-    &:focus {
-        transition: 0.3s;
-        border-color: transparent;
-        box-shadow: 0 0 5px 1px rgba($color: $theam-color-2, $alpha: 1);
-    }
-
-    &::selection {
-        background-color: $theam-color-2;
     }
 }
 
@@ -558,16 +488,9 @@ ul {
     }
 }
 
-.mainFooter,
-.mainFooter-red {
+.mainFooter {
     background: linear-gradient(to bottom, #171717c4, #3b3b3b3f, #77777700, #b9b9b900, #ffffff00), $theam-color;
     user-select: none;
-}
-
-.mainFooter-red {
-    background-image: url("../assets/circle-scatter-haikei-3.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .shadow-md-white {
@@ -575,8 +498,7 @@ ul {
     fill: #201c36;
 }
 
-.newsLetterForm,
-.newsLetterForm-red {
+.newsLetterForm {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -623,21 +545,6 @@ ul {
     }
 }
 
-.newsLetterForm-red {
-    input,
-    button {
-        border-color: $theam-color-2;
-    }
-
-    input {
-        background-color: rgba($color: $theam-color-2, $alpha: 0.3);
-    }
-
-    button {
-        background-color: rgba($color: $theam-color-2, $alpha: 0.45);
-    }
-}
-
 .nav-padding {
     padding-top: 60px;
 }
@@ -668,9 +575,88 @@ ul {
     }
 }
 
-.twinkling-stars-background {
-    background-image: url("../assets/circle-scatter-haikei-2.svg");
-    background-repeat: no-repeat;
+.border-theam {
+    border-color: rgba($color: $theam-color, $alpha: 0.75) !important;
+}
+
+.random-background {
+    background-image: url("../assets/random-background.svg");
     background-size: cover;
-    background-attachment: fixed;
+    background-position: bottom;
+}
+
+.text-jsutify {
+    text-align: justify;
+}
+
+.more-blog-card {
+    background-image: var(--bg);
+    height: 200px;
+    min-width: 300px;
+    width: 300px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border-radius: 7px;
+    padding-bottom: 10px;
+    overflow: hidden;
+
+    span {
+        position: relative;
+        z-index: 1;
+        user-select: none;
+    }
+
+    a {
+        text-decoration: none;
+        position: relative;
+        z-index: 1;
+        color: #fff;
+        background: $theam-color;
+        width: fit-content;
+        padding: 2px 7px;
+        border-radius: 4px;
+        margin-top: 5px;
+        overflow: hidden;
+        height: 0px;
+        transition: height 0.3s;
+    }
+
+    &:hover {
+        a {
+            height: 28px;
+            transition: height 0.3s;
+        }
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        height: inherit;
+        width: inherit;
+        background-image: linear-gradient(to top, #000000d8, #000000c0, #00000060, #00000000, #00000000);
+        bottom: 0;
+    }
+}
+
+.simleButton-with-shaded {
+    width: 100%;
+    border: 1px solid $theam-color;
+    border-radius: 3px;
+    padding: 3px 0;
+    text-transform: uppercase;
+    font-weight: 550;
+    background-color: $theam-color;
+    outline: 0;
+    color: #fff;
+    box-shadow: 0 4px 0 -1px rgba($color: $theam-color, $alpha: 0.5);
+    transition: 0.15s;
+
+    &:hover,
+    &:target {
+        transition: 0.15s;
+        box-shadow: 0 0px 0 -1px rgba($color: $theam-color, $alpha: 0.5);
+        transform: translateY(3px);
+    }
 }

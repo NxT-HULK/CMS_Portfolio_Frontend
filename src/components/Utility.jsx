@@ -1,16 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FaLongArrowAltRight } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom/dist'
-import FunctionContext from '../context/function/FunctionContext'
 import DataContext from '../context/data/DataContext'
 
 export const IcoBtn = ({ link, icon }) => {
-
-  const { redTheamFlag } = useContext(FunctionContext)
-
   return (
     <>
-      <a href={link} target="_blank" rel="noopener noreferrer" className={`${redTheamFlag === true ? 'icon-btn-shaded-red' : 'icon-btn-shaded'} user-select-none`}>
+      <a href={link} target="_blank" rel="noopener noreferrer" className={`icon-btn-shaded user-select-none`}>
         <span>
           {icon}
         </span>
@@ -30,13 +26,10 @@ export const BtnBig = ({ text, icon, link }) => {
   )
 }
 
-export const CustomBtn = ({ text, icon, type }) => {
-
-  const { redTheamFlag } = useContext(FunctionContext);
-
+export const CustomBtn = ({ text, icon, type, className }) => {
   return (
     <>
-      <button type={type === 'submit' ? 'submit' : 'button'} className={`btn-reset user-select-none ${redTheamFlag === true ? 'theam-btn-big-2' : 'theam-btn-big'}`}>
+      <button type={type === 'submit' ? 'submit' : 'button'} className={`btn-reset user-select-none theam-btn-big ${className}`}>
         <span>{icon}</span>
         <span>{text}</span>
       </button>
@@ -66,14 +59,8 @@ export const SkillBox = ({ icon, text, svgColor }) => {
   return (
     <div className="skill-box" style={{ '--svg-color': svgColor }}>
       <div className="wrapper">
-        <div className="icon">
-          {icon}
-        </div>
-        <div className="text">
-          <span>
-            {text}
-          </span>
-        </div>
+        <div className="icon"> {icon} </div>
+        <div className="text"> <span> {text} </span> </div>
       </div>
     </div>
   )
@@ -116,51 +103,29 @@ export const ExperienceCard = ({ img, role, para }) => {
 
 export const FirstLetterEffectText = ({ text, className }) => {
 
-  const { redPages } = useContext(FunctionContext)
   const pathname = useLocation().pathname
   const [firstLetterEffect, setFirstLetterEffect] = useState("")
 
   useEffect(() => {
-
     const arr = text.split(" ")
-    if (redPages.indexOf(pathname) >= 0) {
-
-      let data = arr.map((ele) => {
-        return (
-          <span key={ele}>
-            <span className={`firstLetterEffect-red`}>
-              {ele[0]}
-            </span>
-            <span className={`fs-3 ${className}`}>
-              {ele.substring(1)}&nbsp;
-            </span>
+    let data = arr.map((ele) => {
+      return (
+        <span key={ele}>
+          <span className={`firstLetterEffect`}>
+            {ele[0]}
           </span>
-        )
-      })
-      setFirstLetterEffect(data)
-
-    } else {
-
-      let data = arr.map((ele) => {
-        return (
-          <span key={ele}>
-            <span className={`firstLetterEffect`}>
-              {ele[0]}
-            </span>
-            <span className={`fs-3 ${className}`}>
-              {ele.substring(1)}&nbsp;
-            </span>
+          <span className={`fs-3`}>
+            {ele.substring(1)}&nbsp;
           </span>
-        )
-      })
-      setFirstLetterEffect(data)
+        </span>
+      )
+    })
+    setFirstLetterEffect(data)
 
-    }
-
-  }, [text, className, pathname, redPages])
+  }, [text, className, pathname])
 
   return (
-    <span className="role block my-2 p-0 fw-bold">{firstLetterEffect}</span>
+    <span className={`role block my-2 p-0 fw-bold  ${className}`}>{firstLetterEffect}</span>
   )
 }
 
@@ -256,5 +221,73 @@ export const TestimonialCard = ({ rating, message, signature }) => {
         </div>
       </div>
     </>
+  )
+}
+
+export const CustomTags = ({ tag }) => {
+  return (
+    <>
+      <span className="rounded-1 text-theam text-uppercase px-3 py-1 d-inline-block border">#{tag}</span>
+    </>
+  )
+}
+
+export const BlogCommentBox = ({ mess, date }) => {
+
+  const [message, setMessage] = useState(mess)
+  useEffect(() => {
+    if (mess.length > 100) {
+      setMessage(mess.substring(0, 100) + "...")
+    }
+  }, [mess])
+
+  const { setInformationModalData } = useContext(DataContext)
+  const handleKnowMore = () => {
+    setInformationModalData({
+      heading: `Comment`,
+      message: mess
+    })
+  }
+
+  return (
+    <>
+      <div className="w-100 border px-2 pt-3 pb-2 rounded">
+        <p className='mb-1'>
+          {message}
+          {mess.length !== message.length &&
+            <small>
+              <button type="button" className='text-decoration-underline fst-italic border-0 bg-transparent text-theam' onClick={handleKnowMore} data-bs-toggle="modal" data-bs-target="#informationModal" >more</button>
+            </small>
+          }
+        </p>
+        <small> <span className="font-monospace d-block text-end">{date}</span> </small>
+      </div>
+    </>
+  )
+}
+
+export const BlogSmallCard = ({ title, imgLink }) => {
+
+  const [titleText, setTitleText] = useState(title)
+  useEffect(() => {
+    if (title.length > 19) {
+      setTitleText(title.substring(0, 19) + "...")
+    }
+  }, [title])
+
+
+  return (
+    <>
+      <div className="more-blog-card d-flex align-items-center justify-content-end flex-column" style={{ '--bg': `url(${imgLink})` }} >
+        <span className="fw-bold d-block text-light fs-5"> {titleText} </span>
+        <Link to="/blogs/another-blog">Details</Link>
+      </div>
+    </>
+  )
+}
+
+export const ButtonShaded = ({ type, className, text }) => {
+  return (
+    <button type={`${type ? type : 'submit'}`} className={`simleButton-with-shaded ${className}`}> {text} </button>
   )
 }

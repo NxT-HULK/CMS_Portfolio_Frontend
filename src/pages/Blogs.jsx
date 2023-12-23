@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Blogs = () => {
 
@@ -13,8 +14,9 @@ const Blogs = () => {
                         <div className="blog-card-overview" key={ele + "" + idx}>
                             <div className="gradient-closer"></div>
                             <img src={`https://picsum.photos/id/${450+idx}/600/800`} alt="" />
-                            <div className='position-relative p-md-3 p-2 allMatter d-flex align-items-end h-100'>
+                            <div className='position-relative p-md-3 p-2 allMatter d-flex justify-content-end h-100 flex-column'>
                                 <span>Lorem ipsum dolor sit amet consectetur {idx + 1}</span>
+                                <Link to='/blogs/id'>Know More</Link>
                             </div>
                         </div>
                     )

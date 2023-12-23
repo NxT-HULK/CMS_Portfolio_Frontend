@@ -1,5 +1,4 @@
 $theam-color: #6a59d1;
-$theam-color-2: #a7233a;
 $gray-light: #e3e1ef;
 $custom-gray: #808080;
 
@@ -11,10 +10,6 @@ $custom-gray: #808080;
     color: $theam-color !important;
 }
 
-@mixin text-theam-2() {
-    color: $theam-color-2 !important;
-}
-
 .bg-theam {
     @include bg-theam();
 }
@@ -23,20 +18,9 @@ $custom-gray: #808080;
     @include text-theam();
 }
 
-.text-theam-2 {
-    @include text-theam-2();
-}
-
 @mixin center-center() {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-@mixin bg-theam-2() {
-    background-color: $theam-color-2 !important;
-}
-
-.bg-theam-2 {
-    @include bg-theam-2();
-}

@@ -280,7 +280,7 @@ const Home = () => {
                                     <input type="email" className="rounded-1 custom-input-style" placeholder="youremail@domain.com (Optional)" />
                                 </div>
                                 <div className="mb-2">
-                                    <textarea name="message" id="" cols="3" rows="5" className='w-100 custom-input-style rounded-1' placeholder="I'll appreciate you thought, Feel free to say anything." data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" required />
+                                    <textarea name="message" id="" cols="" rows="5" className='w-100 custom-input-style rounded-1' placeholder="I'll appreciate you thought, Feel free to say anything." data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" required />
                                 </div>
                                 <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} />
                             </form>
