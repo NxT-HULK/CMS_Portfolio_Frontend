@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FaLongArrowAltRight } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom/dist'
 import DataContext from '../context/data/DataContext'
+import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia'
 
 export const IcoBtn = ({ link, icon }) => {
   return (
@@ -15,10 +16,10 @@ export const IcoBtn = ({ link, icon }) => {
   )
 }
 
-export const BtnBig = ({ text, icon, link }) => {
+export const BtnBig = ({ text, icon, link, target }) => {
   return (
     <>
-      <Link to={link} type="button" className='theam-btn-big user-select-none'>
+      <Link to={link} type="button" className='theam-btn-big user-select-none' target={target === true ? '_blank' : ''}>
         <span>{icon}</span>
         <span>{text}</span>
       </Link>
@@ -101,7 +102,7 @@ export const ExperienceCard = ({ img, role, para }) => {
   )
 }
 
-export const FirstLetterEffectText = ({ text, className }) => {
+export const FirstLetterEffectText = ({ text, className, className2 }) => {
 
   const pathname = useLocation().pathname
   const [firstLetterEffect, setFirstLetterEffect] = useState("")
@@ -114,7 +115,7 @@ export const FirstLetterEffectText = ({ text, className }) => {
           <span className={`firstLetterEffect`}>
             {ele[0]}
           </span>
-          <span className={`fs-3`}>
+          <span className={`fs-3 ${className2}`}>
             {ele.substring(1)}&nbsp;
           </span>
         </span>
@@ -122,7 +123,7 @@ export const FirstLetterEffectText = ({ text, className }) => {
     })
     setFirstLetterEffect(data)
 
-  }, [text, className, pathname])
+  }, [text, className, pathname, className2])
 
   return (
     <span className={`role block my-2 p-0 fw-bold  ${className}`}>{firstLetterEffect}</span>
@@ -289,5 +290,47 @@ export const BlogSmallCard = ({ title, imgLink }) => {
 export const ButtonShaded = ({ type, className, text }) => {
   return (
     <button type={`${type ? type : 'submit'}`} className={`simleButton-with-shaded ${className}`}> {text} </button>
+  )
+}
+
+export const StripedSliderCustom = ({ data }) => {
+
+  const scrollerContainer = useRef("")
+  const card = useRef("")
+
+  const hanleLeftClick = (e) => {
+    const cardWidth = card.current.clientWidth
+    scrollerContainer.current.scrollLeft -= cardWidth
+  }
+
+  const hanleRightClick = (e) => {
+    const cardWidth = card.current.clientWidth
+    scrollerContainer.current.scrollLeft += cardWidth
+  }
+
+  return (
+    <div className='d-flex align-items-stretch custom-strip-scroller'>
+      <div className="controller">
+        <button type="button" onClick={hanleLeftClick}>
+          <LiaAngleLeftSolid />
+        </button>
+      </div>
+
+      <div className="d-flex gap-3 overflow-hidden scroll-smoth" ref={scrollerContainer}>
+        {data.map((ele, idx) => {
+          return (
+            <div className="work-card-custom" key={`professional-cards-${idx}-${ele._id}`} ref={card}>
+              <img src={ele.path} alt="" />
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="controller">
+        <button type="button" onClick={hanleRightClick}>
+          <LiaAngleRightSolid />
+        </button>
+      </div>
+    </div>
   )
 }

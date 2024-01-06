@@ -4,9 +4,11 @@ import { useLocation } from 'react-router-dom'
 
 const FunctionState = (props) => {
     const [darkTheamFlag, setDarkTheamFlag] = useState(false)
+    const [navBackdropFlag, setnavBackdropFlag] = useState(false)
     const pathname = useLocation().pathname
 
-    const darkPages = useMemo(() => ['/blogs'], []);
+    const darkPages = useMemo(() => ['/blogs', '/work'], []);
+    const navBackdropRemoved = useMemo(() => ['/work'], []);
 
     useEffect(() => {
 
@@ -17,10 +19,17 @@ const FunctionState = (props) => {
             setDarkTheamFlag(false)
         }
 
-    }, [pathname, darkPages])
+        // Checking for Navbar Backdrop Filter
+        if (navBackdropRemoved.indexOf(pathname) >= 0) {
+            setnavBackdropFlag(true)
+        } else {
+            setnavBackdropFlag(false)
+        }
+
+    }, [pathname, darkPages, navBackdropRemoved])
 
     return (
-        <FunctionContext.Provider value={{ darkTheamFlag, darkPages }}>
+        <FunctionContext.Provider value={{ darkTheamFlag, darkPages, navBackdropFlag, navBackdropRemoved }}>
             {props.children}
         </FunctionContext.Provider>
     )

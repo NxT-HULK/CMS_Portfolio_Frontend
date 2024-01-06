@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import FunctionState from './context/function/FunctionState'
 import DataState from './context/data/DataState'
 import BlogDetails from './pages/BlogDetails'
+import Work from './pages/Work'
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
           <BootstrapModal />
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/work' element={<>Work page</>} />
+            <Route path='/work' element={<Work />} />
             <Route path='/course' element={<>Course page</>} />
             <Route path='/blogs' element={<Blogs />} />
             <Route path='/blogs/:id' element={<BlogDetails />} />

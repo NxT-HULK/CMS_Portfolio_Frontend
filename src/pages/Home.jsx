@@ -238,7 +238,7 @@ const Home = () => {
                 <ShadowText text1="Golden Feedback" text2="Testimonial" />
 
                 <div className="container mb-3">
-                    <FirstLetterEffectText text="You Feedback Is My Gem" />
+                    <FirstLetterEffectText text="Your Feedback Is My Gem" />
                 </div>
 
                 <div className="container-fluid d-flex flex-wrap justify-content-center">
