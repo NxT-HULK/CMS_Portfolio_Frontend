@@ -4,7 +4,6 @@ import { FaArrowRightLong, FaLinkedinIn } from 'react-icons/fa6'
 import { FaFacebookF, FaGithub, FaInstagram } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import DataContext from '../context/data/DataContext'
-import FunctionContext from '../context/function/FunctionContext'
 
 const CustomList = ({ link, text }) => {
   return (
