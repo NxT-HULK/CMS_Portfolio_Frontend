@@ -65,7 +65,7 @@ const Work = () => {
             <div className="p-0 m-0 w-100 min-vh-100">
                 <div className="position-relative w-100 p-0 m-0 d-flex align-items-end" style={{ minHeight: '100vh' }}>
                     <video loop={true} muted={audioFlag} autoPlay={true} className='h-100 w-100 p-0 m-0 object-fit-cover position-absolute' style={{ zIndex: '-1' }}>
-                        <source src={require('../assets/temp.mp4')} type='video/mp4' />
+                        <source src={require('../assets/work.mp4')} type='video/mp4' />
                     </video>
 
                     <div className="nav-padding h-100 z-2">
