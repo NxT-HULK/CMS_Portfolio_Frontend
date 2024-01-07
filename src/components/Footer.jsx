@@ -24,7 +24,7 @@ const Footer = () => {
   const { facebook, github, insta, linkedin } = socialLinks
   
   return (
-    <div className={`mainFooter`}>
+    <div className={`mainFooter w-100`}>
       <div className="mx-md-5 mx-3 py-5 d-flex flex-wrap gap-md-0 gap-5">
         <div className='d-flex flex-column gap-3 col-md-5 col-12'>
           <div className={`transparent-effect-thin d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white`}>

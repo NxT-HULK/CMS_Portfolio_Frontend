@@ -2,6 +2,16 @@
 @import "./variables.scss";
 @import "./animation.scss";
 
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section {
+    width: 100%;
+}
+
 * {
     font-family: "Poppins", sans-serif;
 }
@@ -665,4 +675,43 @@ ul {
 
 .scroll-smoth {
     scroll-behavior: smooth;
-}   
+}
+
+.toastBox {
+    width: clamp(300px, 500px, 100%);
+    background-color: #222;
+    position: fixed;
+    bottom: 20px;
+    z-index: 9999;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: -3px 3px #000;
+    transform: scale(.5);
+    animation: zoomOut 0.8s forwards cubic-bezier(0, 1, 0.85, 1.06);
+
+    .timer {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        @include center-center();
+        border: 4px solid transparent;
+        border-radius: 50%;
+    }
+}
+
+.navbar-nav .nav-item,
+.navbar-nav .nav-link,
+.nav-item,
+.nav-link {
+    &:hover {
+        color: $theam-color !important;
+    }
+
+    &:focus {
+        color: unset;
+    }
+}
+
+.nav-item .active {
+    color: $theam-color !important;
+}

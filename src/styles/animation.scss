@@ -37,3 +37,9 @@
         text-decoration: underline;
     }
 }
+
+@keyframes zoomOut {
+    to {
+        transform: scale(1);
+    }
+}

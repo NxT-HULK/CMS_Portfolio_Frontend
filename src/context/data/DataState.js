@@ -16,8 +16,15 @@ const DataState = (props) => {
         message: ""
     })
 
+    const [ToastModalData, setToastModalData] = useState({
+        time: 5,
+        multipliedBy: 20,
+        message: ''
+    })
+
+
     return (
-        <DataContext.Provider value={{ socialLinks, informationModalData, setInformationModalData }}>
+        <DataContext.Provider value={{ socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData }}>
             {props.children}
         </DataContext.Provider>
     )

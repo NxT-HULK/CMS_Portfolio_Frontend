@@ -1,9 +1,8 @@
 import React, { useContext } from 'react'
 import { BtnBig, CustomBtn, DetailBox, ExperienceCard, FirstLetterEffectText, IcoBtn, ProvideCard, ShadowText, SkillBox, SkillBoxContainer, TestimonialCard } from '../components/Utility'
-import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython, FaPencilRuler, FaPhotoVideo, FaFileCode } from 'react-icons/fa'
+import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython, FaPencilRuler, FaPhotoVideo, FaFileCode, FaHashtag } from 'react-icons/fa'
 import { FaBarsStaggered } from 'react-icons/fa6'
 import { BsFillSendFill, BsMouseFill } from 'react-icons/bs'
-import { TbBrandMailgun } from 'react-icons/tb'
 import { SiExpress, SiMongodb } from 'react-icons/si'
 import { GrCertificate, GrMysql } from 'react-icons/gr'
 import Typewriter from 'typewriter-effect';
@@ -49,7 +48,7 @@ const Home = () => {
                             </p>
 
                             <div>
-                                <BtnBig text="Contact Me" icon={<TbBrandMailgun />} link="" />
+                                <BtnBig text="Hire Me" icon={<FaHashtag />} link="" />
                             </div>
                         </div>
 
@@ -58,7 +57,7 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <a href="#about_me" className='text-decoration-none text-dark'>
+                    <div className='text-decoration-none text-dark'>
                         <div className='d-flex justify-content-center align-items-center d-xxl-flex d-md-flex d-sm-none d-none user-select-none'>
                             <span className='fw-medium border-bottom border-color-theam border-2'>
                                 &nbsp;Scroll
@@ -69,7 +68,7 @@ const Home = () => {
                                 &nbsp;
                             </span>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </section>
 

@@ -14,6 +14,8 @@ import FunctionState from './context/function/FunctionState'
 import DataState from './context/data/DataState'
 import BlogDetails from './pages/BlogDetails'
 import Work from './pages/Work'
+import { Toast } from './components/Utility'
+import Course from './pages/Course'
 
 const App = () => {
   return (
@@ -22,10 +24,11 @@ const App = () => {
         <DataState>
           <Navbar />
           <BootstrapModal />
+          <Toast />
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/work' element={<Work />} />
-            <Route path='/course' element={<>Course page</>} />
+            <Route path='/course' element={<Course />} />
             <Route path='/blogs' element={<Blogs />} />
             <Route path='/blogs/:id' element={<BlogDetails />} />
             <Route path='/contact' element={<Contact />} />

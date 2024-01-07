@@ -334,3 +334,40 @@ export const StripedSliderCustom = ({ data }) => {
     </div>
   )
 }
+
+export const Toast = () => {
+  const { ToastModalData, setToastModalData } = useContext(DataContext);
+  const [status, setStatus] = useState(ToastModalData.message.length > 0 ? true : false);
+
+  useEffect(() => {
+    let intervalId;
+    if (ToastModalData && ToastModalData.message.length !== 0) {
+      setStatus(true);
+      intervalId = setInterval(() => {
+        if (ToastModalData.time <= 1) {
+          setStatus(false);
+        } else {
+          setToastModalData({
+            ...ToastModalData,
+            'time': ToastModalData.time - 1
+          })
+        }
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [ToastModalData, setToastModalData]);
+
+  return (
+    <>
+      <div className={`toastBox p-3 d-flex align-items-center gap-3 ${status ? 'd-block' : 'd-none'}`}>
+        <div className="timer" style={{
+          background: `linear-gradient(#222, #222) content-box no-repeat, conic-gradient(#6a59d1 calc(${ToastModalData.multipliedBy}*${ToastModalData.time}%), 0, #222) border-box`
+        }}>{ToastModalData.time}</div>
+        <p className='m-0 text-capitalize'>{ToastModalData.message}</p>
+      </div>
+    </>
+  );
+};
