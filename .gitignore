@@ -24,3 +24,7 @@ yarn-error.log*
 
 public/temp.*
 src/assets/temp.*
+
+/backend
+/package-lock.json
+/yarn.lock

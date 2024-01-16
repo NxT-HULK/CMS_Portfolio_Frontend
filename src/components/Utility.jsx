@@ -87,16 +87,19 @@ export const DetailBox = ({ year, title, para, link }) => {
 }
 
 export const ExperienceCard = ({ img, role, para }) => {
+
+  const mainPara = { __html: para }
+
   return (
     <div className="experience-box w-100 flex-wrap justify-content-md-start justify-content-sm-center justify-content-center">
-      <div className="img col-xxl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+      {/* <div className="img col-xxl-3 col-lg-3 col-md-4 col-sm-12 col-12">
         <img src={img} alt="" />
-      </div>
-      <div className="matter col-xxl-9 col-lg-9 col-md-8 col-sm-12 col-12 px-2 d-flex flex-column px-3">
+      </div> */}
+      <div className="matter col-12 col-12 px-2 d-flex flex-column px-3">
         <span className="role block my-2 p-0 fw-bold">
           <FirstLetterEffectText text={role} />
         </span>
-        <span className='text-justify description'>{para}</span>
+        <span className='text-justify description' dangerouslySetInnerHTML={mainPara}></span>
       </div>
     </div>
   )
@@ -136,7 +139,8 @@ export const ProvideCard = ({ icon, text, modalId }) => {
       <div className="whatIProvideCard">
         <span className="icon">{icon}</span>
         <span className="fs-4 fw-bold">{text}</span>
-        <button type="button" className='d-flex gap-2 align-items-center px-2 py-1 rounded' data-bs-toggle="modal" data-bs-target={`#${modalId}`}>
+        <button type="button" className='d-flex gap-2 align-items-center px-2 py-1 rounded'>
+          {/* <button type="button" className='d-flex gap-2 align-items-center px-2 py-1 rounded' data-bs-toggle="modal" data-bs-target={`#${modalId}`}> */}
           Know More <FaLongArrowAltRight />
         </button>
       </div>
@@ -159,15 +163,15 @@ export const TestimonialCard = ({ rating, message, signature }) => {
   const { setInformationModalData } = useContext(DataContext)
   const handleKnowMore = () => {
     setInformationModalData({
-      heading: `Testiminal - ${signature}`,
+      heading: `Testimonial - ${signature}`,
       message: message
     })
   }
 
   return (
     <>
-      <div className="testimonial-card d-flex flex-column">
-        <div className="main-container d-flex flex-column align-items-center user-select-none">
+      <div className="testimonial-card d-flex flex-column h-100">
+        <div className="main-container d-flex flex-column align-items-center user-select-none h-100">
           <div className="d-flex gap-2 stars-wrapper">
             {
               rating === 1 &&

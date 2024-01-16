@@ -240,7 +240,7 @@ ul {
         .active {
             background-color: $theam-color !important;
             border: 0;
-            color: #fff;
+            color: #fff !important;
             padding: 5px 13px;
             text-transform: uppercase;
             border-radius: 5px;
@@ -469,7 +469,9 @@ ul {
         background-size: cover;
         display: block;
         height: 40px;
+        min-height: 40px;
         width: 40px;
+        min-width: 40px;
         position: relative;
         transform: translate(0px, 10px);
     }
@@ -480,7 +482,9 @@ ul {
         background-size: cover;
         display: block;
         height: 40px;
+        min-height: 40px;
         width: 40px;
+        min-width: 40px;
         margin-left: auto;
         position: relative;
         transform: translate(5px, -5px);
@@ -686,7 +690,7 @@ ul {
     color: #fff;
     border-radius: 5px;
     box-shadow: -3px 3px #000;
-    transform: scale(.5);
+    transform: scale(0.5);
     animation: zoomOut 0.8s forwards cubic-bezier(0, 1, 0.85, 1.06);
 
     .timer {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { BtnBig, CustomBtn, DetailBox, ExperienceCard, FirstLetterEffectText, IcoBtn, ProvideCard, ShadowText, SkillBox, SkillBoxContainer, TestimonialCard } from '../components/Utility'
 import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython, FaPencilRuler, FaPhotoVideo, FaFileCode, FaHashtag } from 'react-icons/fa'
 import { FaBarsStaggered } from 'react-icons/fa6'
@@ -7,11 +7,83 @@ import { SiExpress, SiMongodb } from 'react-icons/si'
 import { GrCertificate, GrMysql } from 'react-icons/gr'
 import Typewriter from 'typewriter-effect';
 import DataContext from '../context/data/DataContext'
+import FunctionContext from '../context/function/FunctionContext'
 
 const Home = () => {
 
-    const { socialLinks } = useContext(DataContext)
+    const { socialLinks, setResponseStatus, setResponseData, responseData, backendHost } = useContext(DataContext)
+    const { handleOnChange } = useContext(FunctionContext)
     const { linkedin, insta, facebook } = socialLinks
+
+    const testimonialForm = useRef("")
+    const [testimonialFormData, settestimonialFormData] = useState({})
+    const handleSubmitTestimonial = async (e) => {
+        e.preventDefault()
+        try {
+
+            setResponseStatus(true)
+            setResponseData({ ...responseData, "isLoading": true, "heading": 'Sending Feedback' })
+
+            let response = await fetch(`${backendHost}/testimonial/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "name": testimonialFormData.name,
+                    "rating": testimonialFormData.rating,
+                    "email": testimonialFormData.email,
+                    "mess": testimonialFormData.message
+                })
+            })
+
+            let data = await response.json()
+            setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Feedback', "message": data })
+
+            setTimeout(() => {
+                setResponseStatus(false)
+                setResponseData({})
+            }, 4000);
+
+            testimonialForm.current.reset()
+
+        } catch (error) {
+
+            setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Feedback', "message": "Oops! Something went wrong on our server. Please try again after some time. Thank you for your patience." })
+            setTimeout(() => {
+                setResponseStatus(false)
+                setResponseData({})
+            }, 4000);
+
+            console.error(error.message)
+        }
+    }
+
+    const testimonialCarousel_container = useRef("")
+    const [testimonialData, setTestimonialData] = useState([])
+    useEffect(() => {
+        const fetchTestimonial = async () => {
+            let raw = await fetch(`${backendHost}/testimonial`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            await raw.json().then((data) => {
+                setTestimonialData(data)
+                return data
+            }).then((data) => {
+                if (data.length >= 1) {
+                    setTimeout(() => {
+                        console.log(testimonialCarousel_container.current.firstElementChild.classList.add('active'))
+                    }, 100);
+                }
+            })
+        }
+
+        fetchTestimonial();
+    }, [backendHost])
 
     return (
         <>
@@ -48,7 +120,7 @@ const Home = () => {
                             </p>
 
                             <div>
-                                <BtnBig text="Hire Me" icon={<FaHashtag />} link="" />
+                                <BtnBig text="Hire Me" icon={<FaHashtag />} link="/contact" />
                             </div>
                         </div>
 
@@ -77,7 +149,7 @@ const Home = () => {
 
                 <div className='container mt-3 d-flex gap-5 justify-content-center flex-wrap'>
                     <div className='rounded-4 overflow-hidden width-fit'>
-                        <img src="https://picsum.photos/500/400/" alt="" />
+                        <img src={require('../assets/profile.jpg')} alt="" style={{ maxWidth: '500px', maxHeight: '400px', objectPosition: 'top' }} className='object-fit-cover' />
                     </div>
 
                     <div className='col-xxl-6 col-lg-6 col-md-7 col-sm-12 col-12'>
@@ -123,7 +195,7 @@ const Home = () => {
                         </div>
 
                         <div className="my-3">
-                            <BtnBig text="Download CV" icon={<FaDownload className='me-1' />} link="" />
+                            <BtnBig text="Download CV" icon={<FaDownload className='me-1' />} link={socialLinks.resume} />
                         </div>
 
                     </div>
@@ -142,15 +214,15 @@ const Home = () => {
                         </div>
 
                         <SkillBoxContainer>
+                            <SkillBox icon={<SiMongodb />} text="MonogoDB" svgColor="#116149" />
+                            <SkillBox icon={<SiExpress />} text="Express" svgColor="#f1c617" />
                             <SkillBox icon={<FaReact />} text="React" svgColor="#61dafb" />
+                            <SkillBox icon={<FaNodeJs />} text="Node" svgColor="#8fc708" />
+                            <SkillBox icon={<FaGitAlt />} text="Git" svgColor="#f05539" />
+                            <SkillBox icon={<FaSass />} text="SCSS" svgColor="#cf6c9c" />
                             <SkillBox icon={<FaJava />} text="Java" svgColor="#116149" />
                             <SkillBox icon={<GrMysql />} text="MySQL" svgColor="#116149" />
                             <SkillBox icon={<FaPython />} text="Python" svgColor="#113527" />
-                            <SkillBox icon={<SiMongodb />} text="MonogoDB" svgColor="#116149" />
-                            <SkillBox icon={<SiExpress />} text="Express" svgColor="#f1c617" />
-                            <SkillBox icon={<FaNodeJs />} text="Node" svgColor="#8fc708" />
-                            <SkillBox icon={<FaSass />} text="SCSS" svgColor="#cf6c9c" />
-                            <SkillBox icon={<FaGitAlt />} text="Git" svgColor="#f05539" />
                         </SkillBoxContainer>
                     </div>
 
@@ -184,7 +256,7 @@ const Home = () => {
                                 <div className="tab-pane fade" id="pills-education" role="tabpanel" aria-labelledby="pills-education-tab" tabIndex="0">
                                     <div className="d-flex flex-column gap-3">
                                         <DetailBox year={'2018 - 2021'} title={'Diploma'} para={'Government Polytechnic, Ranchi - Jharkhand India'} />
-                                        <DetailBox year={'Current'} title={'B.Tech'} para={'LNCT, Bhopal - Madhya Pradesh India'} />
+                                        <DetailBox year={'2021 - 2024 (Current)'} title={'B.Tech'} para={'LNCT, Bhopal - Madhya Pradesh India'} />
                                     </div>
                                 </div>
                             </div>
@@ -201,20 +273,16 @@ const Home = () => {
                         <div id="workExpCarousel" className="carousel slide" data-bs-ride="carousel">
                             <div className="carousel-inner">
                                 <div className="carousel-item active">
-                                    <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
+                                    <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Here, I embarked on my professional journey as a frontend developer, delving into the realms of HTML, CSS, JavaScript, and MySQL, along with a myriad of other essential skills. This marked a pivotal phase as I secured my inaugural internship at <a href="https://shineskill.com/" target="_blank">Shine Skill Pvt</a>. Ltd. By the culmination of this internship, I successfully crafted an e-commerce website, representing a significant milestone in my career, albeit focused solely on the frontend aspect.'} role={'Frontend Developer'} />
                                 </div>
                                 <div className="carousel-item">
-                                    <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
-                                </div>
-                                <div className="carousel-item">
-                                    <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos illo a vero dicta blanditiis libero veritatis nisi debitis, exercitationem magni numquam nihil facilis necessitatibus quia facere dolorem autem, aliquid dolor! Voluptas nulla suscipit sequi, non ipsam odio fugiat optio itaque ab est corrupti, dolore culpa quisquam vel deleniti recusandae quibusdam.'} role={'Full Stack Developer'} />
+                                    <ExperienceCard img={'https://picsum.photos/seed/picsum/500/500'} para={'At my second professional stint as a full-stack developer, I spearheaded the creation of numerous website projects, showcasing my diverse skill set. Noteworthy among them are projects such as <a href="http://srconceptstudio.com/">Concept Studio</a>, <a href="http://flyaliipalau.pw/">Alii Palau</a>, <a href="https://www.khuttal.com/">Khuttal</a>, <a href="https://freakingminds.in/">Freaking Minds</a>, and <a href="https://therestronaut.com/">The Restronaut</a>. Throughout these endeavors, I adeptly tackled frontend bugs and translated conceptual ideas into tangible, functional solutions.'} role={'Full Stack Developer'} />
                                 </div>
                             </div>
 
                             <div className="carousel-indicators position-relative z-0">
                                 <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="0" className="custom-indicators active" aria-current="true" aria-label="Slide 1"></button>
                                 <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="1" className='custom-indicators' aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#workExpCarousel" data-bs-slide-to="2" className='custom-indicators' aria-label="Slide 3"></button>
                             </div>
                         </div>
                     </div>
@@ -241,31 +309,34 @@ const Home = () => {
                 </div>
 
                 <div className="container-fluid d-flex flex-wrap justify-content-center">
-                    <div className="col-md-4 col-12 p-4 pt-0">
-                        <div id="testimonialCarousel" className="carousel slide" data-bs-ride="carousel">
-                            <div className="carousel-inner">
-                                <div className="carousel-item active">
-                                    <TestimonialCard message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam esse ipsum itaque laboriosam. Assumenda qui voluptatem dolor maiores perspiciatis quos? Ullam nemo praesentium, quisquam ex itaque amet enim libero repellendus quasi fuga numquam nisi repudiandae dignissimos soluta vero quis. Eveniet magnam esse obcaecati doloremque magni qui facilis consequatur placeat quae?" signature="Shivam Kumar" rating={5} />
-                                </div>
-                                <div className="carousel-item">
-                                    <TestimonialCard message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam esse ipsum itaque laboriosam. Assumenda qui voluptatem dolor maiores perspiciatis quos? Ullam nemo praesentium, quisquam ex itaque amet enim libero repellendus quasi fuga numquam nisi repudiandae dignissimos soluta vero quis. Eveniet magnam esse obcaecati doloremque magni qui facilis consequatur placeat quae?" signature="Shivam Kashyap" rating={5} />
-                                </div>
-                                <div className="carousel-item">
-                                    <TestimonialCard message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam esse ipsum itaque laboriosam. Assumenda qui voluptatem dolor maiores perspiciatis quos? Ullam nemo praesentium, quisquam ex itaque amet enim libero repellendus quasi fuga numquam nisi repudiandae dignissimos soluta vero quis. Eveniet magnam esse obcaecati doloremque magni qui facilis consequatur placeat quae?" signature="Developer" rating={5} />
+
+                    {testimonialData && testimonialData &&
+                        <div className="col-md-4 col-12 p-4 pt-0">
+                            <div id="testimonialCarousel" className="carousel slide h-100" data-bs-ride="carousel">
+                                <div className="carousel-inner h-100" ref={testimonialCarousel_container}>
+
+                                    {testimonialData && testimonialData.map((ele) => {
+                                        return (
+                                            <div className="carousel-item h-100" key={`${ele._id}`}>
+                                                <TestimonialCard message={ele.mess} signature={ele.name} rating={ele.rating} />
+                                            </div>
+                                        )
+                                    })}
+
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
 
                     <div className="col-md-7 col-12 p-4 mt-3">
                         <div>
-                            <form className='rounded-3'>
+                            <form className='rounded-3' onSubmit={handleSubmitTestimonial} ref={testimonialForm}>
                                 <div className="mb-2 d-flex flex-wrap gap-md-0 gap-2">
                                     <div className="col-md-6 col-12 pe-md-2 pe-0">
-                                        <input type="text" className="rounded-1 custom-input-style" placeholder="Your Name*" required />
+                                        <input type="text" name="name" className="rounded-1 custom-input-style" placeholder="Your Name*" required onChange={(e) => { handleOnChange(e, testimonialFormData, settestimonialFormData) }} />
                                     </div>
                                     <div className="col-md-6 col-12 ps-md-2 ps-0">
-                                        <select name="rating" id="testimonial-rating" className='rounded-1 custom-input-style'>
+                                        <select name="rating" id="testimonial-rating" className='rounded-1 custom-input-style' onChange={(e) => { handleOnChange(e, testimonialFormData, settestimonialFormData) }}>
                                             <option value="" className='d-none'>Rate Me</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -276,10 +347,10 @@ const Home = () => {
                                     </div>
                                 </div>
                                 <div className="mb-2">
-                                    <input type="email" className="rounded-1 custom-input-style" placeholder="youremail@domain.com (Optional)" />
+                                    <input type="email" className="rounded-1 custom-input-style" placeholder="youremail@domain.com (Optional)" name="email" onChange={(e) => { handleOnChange(e, testimonialFormData, settestimonialFormData) }} />
                                 </div>
                                 <div className="mb-2">
-                                    <textarea name="message" id="" cols="" rows="5" className='w-100 custom-input-style rounded-1' placeholder="I'll appreciate you thought, Feel free to say anything." data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" required />
+                                    <textarea name="message" id="" cols="" rows="5" className='w-100 custom-input-style rounded-1' placeholder="I'll appreciate you thought, Feel free to say anything." data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" required onChange={(e) => { handleOnChange(e, testimonialFormData, settestimonialFormData) }} />
                                 </div>
                                 <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} />
                             </form>

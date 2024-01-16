@@ -91,12 +91,56 @@ const NewsLetterSubscribe = () => {
     )
 }
 
+const ResponseBox = () => {
+
+    const { responseStatus, responseData, setResponseStatus } = useContext(DataContext)
+
+    return (
+        <>
+            <div className={`${responseStatus === true ? 'd-block' : 'd-none'} position-fixed vh-100 w-100`} style={{ background: '#00000090', backdropFilter: 'blur(10px)', zIndex: '10' }}>
+                <div className="container d-flex align-items-center justify-content-center h-100">
+                    <div className="col-md-7 col-12">
+                        <div className="modal-content">
+                            <div className="modal-header bg-theam py-1 rounded-top-1 ps-3 pe-2" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>
+                                <h1 className="modal-title fs-5 text-white text-capitalize" id="informationModal">{responseData.heading}</h1>
+                                <button type="button" className="btn-reset" onClick={() => { setResponseStatus(false) }}>
+                                    <IoCloseOutline className='fs-3 text-white' />
+                                </button>
+                            </div>
+                            <div className="modal-body rounded-bottom-1 bg-white p-3">
+
+                                <div className="d-flex justify-content-center align-items-center">
+                                    {responseData.isLoading === true &&
+                                        <>
+                                            <div className="spinner-border text-secondary" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                            <span className='ms-2 fw-semibold fs-5 text-secondary'>Sending</span>
+                                        </>
+                                    }
+                                </div>
+
+                                {!responseData.isLoading && responseData.message &&
+                                    <span>
+                                        {responseData.message}
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
 const BootstrapModal = () => {
     return (
         <>
             <WhatIProvideModal modalId={'testing'} modalTitle={'testing'} />
             <InformationModal />
             <NewsLetterSubscribe />
+            <ResponseBox />
         </>
     )
 }
