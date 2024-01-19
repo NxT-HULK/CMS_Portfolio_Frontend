@@ -24,8 +24,8 @@ const Footer = () => {
   const { facebook, github, insta, linkedin } = socialLinks
   
   return (
-    <div className={`mainFooter w-100`}>
-      <div className="mx-md-5 mx-3 py-5 d-flex flex-wrap gap-md-0 gap-5">
+    <div className={`bg-dark w-100`}>
+      <div className="mx-md-5 mx-3 pt-5 pb-4 d-flex flex-wrap gap-md-0 gap-5">
         <div className='d-flex flex-column gap-3 col-md-5 col-12'>
           <div className={`transparent-effect-thin d-block width-fit px-3 py-1 rounded-3 user-select-none shadow-md-white`}>
             <span className="fs-1 fw-bold text-uppercase text-white d-block">Shivam Kashyap</span>
@@ -77,6 +77,11 @@ const Footer = () => {
             </form>
           </div>
         </div>
+      </div>
+      <div className="bg-theam py-3 px-md-4 px-3">
+        <p className="text-center fw-semibold text-white m-0">
+            © Copyright {new Date().getFullYear()} Shivam Kashyap. All Rights Reserved
+        </p>
       </div>
     </div>
   )
