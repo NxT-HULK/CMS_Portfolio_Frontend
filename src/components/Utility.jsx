@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { FaLongArrowAltRight } from 'react-icons/fa'
+import { FaInfo, FaLink, FaLongArrowAltRight, FaPlay } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom/dist'
 import DataContext from '../context/data/DataContext'
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia'
@@ -320,11 +320,25 @@ export const StripedSliderCustom = ({ data }) => {
         </button>
       </div>
 
-      <div className="d-flex gap-3 overflow-hidden scroll-smoth" ref={scrollerContainer}>
+      <div className="d-flex overflow-hidden scroll-smoth" ref={scrollerContainer}>
         {data.map((ele, idx) => {
           return (
             <div className="work-card-custom" key={`professional-cards-${idx}-${ele._id}`} ref={card}>
               <img src={ele.path} alt="" />
+
+              <div className='detailed-controller'>
+                <div className="justify-content-end d-flex gap-2 mb-2">
+                  <button type="button" className="controller-btn" data-bs-toggle="modal" data-bs-target="#workInformation">
+                    <FaInfo />
+                  </button>
+                  <a href="/" target="_blank" rel="noopener noreferrer" className="controller-btn">
+                    <FaLink />
+                  </a>
+                  <button type="button" className="controller-btn">
+                    <FaPlay className='ms-1' />
+                  </button>
+                </div>
+              </div>
             </div>
           )
         })}

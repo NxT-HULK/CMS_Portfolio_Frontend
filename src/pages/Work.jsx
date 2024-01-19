@@ -76,9 +76,9 @@ const Work = () => {
                                 </div>
                                 <div className="d-flex gap-3">
                                     <BtnBig text={`Explore`} link={'https://srconceptstudio.com/#/'} target={true} icon={<FaWpexplorer className='fs-5 me-1' />} />
-                                    <button type={'button'} className={`btn-reset user-select-none theam-btn-big`}>
+                                    <button type={'button'} className={`btn-reset user-select-none theam-btn-big`} data-bs-toggle="modal" data-bs-target="#workInformation">
                                         <span> <FaInfo className='fs-6' /> </span>
-                                        <span> Inforamtion </span>
+                                        <span> Information </span>
                                     </button>
                                 </div>
                             </div>
