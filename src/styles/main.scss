@@ -718,3 +718,16 @@ ul {
 .text-justify {
     text-align: justify !important;
 }
+
+#auth-main-container {
+    background-image: url("../assets/authentication_background.svg");
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+
+    .container {
+        min-height: inherit;
+    }
+}

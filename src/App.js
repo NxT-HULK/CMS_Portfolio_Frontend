@@ -17,6 +17,9 @@ import BlogDetails from './pages/BlogDetails'
 import { Toast } from './components/Utility'
 import Course from './pages/Course'
 
+import AdminHome from './admin/AdminHome'
+import AuthenticateAdmin from './pages/AuthenticateAdmin'
+
 const App = () => {
   return (
     <HashRouter>
@@ -32,6 +35,8 @@ const App = () => {
             <Route path='/blogs' element={<Course />} />
             <Route path='/blogs/:id' element={<BlogDetails />} />
             <Route path='/contact' element={<Contact />} />
+            <Route path="/auth" element={<AuthenticateAdmin />} />
+            <Route path="/admin" element={<AdminHome />} />
           </Routes>
           <Footer />
         </DataState>

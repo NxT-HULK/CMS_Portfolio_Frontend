@@ -76,7 +76,7 @@ const Home = () => {
             }).then((data) => {
                 if (data.length >= 1) {
                     setTimeout(() => {
-                        console.log(testimonialCarousel_container.current.firstElementChild.classList.add('active'))
+                        testimonialCarousel_container.current.firstElementChild.classList.add('active')
                     }, 100);
                 }
             })

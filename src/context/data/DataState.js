@@ -33,8 +33,42 @@ const DataState = (props) => {
         message: ""
     })
 
+    const getToken = async () => {
+        try {
+            const data = localStorage.getItem('auth-token');
+    
+            if (!data) {
+                throw new Error('No Token Found');
+            }
+    
+            const raw = await fetch(`${backendHost}/admin/verify`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: data,
+                }),
+            });
+    
+            if (!raw.ok) {
+                throw new Error(`Error verifying token: ${raw.statusText}`);
+            }
+    
+            const response = await raw.json();
+    
+            if (response === 'Admin Verified') {
+                return 'OK';
+            } else {
+                throw new Error('Invalid Token');
+            }
+        } catch (error) {
+            throw error;
+        }
+    };
+    
     return (
-        <DataContext.Provider value={{ socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData, responseStatus, setResponseStatus, responseData, setResponseData, backendHost }}>
+        <DataContext.Provider value={{ socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData, responseStatus, setResponseStatus, responseData, setResponseData, backendHost, getToken }}>
             {props.children}
         </DataContext.Provider>
     )
