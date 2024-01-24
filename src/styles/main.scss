@@ -731,3 +731,9 @@ ul {
         min-height: inherit;
     }
 }
+
+.last-child-no-border {
+    &:last-child {
+        border: 0 !important;
+    }
+}

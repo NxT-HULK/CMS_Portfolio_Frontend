@@ -23,8 +23,8 @@ const DataState = (props) => {
         message: ''
     })
 
-    const backendHost = "https://backend-portfolio-pous.onrender.com"
-    // const backendHost = "http://localhost:5000"
+    // const backendHost = "https://backend-portfolio-pous.onrender.com"
+    const backendHost = "http://localhost:5000"
 
     const [responseStatus, setResponseStatus] = useState(false)
     const [responseData, setResponseData] = useState({
@@ -36,11 +36,11 @@ const DataState = (props) => {
     const getToken = async () => {
         try {
             const data = localStorage.getItem('auth-token');
-    
+
             if (!data) {
                 throw new Error('No Token Found');
             }
-    
+
             const raw = await fetch(`${backendHost}/admin/verify`, {
                 method: 'POST',
                 headers: {
@@ -50,13 +50,13 @@ const DataState = (props) => {
                     token: data,
                 }),
             });
-    
+
             if (!raw.ok) {
                 throw new Error(`Error verifying token: ${raw.statusText}`);
             }
-    
+
             const response = await raw.json();
-    
+
             if (response === 'Admin Verified') {
                 return 'OK';
             } else {
@@ -66,9 +66,12 @@ const DataState = (props) => {
             throw error;
         }
     };
-    
+
     return (
-        <DataContext.Provider value={{ socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData, responseStatus, setResponseStatus, responseData, setResponseData, backendHost, getToken }}>
+        <DataContext.Provider value={{
+            socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData,
+            responseStatus, setResponseStatus, responseData, setResponseData, backendHost, getToken,
+        }}>
             {props.children}
         </DataContext.Provider>
     )

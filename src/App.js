@@ -13,7 +13,7 @@ import Contact from './pages/Contact'
 import FunctionState from './context/function/FunctionState'
 import DataState from './context/data/DataState'
 import BlogDetails from './pages/BlogDetails'
-// import Work from './pages/Work'
+import Work from './pages/Work'
 import { Toast } from './components/Utility'
 import Course from './pages/Course'
 
@@ -30,7 +30,7 @@ const App = () => {
           <Toast />
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/work' element={<Course />} />
+            <Route path='/work' element={<Work />} />
             <Route path='/course' element={<Course />} />
             <Route path='/blogs' element={<Course />} />
             <Route path='/blogs/:id' element={<BlogDetails />} />

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../styles/work.scss'
-import { BtnBig, FirstLetterEffectText, StripedSliderCustom } from '../components/Utility'
+import { CustomBtn, FirstLetterEffectText, StripedSliderCustom } from '../components/Utility'
 import { FaInfo, FaWpexplorer } from 'react-icons/fa'
 import { GiSpeaker, GiSpeakerOff } from "react-icons/gi";
+import DataContext from '../context/data/DataContext';
+import { ImSpinner4 } from 'react-icons/im'
 
 const Work = () => {
 
@@ -10,55 +12,78 @@ const Work = () => {
     const [professional] = useState([
         {
             '_id': 0,
-            'path': 'https://picsum.photos/id/10/350/200',
-            'link': ''
+            'background': 'https://picsum.photos/id/10/350/200',
+            'link': '/'
         },
         {
             '_id': 1,
-            'path': 'https://picsum.photos/id/11/350/200',
+            'background': 'https://picsum.photos/id/11/350/200',
             'link': ''
         },
         {
             '_id': 2,
-            'path': 'https://picsum.photos/id/12/350/200',
+            'background': 'https://picsum.photos/id/12/350/200',
             'link': ''
         },
         {
             '_id': 3,
-            'path': 'https://picsum.photos/id/13/350/200',
+            'background': 'https://picsum.photos/id/13/350/200',
             'link': ''
         },
         {
             '_id': 4,
-            'path': 'https://picsum.photos/id/14/350/200',
+            'background': 'https://picsum.photos/id/14/350/200',
             'link': ''
         },
         {
             '_id': 5,
-            'path': 'https://picsum.photos/id/15/350/200',
+            'background': 'https://picsum.photos/id/15/350/200',
             'link': ''
         },
         {
             '_id': 6,
-            'path': 'https://picsum.photos/id/16/350/200',
+            'background': 'https://picsum.photos/id/16/350/200',
             'link': ''
         },
         {
             '_id': 7,
-            'path': 'https://picsum.photos/id/17/350/200',
+            'background': 'https://picsum.photos/id/17/350/200',
             'link': ''
         },
         {
             '_id': 8,
-            'path': 'https://picsum.photos/id/18/350/200',
+            'background': 'https://picsum.photos/id/18/350/200',
             'link': ''
         },
         {
             '_id': 9,
-            'path': 'https://picsum.photos/id/19/350/200',
+            'background': 'https://picsum.photos/id/19/350/200',
             'link': ''
         },
     ])
+
+    const { backendHost } = useContext(DataContext)
+
+    const [isLoadingProfessionalData, setIsLoadingProfessionalData] = useState(false)
+    const [professionalData, setProfessionalData] = useState(false)
+    useEffect(() => {
+        (async () => {
+            setIsLoadingProfessionalData(true)
+            let raw = await fetch(`${backendHost}/work/get-data/professional`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            let data = await raw.json()
+            setProfessionalData(data)
+
+            console.log(data);
+
+            setIsLoadingProfessionalData(false)
+        })();
+    }, [backendHost])
+
 
     return (
         <>
@@ -72,14 +97,11 @@ const Work = () => {
                         <div className="ms-md-5 ms-3 d-flex d-flex align-items-end justify-content-md-center justify-content-start">
                             <div className="col-md-6 col-12 mt-5 pt-5">
                                 <div className="transparent-effect py-4 px-3 rounded-2 mb-3 col-10">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci repudiandae soluta impedit doloribus odit facere atque distinctio animi quos temporibus, omnis nihil enim rem ipsum consectetur dolores voluptatibus molestias quibusdam.
+                                    Welcome to my portfolio, where creativity meets purpose. Explore a journey of innovation and passion as I showcase my diverse skills and experiences. Thank you for joining me on this visual and intellectual adventure. Feel free to explore, connect, and discover the essence of my work. Your presence here is truly appreciated.
                                 </div>
                                 <div className="d-flex gap-3">
-                                    <BtnBig text={`Explore`} link={'https://srconceptstudio.com/#/'} target={true} icon={<FaWpexplorer className='fs-5 me-1' />} />
-                                    <button type={'button'} className={`btn-reset user-select-none theam-btn-big`} data-bs-toggle="modal" data-bs-target="#workInformation">
-                                        <span> <FaInfo className='fs-6' /> </span>
-                                        <span> Information </span>
-                                    </button>
+                                    <CustomBtn text={`Explore`} icon={<FaWpexplorer className='fs-5 me-1' />} />
+                                    <CustomBtn text={`Information`} icon={<FaInfo className='fs-6' />} />
                                 </div>
                             </div>
 
@@ -105,7 +127,17 @@ const Work = () => {
 
                         <div className="vw-100 left-0 position-relative z-2 px-3 mt-4" style={{ marginBottom: '-80px' }}>
                             <FirstLetterEffectText text="Professional Works" className2={'text-white'} />
-                            <StripedSliderCustom data={professional} />
+
+                            {isLoadingProfessionalData === true ?
+                                <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh' }}>
+                                    <div className="spinner-border border-0 d-flex align-items-center justify-content-center" role="status">
+                                        <ImSpinner4 className='text-white fs-5' />
+                                    </div>
+                                    <span className='text-white'>Loading Data</span>
+                                </div>
+                                :
+                                <StripedSliderCustom data={professionalData} />
+                            }
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ import FunctionContext from '../context/function/FunctionContext'
 const Testimonial = () => {
 
     const { setResponseStatus, setResponseData, backendHost } = useContext(DataContext)
-    const { toSpimpleDate } = useContext(FunctionContext)
+    const { toSimpleDate } = useContext(FunctionContext)
 
     const [isMainLoader, setIsMainLoader] = useState(false)
     const [isFormProcess, setIsFormProcess] = useState({
@@ -168,7 +168,7 @@ const Testimonial = () => {
                         {testimonialData.map((ele) => {
                             return (
                                 <tr key={ele._id}>
-                                    <td className='py-1 px-2 border-end text-center'> {toSpimpleDate(ele.createdAt)} </td>
+                                    <td className='py-1 px-2 border-end text-center'> {toSimpleDate(ele.createdAt)} </td>
                                     <td className='py-1 px-2 border-end text-center'> {ele.name} </td>
                                     <td className='py-1 px-2 border-end text-center'> {ele.rating} </td>
                                     <td className='py-1 px-2 border-end'> {ele.mess} </td>

@@ -6,7 +6,7 @@ import { ImSpinner4 } from 'react-icons/im'
 
 const Contact = () => {
 
-  const { toSpimpleDate } = useContext(FunctionContext)
+  const { toSimpleDate } = useContext(FunctionContext)
   const { backendHost } = useContext(DataContext)
 
   const [isContactLoading, setIsContactLoading] = useState(false)
@@ -78,7 +78,7 @@ const Contact = () => {
             {contactData.map((ele) => {
               return (
                 <tr key={ele._id}>
-                  <td className='py-1 px-2 border-end text-center'> {toSpimpleDate(ele.createdAt)} </td>
+                  <td className='py-1 px-2 border-end text-center'> {toSimpleDate(ele.createdAt)} </td>
                   <td className='py-1 px-2 border-end text-center'> {ele.name} </td>
                   <td className='py-1 px-2 border-end'> {ele.email} </td>
                   <td className='py-1 px-2 border-end'> {ele.query} </td>

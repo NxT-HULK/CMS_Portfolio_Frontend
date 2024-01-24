@@ -115,7 +115,7 @@ export const FirstLetterEffectText = ({ text, className, className2 }) => {
     let data = arr.map((ele) => {
       return (
         <span key={ele}>
-          <span className={`firstLetterEffect`}>
+          <span className={`firstLetterEffect text-capitalize`}>
             {ele[0]}
           </span>
           <span className={`fs-3 ${className2}`}>
@@ -291,7 +291,7 @@ export const BlogSmallCard = ({ title, imgLink }) => {
   )
 }
 
-export const ButtonShaded = ({ type, className, text }) => {
+export const ButtonShaded = ({ type, className, text, onClick }) => {
   return (
     <button type={`${type ? type : 'submit'}`} className={`simleButton-with-shaded ${className}`}> {text} </button>
   )
@@ -312,6 +312,16 @@ export const StripedSliderCustom = ({ data }) => {
     scrollerContainer.current.scrollLeft += cardWidth
   }
 
+  const { setResponseStatus, setResponseData } = useContext(DataContext)
+  const hanleSetInformationData = (projectName, html) => {
+    setResponseStatus(true)
+    setResponseData({
+      isLoading: false,
+      heading: `Project Information - ${projectName}`,
+      message: html
+    })
+  }
+
   return (
     <div className='d-flex align-items-stretch custom-strip-scroller'>
       <div className="controller">
@@ -321,20 +331,20 @@ export const StripedSliderCustom = ({ data }) => {
       </div>
 
       <div className="d-flex overflow-hidden scroll-smoth" ref={scrollerContainer}>
-        {data.map((ele, idx) => {
+        {data && data.map((ele, idx) => {
           return (
             <div className="work-card-custom" key={`professional-cards-${idx}-${ele._id}`} ref={card}>
-              <img src={ele.path} alt="" />
+              <img src={ele.background} alt="" />
 
               <div className='detailed-controller'>
                 <div className="justify-content-end d-flex gap-2 mb-2">
-                  <button type="button" className="controller-btn" data-bs-toggle="modal" data-bs-target="#workInformation">
+                  <button type="button" className="controller-btn" onClick={() => { hanleSetInformationData(ele.name, ele.html) }}>
                     <FaInfo />
                   </button>
-                  <a href="/" target="_blank" rel="noopener noreferrer" className="controller-btn">
+                  <a href={ele.link} target="_blank" rel="noopener noreferrer" className="controller-btn">
                     <FaLink />
                   </a>
-                  <button type="button" className="controller-btn">
+                  <button type="button" className="controller-btn d-none">
                     <FaPlay className='ms-1' />
                   </button>
                 </div>

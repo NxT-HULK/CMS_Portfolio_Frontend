@@ -34,13 +34,13 @@ const FunctionState = (props) => {
     func({ ...state, [e.target.name]: e.target.value })
   }
 
-  const toSpimpleDate = (date) => {
+  const toSimpleDate = (date) => {
     let now = new Date(date)
     return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`
   }
 
   return (
-    <FunctionContext.Provider value={{ darkTheamFlag, darkPages, navBackdropFlag, navBackdropRemoved, handleOnChange, toSpimpleDate }}>
+    <FunctionContext.Provider value={{ darkTheamFlag, darkPages, navBackdropFlag, navBackdropRemoved, handleOnChange, toSimpleDate }}>
       {props.children}
     </FunctionContext.Provider>
   )

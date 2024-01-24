@@ -122,9 +122,7 @@ const ResponseBox = () => {
                                 </div>
 
                                 {!responseData.isLoading && responseData.message &&
-                                    <span>
-                                        {responseData.message}
-                                    </span>
+                                    <div dangerouslySetInnerHTML={{ __html: responseData.message }}></div>
                                 }
                             </div>
                         </div>
@@ -135,39 +133,6 @@ const ResponseBox = () => {
     )
 }
 
-const WorkInformationModal = () => {
-
-
-
-    return (
-        <div className="modal fade" id="workInformation" tabIndex="-1" aria-labelledby={`workInformationLabel`} aria-hidden="true" style={{ backdropFilter: 'blur(5px)' }}>
-            <div className="modal-dialog modal-dialog-centered modal-lg">
-                <div className="modal-content">
-                    <div className="modal-header bg-theam py-1 rounded-top-1" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>
-                        <h1 className="modal-title fs-5 text-white text-capitalize" id={`workInformationLabel`}>Work Information - Testing</h1>
-                        <button type="button" className="btn-reset" data-bs-dismiss="modal">
-                            <IoCloseOutline className='fs-3 text-white' />
-                        </button>
-                    </div>
-                    <div className="modal-body rounded-bottom-1">
-
-                        {/* <div className='d-flex gap-2 align-items-center justify-content-center'>
-                            <div class="d-flex align-items-center justify-content-center spinner-border text-primary border-0" role="status">
-                                <ImSpinner4 className='fs-3 text-theam' />
-                            </div>
-                            <span>Loading Information</span>
-                        </div> */}
-
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, assumenda. Voluptatibus, autem. Pariatur modi tenetur quas exercitationem nobis consectetur suscipit optio placeat corporis enim, qui ipsum unde molestias voluptates dolorum!
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 const BootstrapModal = () => {
     return (
         <>
@@ -175,7 +140,6 @@ const BootstrapModal = () => {
             <InformationModal />
             <NewsLetterSubscribe />
             <ResponseBox />
-            <WorkInformationModal />
         </>
     )
 }

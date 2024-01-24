@@ -5,10 +5,26 @@ import { useNavigate } from 'react-router-dom'
 import { ImSpinner4 } from 'react-icons/im'
 import DataContext from '../context/data/DataContext'
 import { IoMdLogOut } from "react-icons/io";
+import Work from './Work'
+import FunctionContext from '../context/function/FunctionContext'
+
+const CustomLi = ({ text, index, setWorkspace }) => {
+    return (
+        <li>
+            <button type="button" className="btn-reset" onClick={() => { setWorkspace(index) }}>
+                <span className="text-uppercase fw-semibold text-theam"> {text} </span>
+            </button>
+        </li>
+    )
+}
 
 const AdminMain = () => {
 
-    const { backendHost, getToken } = useContext(DataContext)
+    const dataContext__variable = useContext(DataContext)
+    const { backendHost, getToken } = dataContext__variable
+
+    const functionContext__variable = useContext(FunctionContext)
+
     const [workspace, setWorkspace] = useState(0)
     const navigate = useNavigate("")
     const [tokenStatus, setTokenStatus] = useState(false)
@@ -34,10 +50,12 @@ const AdminMain = () => {
         })()
     }, [getToken, navigate, backendHost])
 
-    const handleLogoutAdmin = () => { 
+    const handleLogoutAdmin = () => {
         localStorage.removeItem('auth-token')
         navigate('/auth')
     }
+
+    const menu = ["Testimonial", "Contact", "Work"]
 
     return (
         <>
@@ -45,16 +63,9 @@ const AdminMain = () => {
                 <>
                     <nav className='w-100 px-3 border-bottom mb-2 position-sticky bg-white top-0 d-flex justify-content-between align-items-center'>
                         <ul className='d-flex gap-3 py-3'>
-                            <li>
-                                <button type="button" className="btn-reset" onClick={() => { setWorkspace(0) }}>
-                                    <span className="text-uppercase fw-semibold text-theam"> Testimonial </span>
-                                </button>
-                            </li>
-                            <li>
-                                <button type="button" className="btn-reset" onClick={() => { setWorkspace(1) }}>
-                                    <span className="text-uppercase fw-semibold text-theam"> Contact </span>
-                                </button>
-                            </li>
+                            {menu.map((ele, idx) => {
+                                return <CustomLi text={ele} index={idx} setWorkspace={setWorkspace} key={`admin-menu-${ele}`} />
+                            })}
                         </ul>
 
                         <button type="button" className='btn-reset d-flex align-items-center bg-danger px-2 py-1 rounded-1' onClick={handleLogoutAdmin}>
@@ -67,13 +78,16 @@ const AdminMain = () => {
                         {(() => {
                             switch (workspace) {
                                 case 0:
-                                    return <Testimonial />
+                                    return <Testimonial DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
                                 case 1:
-                                    return <Contact />
+                                    return <Contact DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
+
+                                case 2:
+                                    return <Work DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
                                 default:
-                                    return <span> Undefined Input </span>
+                                    return <span> Menu is not linked with switch statement </span>
                             }
                         })()}
                     </div>
