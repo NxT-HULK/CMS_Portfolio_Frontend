@@ -188,7 +188,7 @@ const Home = () => {
                                         <span className='fw-bold fs-2'>03</span>
                                     </div>
                                     <div>
-                                        <span className='fw-medium'>Frameworks Experience</span>
+                                        <span className='fw-medium'>Framework Experience</span>
                                     </div>
                                 </li>
                             </ul>
