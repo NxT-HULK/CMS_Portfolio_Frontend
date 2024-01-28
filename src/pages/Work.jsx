@@ -9,66 +9,20 @@ import { ImSpinner4 } from 'react-icons/im'
 const Work = () => {
 
     const [audioFlag, setAudioFlag] = useState(true)
-    const [professional] = useState([
-        {
-            '_id': 0,
-            'background': 'https://picsum.photos/id/10/350/200',
-            'link': '/'
-        },
-        {
-            '_id': 1,
-            'background': 'https://picsum.photos/id/11/350/200',
-            'link': ''
-        },
-        {
-            '_id': 2,
-            'background': 'https://picsum.photos/id/12/350/200',
-            'link': ''
-        },
-        {
-            '_id': 3,
-            'background': 'https://picsum.photos/id/13/350/200',
-            'link': ''
-        },
-        {
-            '_id': 4,
-            'background': 'https://picsum.photos/id/14/350/200',
-            'link': ''
-        },
-        {
-            '_id': 5,
-            'background': 'https://picsum.photos/id/15/350/200',
-            'link': ''
-        },
-        {
-            '_id': 6,
-            'background': 'https://picsum.photos/id/16/350/200',
-            'link': ''
-        },
-        {
-            '_id': 7,
-            'background': 'https://picsum.photos/id/17/350/200',
-            'link': ''
-        },
-        {
-            '_id': 8,
-            'background': 'https://picsum.photos/id/18/350/200',
-            'link': ''
-        },
-        {
-            '_id': 9,
-            'background': 'https://picsum.photos/id/19/350/200',
-            'link': ''
-        },
-    ])
-
     const { backendHost } = useContext(DataContext)
 
-    const [isLoadingProfessionalData, setIsLoadingProfessionalData] = useState(false)
+    const [isLoadingProfessionalProjects, setIsLoadingProfessionalProjects] = useState(false)
     const [professionalData, setProfessionalData] = useState(false)
+
+    const [isLoadingPersonalProjects, setIsLoadingPersonalProjects] = useState(false)
+    const [personalProjects, setPersonalProjects] = useState(false)
+
+    const [isLoadingHobbyProjects, setIsLoadingHobbyProjects] = useState(false)
+    const [hobbyProjects, setHobbyProjects] = useState(false)
+
     useEffect(() => {
         (async () => {
-            setIsLoadingProfessionalData(true)
+            setIsLoadingProfessionalProjects(true)
             let raw = await fetch(`${backendHost}/work/get-data/professional`, {
                 method: 'GET',
                 headers: {
@@ -77,17 +31,40 @@ const Work = () => {
             })
             let data = await raw.json()
             setProfessionalData(data)
+            setIsLoadingProfessionalProjects(false)
+        })();
 
-            console.log(data);
+        (async () => {
+            setIsLoadingPersonalProjects(true)
+            let raw = await fetch(`${backendHost}/work/get-data/personal`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            let data = await raw.json()
+            setPersonalProjects(data)
+            setIsLoadingPersonalProjects(false)
+        })();
 
-            setIsLoadingProfessionalData(false)
+        (async () => {
+            setIsLoadingHobbyProjects(true)
+            let raw = await fetch(`${backendHost}/work/get-data/hobby`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            let data = await raw.json()
+            setHobbyProjects(data)
+            setIsLoadingHobbyProjects(false)
         })();
     }, [backendHost])
 
 
     return (
         <>
-            <div className="p-0 m-0 w-100 min-vh-100">
+            <div className="p-0 m-0 w-100 min-vh-100 position-relative">
                 <div className="position-relative w-100 p-0 m-0 d-flex align-items-end" style={{ minHeight: '100vh' }}>
                     <video loop={true} muted={audioFlag} autoPlay={true} className='h-100 w-100 p-0 m-0 object-fit-cover position-absolute' style={{ zIndex: '-1' }}>
                         <source src={require('../assets/work.mp4')} type='video/mp4' />
@@ -128,7 +105,7 @@ const Work = () => {
                         <div className="vw-100 left-0 position-relative z-2 px-3 mt-4" style={{ marginBottom: '-80px' }}>
                             <FirstLetterEffectText text="Professional Works" className2={'text-white'} />
 
-                            {isLoadingProfessionalData === true ?
+                            {isLoadingProfessionalProjects === true ?
                                 <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh' }}>
                                     <div className="spinner-border border-0 d-flex align-items-center justify-content-center" role="status">
                                         <ImSpinner4 className='text-white fs-5' />
@@ -146,16 +123,34 @@ const Work = () => {
 
             <div className="container-fluid pt-5" id="work_svg_bg">
                 <div className="pt-5 mt-2">
-                    <FirstLetterEffectText text="My Hobby Work" className2={'text-white'} />
+                    <FirstLetterEffectText text="Frelance Works" className2={'text-white'} />
                     <div>
-                        <StripedSliderCustom data={professional} />
+                        {isLoadingPersonalProjects === true ?
+                            <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh' }}>
+                                <div className="spinner-border border-0 d-flex align-items-center justify-content-center" role="status">
+                                    <ImSpinner4 className='text-white fs-5' />
+                                </div>
+                                <span className='text-white'>Loading Data</span>
+                            </div>
+                            :
+                            <StripedSliderCustom data={personalProjects} />
+                        }
                     </div>
                 </div>
 
                 <div className="pt-3 pb-5">
-                    <FirstLetterEffectText text="Some Extra Stuff" className2={'text-white'} />
+                    <FirstLetterEffectText text="Learning Projects" className2={'text-white'} />
                     <div>
-                        <StripedSliderCustom data={professional} />
+                        {isLoadingHobbyProjects === true ?
+                            <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh' }}>
+                                <div className="spinner-border border-0 d-flex align-items-center justify-content-center" role="status">
+                                    <ImSpinner4 className='text-white fs-5' />
+                                </div>
+                                <span className='text-white'>Loading Data</span>
+                            </div>
+                            :
+                            <StripedSliderCustom data={hobbyProjects} />
+                        }
                     </div>
                 </div>
             </div>

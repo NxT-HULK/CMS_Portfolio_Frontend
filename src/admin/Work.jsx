@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ImSpinner4 } from 'react-icons/im'
 import FunctionContext from '../context/function/FunctionContext'
-import { FaExternalLinkAlt, FaTrash } from 'react-icons/fa'
+import { FaBookmark, FaExternalLinkAlt, FaTrash } from 'react-icons/fa'
 import { ButtonShaded, FirstLetterEffectText } from '../components/Utility'
 import { IoOptions } from "react-icons/io5";
 
-const Work = ({ DataContext }) => {
+const Work = ({ DataContext, setWorkspace }) => {
 
     const { backendHost, setResponseData, setResponseStatus } = DataContext
     const { toSimpleDate } = useContext(FunctionContext)
@@ -98,6 +98,12 @@ const Work = ({ DataContext }) => {
                 </div>
                 :
                 <>
+                    <div className="w-100 my-4 d-block mb-4">
+                        <button type="button" className='simleButton-with-shaded width-fit px-2' onClick={() => { setWorkspace('add_work') }}>
+                            <FaBookmark className='text-white me-1' />
+                            Add Work
+                        </button>
+                    </div>
 
                     {Object.keys(mainData).map((ele) => {
                         return (
@@ -108,9 +114,9 @@ const Work = ({ DataContext }) => {
                                         <tr className='bg-theam'>
                                             <th className='py-2 text-white border-end text-center px-2'>Date</th>
                                             <th className='py-2 text-white border-end text-center px-2'>Name</th>
-                                            <th className='py-2 text-white border-end text-center px-2'>Background</th>
+                                            <th className='py-2 text-white border-end text-center px-2'>Back Img</th>
                                             <th className='py-2 text-white border-end text-center px-2'>Modal Data</th>
-                                            <th className='py-2 text-white border-end text-center px-2'>Short Desc</th>
+                                            <th className='py-2 text-white border-end text-center px-2' style={{ minWidth: '400px' }}>Short Desc</th>
                                             <th className='py-2 text-white border-end text-center px-2'>Tags</th>
                                             <th className='py-2 text-white text-center px-4'>Action</th>
                                         </tr>
@@ -140,7 +146,7 @@ const Work = ({ DataContext }) => {
                                                     <td className='py-1 px-2 border-end'>
                                                         <div className="d-flex flex-wrap gap-1">
                                                             {inner.techUsed.map((tags, idx) => {
-                                                                return <span className="bg-theam text-white px-1 rounded-1" style={{ fontSize: "14px" }} key={`table-${ele}-tech-index-${idx}-name-${tags}`}>#{tags}</span>
+                                                                return <span className="bg-theam text-white px-1 rounded-1" style={{ fontSize: "14px", whiteSpace: 'nowrap' }} key={`table-${ele}-tech-index-${idx}-name-${tags}`}>#{tags}</span>
                                                             })}
                                                         </div>
                                                     </td>
@@ -167,6 +173,12 @@ const Work = ({ DataContext }) => {
                             </div>
                         )
                     })}
+
+                    {Object.keys(mainData).length === 0 &&
+                        <div className='d-block mb-auto'>
+                            <span className="fs-4 fw-bold">No Data Found</span>
+                        </div>
+                    }
                 </>
             }
         </>

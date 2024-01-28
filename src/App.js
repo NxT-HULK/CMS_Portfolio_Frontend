@@ -3,7 +3,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import BootstrapModal from './components/BootstrapModal'
-import Footer from './components/Footer'
+// import Footer from './components/Footer'
 import './styles/main.scss'
 import './styles/responsive.scss'
 import './styles/scroller.scss'
@@ -19,6 +19,7 @@ import Course from './pages/Course'
 
 import AdminHome from './admin/AdminHome'
 import AuthenticateAdmin from './pages/AuthenticateAdmin'
+import Footer2 from './components/Footer2'
 
 const App = () => {
   return (
@@ -38,7 +39,7 @@ const App = () => {
             <Route path="/auth" element={<AuthenticateAdmin />} />
             <Route path="/admin" element={<AdminHome />} />
           </Routes>
-          <Footer />
+          <Footer2 />
         </DataState>
       </FunctionState>
     </HashRouter>

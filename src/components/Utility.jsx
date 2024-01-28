@@ -229,10 +229,10 @@ export const TestimonialCard = ({ rating, message, signature }) => {
   )
 }
 
-export const CustomTags = ({ tag }) => {
+export const CustomTags = ({ tag, className }) => {
   return (
     <>
-      <span className="rounded-1 text-theam text-uppercase px-3 py-1 d-inline-block border">#{tag}</span>
+      <span className={`${className} rounded-1 text-theam text-uppercase px-3 py-1 d-inline-block border`}>#{tag}</span>
     </>
   )
 }

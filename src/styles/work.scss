@@ -20,7 +20,6 @@
     opacity: 1;
     top: auto;
     width: 100%;
-    margin-bottom: -70px;
     left: 0;
     position: absolute;
     right: 0;
@@ -80,6 +79,8 @@
             border-radius: 5px;
             object-position: center center;
             width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
         }
 
         &::after {

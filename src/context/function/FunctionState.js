@@ -7,10 +7,10 @@ const FunctionState = (props) => {
   const [navBackdropFlag, setnavBackdropFlag] = useState(false)
   const pathname = useLocation().pathname
 
-  const darkPages = useMemo(() => [], []);
+  const darkPages = useMemo(() => ['/work'], []);
   // const darkPages = useMemo(() => ['/blogs', '/work'], []);
-  const navBackdropRemoved = useMemo(() => [], []);
-  // const navBackdropRemoved = useMemo(() => ['/work'], []);
+  // const navBackdropRemoved = useMemo(() => [], []);
+  const navBackdropRemoved = useMemo(() => ['/work'], []);
 
   useEffect(() => {
 

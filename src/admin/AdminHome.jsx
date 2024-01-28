@@ -7,12 +7,16 @@ import DataContext from '../context/data/DataContext'
 import { IoMdLogOut } from "react-icons/io";
 import Work from './Work'
 import FunctionContext from '../context/function/FunctionContext'
+import { MdOutlineSettingsInputComponent } from "react-icons/md";
+import { IoCloseOutline } from 'react-icons/io5'
+import { FaBookmark } from 'react-icons/fa'
+import AddWork from './AddWork'
 
-const CustomLi = ({ text, index, setWorkspace }) => {
+const CustomLi = ({ text, index, setWorkspace, className }) => {
     return (
         <li>
             <button type="button" className="btn-reset" onClick={() => { setWorkspace(index) }}>
-                <span className="text-uppercase fw-semibold text-theam"> {text} </span>
+                <span className={`text-uppercase fw-semibold text-theam ${className}`}> {text} </span>
             </button>
         </li>
     )
@@ -56,25 +60,79 @@ const AdminMain = () => {
     }
 
     const menu = ["Testimonial", "Contact", "Work"]
+    const [menuModal, setmenuModal] = useState(false)
 
     return (
         <>
+            {/* menu modal starts from here */}
+            <div className={`${menuModal === true ? 'd-block' : 'd-none'} position-fixed vh-100 w-100`} style={{ background: '#00000090', backdropFilter: 'blur(10px)', zIndex: '10' }}>
+                <div className="container d-flex align-items-center justify-content-center h-100">
+                    <div className="col-md-7 col-12">
+                        <div className="modal-content">
+                            <div className="modal-header bg-theam py-1 rounded-top-1 ps-3 pe-2" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>
+                                <span className="modal-title fs-6 text-white text-capitalize" id="informationModal">GENRAL SETTING</span>
+                                <button type="button" className="btn-reset" onClick={() => { setmenuModal(false) }}>
+                                    <IoCloseOutline className='fs-3 text-white' />
+                                </button>
+                            </div>
+                            <div className="modal-body rounded-bottom-1 bg-white p-3 py-0">
+
+                                <div className='my-4'>
+                                    <ul className='d-flex gap-3'>
+                                        {menu.map((ele, idx) => {
+                                            return (
+                                                <button key={`admin-popup-menu-${ele}`} className='btn-reset bg-theam py-1 px-2 rounded-1' onClick={() => { setmenuModal(!menuModal); setWorkspace(idx) }}>
+                                                    <span className={`text-uppercase fw-semibold text-white`}> {ele} </span>
+                                                </button>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+
+                                <hr />
+
+                                <div className='my-4'>
+                                    <button type="button" className='btn-reset bg-theam px-2 py-1 text-white rounded-1' onClick={() => { setmenuModal('false'); setWorkspace('add_work') }}>
+                                        <FaBookmark className='text-white me-1' />
+                                        Add Work
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {tokenStatus === true ?
                 <>
-                    <nav className='w-100 px-3 border-bottom mb-2 position-sticky bg-white top-0 d-flex justify-content-between align-items-center'>
-                        <ul className='d-flex gap-3 py-3'>
-                            {menu.map((ele, idx) => {
-                                return <CustomLi text={ele} index={idx} setWorkspace={setWorkspace} key={`admin-menu-${ele}`} />
-                            })}
-                        </ul>
+                    <nav className='w-100 px-3 border-bottom mb-2 position-sticky bg-white top-0 z-1'>
+                        <div className="d-lg-flex d-none w-100 justify-content-between align-items-center">
+                            <ul className='d-flex gap-3 py-3'>
+                                {menu.map((ele, idx) => {
+                                    return <CustomLi text={ele} index={idx} setWorkspace={setWorkspace} key={`admin-menu-${ele}`} />
+                                })}
+                            </ul>
 
-                        <button type="button" className='btn-reset d-flex align-items-center bg-danger px-2 py-1 rounded-1' onClick={handleLogoutAdmin}>
-                            <IoMdLogOut className='text-white fs-4' />
-                            <span className='text-white'>Logout</span>
-                        </button>
+                            <div className='d-flex gap-3'>
+                                <button type="button" className='btn-reset d-flex align-items-center bg-danger px-2 py-1 rounded-1' onClick={handleLogoutAdmin}>
+                                    <IoMdLogOut className='text-white fs-4' />
+                                    <span className='text-white'>Logout</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="d-lg-none d-block">
+                            <div className="d-flex justify-content-between py-2">
+                                <span className='text-uppercase fw-semibold text-theam fs-4'>Admin Panel</span>
+                                <button type="button" className='simleButton-with-shaded btn-reset width-fit lh-1 px-2 py-1 fs-5' onClick={() => { setmenuModal(true) }} >
+                                    <MdOutlineSettingsInputComponent />
+                                </button>
+                            </div>
+                        </div>
                     </nav>
 
-                    <div className="container d-flex align-items-center justify-content-center flex-column mb-5" style={{ minHeight: '50vh' }}>
+                    <div className="container d-flex align-items-center justify-content-center flex-column mb-5 position-relative overflow-auto px-2" style={{ minHeight: '50vh' }}>
                         {(() => {
                             switch (workspace) {
                                 case 0:
@@ -84,7 +142,10 @@ const AdminMain = () => {
                                     return <Contact DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
                                 case 2:
-                                    return <Work DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
+                                    return <Work setWorkspace={setWorkspace} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
+
+                                case 'add_work':
+                                    return <AddWork DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
                                 default:
                                     return <span> Menu is not linked with switch statement </span>
