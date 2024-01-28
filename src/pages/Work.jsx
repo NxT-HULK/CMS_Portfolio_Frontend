@@ -72,7 +72,7 @@ const Work = () => {
 
                     <div className="nav-padding h-100 z-2">
                         <div className="ms-md-5 ms-3 d-flex d-flex align-items-end justify-content-md-center justify-content-start">
-                            <div className="col-md-6 col-12 mt-5 pt-5">
+                            <div className="col-md-6 col-12 mt-5 pt-5 d-md-block d-none">
                                 <div className="transparent-effect py-4 px-3 rounded-2 mb-3 col-10">
                                     Welcome to my portfolio, where creativity meets purpose. Explore a journey of innovation and passion as I showcase my diverse skills and experiences. Thank you for joining me on this visual and intellectual adventure. Feel free to explore, connect, and discover the essence of my work. Your presence here is truly appreciated.
                                 </div>
@@ -115,6 +115,23 @@ const Work = () => {
                                 :
                                 <StripedSliderCustom data={professionalData} />
                             }
+
+                            <div className='d-md-none d-flex gap-2 align-items-center position-absolute top-0' id="responsive_speaker_btn" style={{ right: '-15px', marginTop: '-50px' }}>
+                                <button type="button" className="btn-reset border border-2 border-theam rounded-circle transparent-effect lh-1 p-2" onClick={() => { setAudioFlag(!audioFlag) }}>
+                                    {audioFlag === true ?
+                                        <GiSpeakerOff className='fs-3 text-white' />
+                                        :
+                                        <GiSpeaker className='fs-3 text-white' />
+                                    }
+                                </button>
+                                <span className="transparent-effect fw-semibold text-uppercase text-white py-2 px-4 border-start border-3 border-theam">
+                                    {audioFlag === true ?
+                                        <span> Mutted </span>
+                                        :
+                                        <span> Speaker </span>
+                                    }
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

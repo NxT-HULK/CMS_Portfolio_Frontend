@@ -77,7 +77,16 @@ const AdminMain = () => {
                             </div>
                             <div className="modal-body rounded-bottom-1 bg-white p-3 py-0">
 
-                                <div className='my-4'>
+                                <div className="mt-3">
+                                    <button type="button" className='btn-reset d-flex align-items-center bg-danger px-2 py-1 rounded-1' onClick={handleLogoutAdmin}>
+                                        <IoMdLogOut className='text-white fs-4' />
+                                        <span className='text-white'>Logout</span>
+                                    </button>
+                                </div>
+
+                                <hr />
+
+                                <div className=''>
                                     <ul className='d-flex gap-3'>
                                         {menu.map((ele, idx) => {
                                             return (

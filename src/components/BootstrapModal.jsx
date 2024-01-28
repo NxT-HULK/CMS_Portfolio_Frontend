@@ -100,8 +100,8 @@ const ResponseBox = () => {
         <>
             <div className={`${responseStatus === true ? 'd-block' : 'd-none'} position-fixed vh-100 w-100`} style={{ background: '#00000090', backdropFilter: 'blur(10px)', zIndex: '10' }}>
                 <div className="container d-flex align-items-center justify-content-center h-100">
-                    <div className="col-md-7 col-12">
-                        <div className="modal-content">
+                    <div className="col-md-10 col-12">
+                        <div className="modal-content overflow-auto" style={{maxHeight: '90vh'}}>
                             <div className="modal-header bg-theam py-1 rounded-top-1 ps-3 pe-2" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>
                                 <h1 className="modal-title fs-5 text-white text-capitalize" id="informationModal">{responseData.heading}</h1>
                                 <button type="button" className="btn-reset" onClick={() => { setResponseStatus(false) }}>

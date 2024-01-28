@@ -32,14 +32,14 @@ const Footer = () => {
                 <div className={`bg-dark w-100`}>
                     <div className="container pb-3 pt-5">
                         <div className='d-flex flex-wrap justify-content-md-between justify-content-center gap-md-0 gap-5'>
-                            <div className='d-flex flex-column gap-2 col-md-4 col-12'>
+                            <div className='d-flex flex-column gap-2 col-md-4 col-12 align-items-center'>
                                 <div className={`width-fit user-select-none`}>
                                     <span className="text-white d-block fw-medium fs-5 d-block">
                                         Quick Links
                                     </span>
                                 </div>
 
-                                <div className="mt-2">
+                                <div className="mt-2 width-fit">
                                     <ul className='p-0 m-0 d-flex flex-column gap-1'>
                                         <CustomList link={'/'} text={'Portfolio'} />
                                         <CustomList link={'/work'} text={'Work'} />
@@ -51,10 +51,6 @@ const Footer = () => {
                             </div>
 
                             <div className='d-flex flex-column gap-2 col-md-4 col-12 align-items-center'>
-                                
-
-                                
-
                                 <div className={`width-fit user-select-none`}>
                                     <span className="text-white d-block fw-medium fs-5 d-block">
                                         Meet me on Social

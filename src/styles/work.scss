@@ -114,5 +114,33 @@
                 }
             }
         }
+
+        &:last-child {
+            padding-right: 0;
+
+            &::after {
+                content: "";
+                height: 100%;
+                width: calc(100%);
+                display: block;
+                background-image: linear-gradient(to top, #000000aa, #12121280, #77777700, #b9b9b900, #ffffff00);
+                position: absolute;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .custom-strip-scroller {
+        align-items: center !important;
+
+        .controller {
+            height: unset;
+
+            button {
+                padding: 0;
+            }
+        }
     }
 }

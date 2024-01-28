@@ -308,8 +308,14 @@ export const StripedSliderCustom = ({ data }) => {
   }
 
   const hanleRightClick = (e) => {
+    const totalChildren = scrollerContainer.current.querySelectorAll('.work-card-custom')
     const cardWidth = card.current.clientWidth
-    scrollerContainer.current.scrollLeft += cardWidth
+
+    if (scrollerContainer.current.scrollLeft === cardWidth * totalChildren.length - scrollerContainer.current.clientWidth) {
+      scrollerContainer.current.scrollLeft = 0
+    } else { 
+      scrollerContainer.current.scrollLeft += cardWidth
+    }
   }
 
   const { setResponseStatus, setResponseData } = useContext(DataContext)
@@ -334,7 +340,7 @@ export const StripedSliderCustom = ({ data }) => {
         {data && data.map((ele, idx) => {
           return (
             <div className="work-card-custom" key={`professional-cards-${idx}-${ele._id}`} ref={card}>
-              <img src={ele.background} alt="" />
+              <img src={ele.background} alt="" loading='lazy' />
 
               <div className='detailed-controller'>
                 <div className="justify-content-end d-flex gap-2 mb-2">

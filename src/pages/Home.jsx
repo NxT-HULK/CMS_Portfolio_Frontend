@@ -155,12 +155,12 @@ const Home = () => {
                     <div className='col-xxl-6 col-lg-6 col-md-7 col-sm-12 col-12'>
                         <span className="d-block fw-bold fs-2">My Profile</span>
                         <p className='fs-4 fw-medium line-height-1-1'>
-                            A Lead <span className="text-theam fw-bold">MERN Stack Developer</span>
+                            Lead <span className="text-theam fw-bold">MERN Stack Developer</span>
                             <br />
-                            based in India
+                            Based in India
                         </p>
                         <p className='mt-4'>
-                            We design and develop services for customers specializing creating stylish, modern websites, web services and online stores. My passion is to design digital user experiences through meaningful interactions. Check out my Portfolio
+                            Design and develop services for customers specializing creating stylish, modern websites, web services and online stores. My passion is to design digital user experiences through meaningful interactions. Check out my Portfolio
                         </p>
 
                         <div className='w-100 border'></div>
@@ -169,7 +169,7 @@ const Home = () => {
                             <ul className='w-100 d-flex flex-wrap justify-content-between pe-4'>
                                 <li className='col-xxl-3 col-md-3 col-sm-12 col-12 d-flex align-items-center gap-2'>
                                     <div>
-                                        <span className='fw-bold fs-2'>5+</span>
+                                        <span className='fw-bold fs-2'>02</span>
                                     </div>
                                     <div>
                                         <span className='fw-medium'>Years of Experience</span>
@@ -177,18 +177,18 @@ const Home = () => {
                                 </li>
                                 <li className='col-xxl-3 col-md-3 col-sm-12 col-12 d-flex align-items-center gap-2'>
                                     <div>
-                                        <span className='fw-bold fs-2'>5+</span>
+                                        <span className='fw-bold fs-2'>10+</span>
                                     </div>
                                     <div>
-                                        <span className='fw-medium'>Years of Experience</span>
+                                        <span className='fw-medium'>Industry Projects</span>
                                     </div>
                                 </li>
                                 <li className='col-xxl-3 col-md-3 col-sm-12 col-12 d-flex align-items-center gap-2'>
                                     <div>
-                                        <span className='fw-bold fs-2'>5+</span>
+                                        <span className='fw-bold fs-2'>03</span>
                                     </div>
                                     <div>
-                                        <span className='fw-medium'>Years of Experience</span>
+                                        <span className='fw-medium'>Frameworks Experience</span>
                                     </div>
                                 </li>
                             </ul>
@@ -229,17 +229,17 @@ const Home = () => {
                     <div className='col-xl-6 col-lg-8 col-md-10 col-12 d-flex flex-column gap-3'>
                         <div className='shaded-box p-4 rounded d-flex gap-3 align-items-center justify-content-center'>
                             <span className="fs-2 fw-bold text-capitalize">
-                                <GrCertificate className='fs-1 text-theam' /> Education / Awards
+                                <GrCertificate className='fs-1 text-theam' /> Education / Proficiency
                             </span>
                         </div>
 
                         <div className='mb-3 shaded-box p-4 rounded'>
                             <ul className="nav nav-pills mb-3 align-items-center gap-2" id="pills-tab" role="tablist">
                                 <li className="nav-item" role="presentation">
-                                    <button className="btn-reset-0 active" id="pills-awards-tab" data-bs-toggle="pill" data-bs-target="#pills-awards" type="button" role="tab" aria-controls="pills-awards" aria-selected="false">AWARDS</button>
+                                    <button className="btn-reset-0 active" id="pills-awards-tab" data-bs-toggle="pill" data-bs-target="#pills-awards" type="button" role="tab" aria-controls="pills-awards" aria-selected="false">COURSE COVERED</button>
                                 </li>
                                 <li className="nav-item" role="presentation">
-                                    <button className="btn-reset-0" id="pills-education-tab" data-bs-toggle="pill" data-bs-target="#pills-education" type="button" role="tab" aria-controls="pills-education" aria-selected="true">EDUCATION</button>
+                                    <button className="btn-reset-0" id="pills-education-tab" data-bs-toggle="pill" data-bs-target="#pills-education" type="button" role="tab" aria-controls="pills-education" aria-selected="true">UNIVERSITY EDUCATION</button>
                                 </li>
                             </ul>
                             <div className="tab-content mt-4" id="pills-tabContent">
