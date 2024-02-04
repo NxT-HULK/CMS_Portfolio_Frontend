@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { IoCloseOutline } from 'react-icons/io5'
 import DataContext from '../context/data/DataContext'
 import { ButtonShaded } from './Utility'
-// import { ImSpinner4 } from "react-icons/im";
+import FunctionContext from '../context/function/FunctionContext'
 
 const WhatIProvideModal = ({ modalId, modalTitle }) => {
     return (
@@ -50,6 +50,55 @@ const InformationModal = () => {
 }
 
 const NewsLetterSubscribe = () => {
+
+    const [data, setData] = useState({})
+    const { setResponseStatus, setResponseData, backendHost } = useContext(DataContext)
+    const { handleOnChange } = useContext(FunctionContext)
+
+    const form = useRef("")
+    const handleSubmitForm = async (e) => {
+        e.preventDefault();
+        try {
+
+            setResponseStatus(true)
+            setResponseData({
+                heading: 'Submitting Form',
+                isLoading: true,
+            })
+
+            let raw = await fetch(`${backendHost}/news/subscribe`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'Application/json'
+                },
+                body: JSON.stringify({
+                    "name": data.name,
+                    "email": data.email,
+                    "type": data.subs_type,
+                })
+            })
+
+            let res = await raw.json()
+            setResponseData({
+                heading: 'Submitting Form',
+                isLoading: false,
+                message: res
+            })
+
+            form.current.reset();
+
+        } catch (error) {
+            console.error(error);
+            setResponseStatus(true)
+            setResponseData({
+                heading: 'Error',
+                isLoading: false,
+                message: 'Error on submiting form'
+            })
+            form.current.reset();
+        }
+    }
+
     return (
         <>
             <div className="modal fade" id="subscribeNewsLetter" tabIndex="-1" aria-labelledby={`subscribeNewsLetterLabel`} aria-hidden="true" style={{ backdropFilter: 'blur(5px)' }}>
@@ -64,25 +113,27 @@ const NewsLetterSubscribe = () => {
                             </button>
                         </div>
                         <div className="modal-body rounded-bottom-1">
-                            <form className='rounded-3'>
+                            <form className='rounded-3' onSubmit={handleSubmitForm} ref={form}>
                                 <div className="mb-2 d-flex flex-wrap gap-md-0 gap-2">
                                     <div className="col-md-6 col-12 pe-md-2 pe-0">
-                                        <input type="text" className="rounded-1 custom-input-style" placeholder="Your Name*" required />
+                                        <input name='name' type="text" className="rounded-1 custom-input-style" placeholder="Your Name*" required onChange={(e) => { handleOnChange(e, data, setData) }} />
                                     </div>
                                     <div className="col-md-6 col-12 ps-md-2 ps-0">
-                                        <select name="rating" id="testimonial-rating" className='rounded-1 custom-input-style' required>
+                                        <select name="subs_type" className='rounded-1 custom-input-style' required onChange={(e) => { handleOnChange(e, data, setData) }}>
                                             <option value="" className='d-none'>Subscryption Type*</option>
                                             <option value="all">All</option>
                                             <option value="blogs">Blogs</option>
-                                            <option value="Courses">Courses</option>
+                                            <option value="courses">Courses</option>
                                             <option value="projects">Projects</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div className="mb-2">
-                                    <input type="email" className="rounded-1 custom-input-style" placeholder="youremail@domain.com*" required />
+                                    <input type="email" name="email" className="rounded-1 custom-input-style" placeholder="youremail@domain.com*" required onChange={(e) => { handleOnChange(e, data, setData) }} />
                                 </div>
-                                <ButtonShaded text={`subscribe now`} />
+                                <div data-bs-dismiss="modal">
+                                    <ButtonShaded text={`subscribe now`} data-bs-dismiss="modal" />
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -101,7 +152,7 @@ const ResponseBox = () => {
             <div className={`${responseStatus === true ? 'd-block' : 'd-none'} position-fixed vh-100 w-100`} style={{ background: '#00000090', backdropFilter: 'blur(10px)', zIndex: '10' }}>
                 <div className="container d-flex align-items-center justify-content-center h-100">
                     <div className="col-md-10 col-12">
-                        <div className="modal-content overflow-auto" style={{maxHeight: '90vh'}}>
+                        <div className="modal-content overflow-auto" style={{ maxHeight: '90vh' }}>
                             <div className="modal-header bg-theam py-1 rounded-top-1 ps-3 pe-2" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>
                                 <h1 className="modal-title fs-5 text-white text-capitalize" id="informationModal">{responseData.heading}</h1>
                                 <button type="button" className="btn-reset" onClick={() => { setResponseStatus(false) }}>
