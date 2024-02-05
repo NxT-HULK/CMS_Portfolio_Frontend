@@ -11,6 +11,8 @@ import { MdOutlineSettingsInputComponent } from "react-icons/md";
 import { IoCloseOutline } from 'react-icons/io5'
 import { FaBookmark } from 'react-icons/fa'
 import AddWork from './AddWork'
+import NewsLetter from './NewsLetter'
+import MailNewsletter from './MailNewsletter'
 
 const CustomLi = ({ text, index, setWorkspace, className }) => {
     return (
@@ -59,7 +61,7 @@ const AdminMain = () => {
         navigate('/auth')
     }
 
-    const menu = ["Testimonial", "Contact", "Work"]
+    const menu = ["Testimonial", "Contact", "Work", "News Letter"]
     const [menuModal, setmenuModal] = useState(false)
 
     return (
@@ -153,8 +155,14 @@ const AdminMain = () => {
                                 case 2:
                                     return <Work setWorkspace={setWorkspace} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
+                                case 3:
+                                    return <NewsLetter setWorkspace={setWorkspace} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
+
                                 case 'add_work':
                                     return <AddWork DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
+
+                                case 'send_mail':
+                                    return <MailNewsletter DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
                                 default:
                                     return <span> Menu is not linked with switch statement </span>

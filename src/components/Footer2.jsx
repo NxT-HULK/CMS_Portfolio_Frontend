@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { IcoBtn } from './Utility'
 import { FaArrowRightLong, FaLinkedinIn } from 'react-icons/fa6'
 import { FaFacebookF, FaGithub, FaInstagram } from 'react-icons/fa'
 import { Link, useLocation } from 'react-router-dom'
 import DataContext from '../context/data/DataContext'
+import FunctionContext from '../context/function/FunctionContext'
 
 const CustomList = ({ link, text }) => {
     return (
@@ -24,6 +25,54 @@ const Footer = () => {
     const { facebook, github, insta, linkedin } = socialLinks
 
     const router = useLocation()
+
+    const [data, setData] = useState({})
+    const { setResponseStatus, setResponseData, backendHost } = useContext(DataContext)
+    const { handleOnChange } = useContext(FunctionContext)
+
+    const form = useRef("")
+    const handleSubmitForm = async (e) => {
+        e.preventDefault();
+        try {
+
+            setResponseStatus(true)
+            setResponseData({
+                heading: 'Submitting Form',
+                isLoading: true,
+            })
+
+            let raw = await fetch(`${backendHost}/news/subscribe`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'Application/json'
+                },
+                body: JSON.stringify({
+                    "name": "&nbsp;&nbsp;&nbsp;",
+                    "email": data.email,
+                    "type": "all",
+                })
+            })
+
+            let res = await raw.json()
+            setResponseData({
+                heading: 'Submitting Form',
+                isLoading: false,
+                message: res
+            })
+
+            form.current.reset();
+
+        } catch (error) {
+            console.error(error);
+            setResponseStatus(true)
+            setResponseData({
+                heading: 'Error',
+                isLoading: false,
+                message: 'Error on submiting form'
+            })
+            form.current.reset();
+        }
+    }
 
     return (
         <>
@@ -74,8 +123,8 @@ const Footer = () => {
                                 </div>
 
                                 <div>
-                                    <form className={`d-flex align-items-center justify-content-center flex-column`}>
-                                        <input type="email" className='custom-input-style bg-white rounded-pill px-4' name="newsletter_email" id="newsLetterEmail" placeholder='youremail@domain.com' />
+                                    <form className={`d-flex align-items-center justify-content-center flex-column`} onSubmit={handleSubmitForm} ref={form}>
+                                        <input type="email" className='custom-input-style bg-white rounded-pill px-4' name="email" id="newsLetterEmail" placeholder='youremail@domain.com' onChange={(e) => { handleOnChange(e, data, setData) }} />
                                         <button className='mt-2 bg-theam text-white border-0 text-uppercase px-3 py-1 rounded-pill' type="submit">Subscribe</button>
                                     </form>
                                 </div>

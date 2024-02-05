@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ImSpinner4 } from 'react-icons/im'
-import FunctionContext from '../context/function/FunctionContext'
 import { FaBookmark, FaExternalLinkAlt, FaTrash } from 'react-icons/fa'
 import { ButtonShaded, FirstLetterEffectText } from '../components/Utility'
 import { IoOptions } from "react-icons/io5";
 
-const Work = ({ DataContext, setWorkspace }) => {
+const Work = ({ DataContext,FunctionContext, setWorkspace }) => {
 
     const { backendHost, setResponseData, setResponseStatus } = DataContext
-    const { toSimpleDate } = useContext(FunctionContext)
+    const { toSimpleDate } = FunctionContext
 
     const [mainData, setMainData] = useState([])
     const [isLoadingData, setIsLoadingData] = useState(false)

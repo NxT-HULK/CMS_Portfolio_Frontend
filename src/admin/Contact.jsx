@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTrash } from 'react-icons/fa'
-import FunctionContext from '../context/function/FunctionContext'
-import DataContext from '../context/data/DataContext'
 import { ImSpinner4 } from 'react-icons/im'
 
-const Contact = () => {
+const Contact = ({ DataContext, FunctionContext }) => {
 
-  const { toSimpleDate } = useContext(FunctionContext)
-  const { backendHost } = useContext(DataContext)
+  const { toSimpleDate } = FunctionContext
+  const { backendHost } = DataContext
 
   const [isContactLoading, setIsContactLoading] = useState(false)
   const [contactData, setContactData] = useState([])

@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaEye, FaEyeSlash, FaTrash } from 'react-icons/fa'
 import { ImSpinner4 } from "react-icons/im";
-import DataContext from '../context/data/DataContext'
-import FunctionContext from '../context/function/FunctionContext'
 
-const Testimonial = () => {
+const Testimonial = ({ DataContext, FunctionContext }) => {
 
-    const { setResponseStatus, setResponseData, backendHost } = useContext(DataContext)
-    const { toSimpleDate } = useContext(FunctionContext)
+    const { setResponseStatus, setResponseData, backendHost } = DataContext
+    const { toSimpleDate } = FunctionContext
 
     const [isMainLoader, setIsMainLoader] = useState(false)
     const [isFormProcess, setIsFormProcess] = useState({
