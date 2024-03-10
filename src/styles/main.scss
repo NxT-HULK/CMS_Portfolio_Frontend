@@ -16,6 +16,12 @@ section {
     font-family: "Poppins", sans-serif;
 }
 
+a {
+    &:focus {
+        color: unset;
+    }
+}
+
 *::selection {
     background-color: $theam-color;
     color: #fff;

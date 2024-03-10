@@ -12,7 +12,7 @@ import './styles/blog-main.scss'
 import Contact from './pages/Contact'
 import FunctionState from './context/function/FunctionState'
 import DataState from './context/data/DataState'
-import BlogDetails from './pages/BlogDetails'
+// import BlogDetails from './pages/BlogDetails'
 import Work from './pages/Work'
 import { Toast } from './components/Utility'
 import Course from './pages/Course'
@@ -20,6 +20,7 @@ import Course from './pages/Course'
 import AdminHome from './admin/AdminHome'
 import AuthenticateAdmin from './pages/AuthenticateAdmin'
 import Footer2 from './components/Footer2'
+import NotFound from './pages/NotFound'
 
 const App = () => {
   return (
@@ -34,10 +35,11 @@ const App = () => {
             <Route path='/work' element={<Work />} />
             <Route path='/course' element={<Course />} />
             <Route path='/blogs' element={<Course />} />
-            <Route path='/blogs/:id' element={<BlogDetails />} />
+            {/* <Route path='/blogs/:id' element={<BlogDetails />} /> */}
             <Route path='/contact' element={<Contact />} />
             <Route path="/auth" element={<AuthenticateAdmin />} />
             <Route path="/admin" element={<AdminHome />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer2 />
         </DataState>

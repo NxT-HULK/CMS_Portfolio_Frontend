@@ -103,7 +103,13 @@ const Work = () => {
                         </div>
 
                         <div className="vw-100 left-0 position-relative z-2 px-3 mt-4" style={{ marginBottom: '-80px' }}>
-                            <FirstLetterEffectText text="Professional Works" className2={'text-white'} />
+                            <div className='w-100 d-flex justify-content-between align-items-center'>
+                                <FirstLetterEffectText text="Professional Works" className2={'text-white'} />
+                                <div className='text-white fs-4 fw-bold bg-white px-4 lh-1 rounded-pill bg-theam py-2'>
+                                    <span> {professionalData.length} </span>
+                                    <span className='d-md-inline d-none'> Projects </span>
+                                </div>
+                            </div>
 
                             {isLoadingProfessionalProjects === true ?
                                 <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh' }}>
@@ -140,7 +146,13 @@ const Work = () => {
 
             <div className="container-fluid pt-5" id="work_svg_bg">
                 <div className="pt-5 mt-2">
-                    <FirstLetterEffectText text="Frelance Works" className2={'text-white'} />
+                    <div className='w-100 d-flex justify-content-between align-items-center'>
+                        <FirstLetterEffectText text="Frelance Works" className2={'text-white'} />
+                        <div className='text-white fs-4 fw-bold bg-white px-4 lh-1 rounded-pill bg-theam py-2'>
+                            <span> {personalProjects.length} </span>
+                            <span className='d-md-inline d-none'> Projects </span>
+                        </div>
+                    </div>
                     <div>
                         {isLoadingPersonalProjects === true ?
                             <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh' }}>
@@ -156,7 +168,13 @@ const Work = () => {
                 </div>
 
                 <div className="pt-3 pb-5">
-                    <FirstLetterEffectText text="Learning Projects" className2={'text-white'} />
+                    <div className='w-100 d-flex justify-content-between align-items-center'>
+                        <FirstLetterEffectText text="Learning Projects" className2={'text-white'} />
+                        <div className='text-white fs-4 fw-bold bg-white px-4 lh-1 rounded-pill bg-theam py-2'>
+                            <span> {hobbyProjects.length} </span>
+                            <span className='d-md-inline d-none'> Projects </span>
+                        </div>
+                    </div>
                     <div>
                         {isLoadingHobbyProjects === true ?
                             <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '50vh' }}>

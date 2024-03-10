@@ -75,6 +75,14 @@ const Navbar = () => {
                                             <NavLink className="nav-link" to="/contact">Contact</NavLink>
                                         </li>
                                     </ul>
+
+                                    <ul className={`navbar-nav mb-2 mb-lg-0 gap-3 d-flex align-items-center`}>
+                                        <li className="nav-item">
+                                            <button type="button" className="btn-reset p-0 m-0 lh-1 bg-theam text-white p-2 rounded-circle" data-bs-toggle="modal" data-bs-target="#subscribeNewsLetter">
+                                                <FaRegBell className='fs-4' />
+                                            </button>
+                                        </li>
+                                    </ul>
                                 </div>
 
                             </div>
@@ -91,7 +99,10 @@ const Navbar = () => {
                                 </button>
 
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                                    <ul className={`navbar-nav mb-2 mb-lg-0 ms-auto me-5 text-theam`}>
+                                    <ul className={`navbar-nav mb-2 mb-lg-0 ms-auto text-theam`}>
+                                        <li className="nav-item">
+                                            <NavLink className="nav-link" to="/">Portfolio</NavLink>
+                                        </li>
                                         <li className="nav-item">
                                             <NavLink className="nav-link" to="/work">Work</NavLink>
                                         </li>
@@ -106,7 +117,7 @@ const Navbar = () => {
                                         </li>
                                     </ul>
 
-                                    <ul className={`navbar-nav ms-auto mb-2 mb-lg-0 gap-3 d-flex align-items-center`}>
+                                    <ul className={`navbar-nav mb-2 mb-lg-0 gap-3 d-flex align-items-center`}>
                                         <li className="nav-item">
                                             <button type="button" className="btn-reset p-0 m-0 lh-1 bg-theam text-white p-2 rounded-circle" data-bs-toggle="modal" data-bs-target="#subscribeNewsLetter">
                                                 <FaRegBell className='fs-4' />
@@ -120,7 +131,6 @@ const Navbar = () => {
                                         </li> */}
                                     </ul>
                                 </div>
-
                             </div>
                         </nav>
                     }

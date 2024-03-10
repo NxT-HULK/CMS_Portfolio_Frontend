@@ -54,7 +54,7 @@ const AdminMain = () => {
         (async () => {
             await gettingToken()
         })()
-    }, [getToken, navigate, backendHost])
+    }, [getToken, navigate, backendHost, workspace])
 
     const handleLogoutAdmin = () => {
         localStorage.removeItem('auth-token')

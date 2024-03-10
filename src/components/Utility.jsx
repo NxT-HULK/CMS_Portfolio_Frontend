@@ -129,7 +129,7 @@ export const FirstLetterEffectText = ({ text, className, className2 }) => {
   }, [text, className, pathname, className2])
 
   return (
-    <span className={`role block my-2 p-0 fw-bold  ${className}`}>{firstLetterEffect}</span>
+    <span className={`${className || ''} role block my-2 p-0 fw-bold`}>{firstLetterEffect}</span>
   )
 }
 
@@ -340,10 +340,10 @@ export const StripedSliderCustom = ({ data }) => {
         {data && data.map((ele, idx) => {
           return (
             <div className="work-card-custom" key={`professional-cards-${idx}-${ele._id}`} ref={card}>
-              <img src={ele.background} alt="" loading='lazy' />
+              <img src={ele.background} alt="" loading='eager' />
 
               <div className='detailed-controller'>
-                <div className="justify-content-end d-flex gap-2 mb-2">
+                <div className="justify-content-center d-flex gap-2 mb-2">
                   <button type="button" className="controller-btn" onClick={() => { hanleSetInformationData(ele.name, ele.html) }}>
                     <FaInfo />
                   </button>
