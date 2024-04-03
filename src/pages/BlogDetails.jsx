@@ -19,8 +19,6 @@ const BlogDetails = () => {
         } else {
             moreBlogsContainer.current.scrollLeft += card.clientWidth + 8
         }
-
-        console.log(card.clientWidth + 8);
     }
 
     return (

@@ -26,7 +26,6 @@ import CommingSoon from './components/CommingSoon'
 import CourseDetails from './pages/CourseDetails'
 import CourseLearning from './pages/CourseLearning'
 import AdminState from './context/admin/AdminState'
-import Testing from './pages/Testing'
 
 const App = () => {
   return (
@@ -48,7 +47,6 @@ const App = () => {
               <Route path='/contact' element={<Contact />} />
               <Route path="/auth" element={<AuthenticateAdmin />} />
               <Route path="/admin" element={<AdminHome />} />
-              <Route path="/test" element={<Testing />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AdminState>

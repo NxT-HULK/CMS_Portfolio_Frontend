@@ -543,7 +543,7 @@ export const AccordianCustom = ({
 }
 
 export const SidebarAccordianList = ({ 
-  id, name, page, lastUpdated, ofModule, adminMode, setWorkspace, setEditPage 
+  id, name, page, lastUpdated, ofModule, adminMode, setWorkspace, setEditPage, course_id
 }) => {
 
   let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true })
@@ -553,7 +553,9 @@ export const SidebarAccordianList = ({
   const handleEditButton = () => {
     setEditPage({
       flag: true,
-      id: id
+      data: id,
+      ofModule: ofModule,
+      ofCourse: course_id
     })
 
     setWorkspace('add_course_pages')

@@ -6,7 +6,7 @@ const EditCoursePage = ({
 }) => {
 
   const { backendHost, setResponseStatus, setResponseData } = DataContext
-  const { edditTargetedCourse, courses, isUpdating, handleChangeStatus, setEditData, setaddCourseresetForm, setEditModule, setEditPage } = AdminContext
+  const { edditTargetedCourse, courses, isUpdating, handleChangeStatus, setEditData, setaddCourseresetForm, setEditModule, setEditPage, currData, setCurrData, isLoadingCurrData, setIsLoadingCurrData } = AdminContext
   const [selectedCourse, setSelectedCourse] = useState(null)
 
   useEffect(() => {
@@ -26,11 +26,6 @@ const EditCoursePage = ({
     setWorkspace('create_course')
   }
 
-  const [isLoadingCurrData, setIsLoadingCurrData] = useState(false)
-  const [currData, setCurrData] = useState({
-    modules: [],
-    pages: []
-  })
   useEffect(() => {
     (async () => {
       setIsLoadingCurrData(true)
@@ -145,6 +140,7 @@ const EditCoursePage = ({
                             adminMode={true}
                             setWorkspace={setWorkspace}
                             adminCurrData={currData}
+                            course_id={selectedCourse?._id}
                           />
                         )
                       })}

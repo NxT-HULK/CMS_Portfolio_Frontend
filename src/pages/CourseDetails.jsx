@@ -26,8 +26,6 @@ const CourseDetails = () => {
         }
     }, [course_id, courses, navigate]);
 
-    console.log(selectedCourse);
-
     return (
         <div className='py-4 px-md-4 px-2 mb-5 container-fluid'>
             <div className='mb-4'>
@@ -75,7 +73,7 @@ const CourseDetails = () => {
             </div>
 
             <div className='mt-4 d-flex justify-content-center'>
-                <BtnBig text={'Start Learning'} icon={<FaBookReader />} link={`/course/learning/${selectedCourse?._id}?module=1&page=1`} target={false} />
+                <BtnBig text={'Start Learning'} icon={<FaBookReader />} link={`/course/learning/${selectedCourse?._id}?module=${selectedCourse?.first_module}&page=${selectedCourse?.first_page}`} target={false} />
             </div>
         </div>
     );

@@ -33,10 +33,7 @@ const Contact = () => {
 
             let data = await raw.json()
 
-            console.log(data)
-
             setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Contact', "message": data[0].msg || data })
-
             setTimeout(() => {
                 setResponseStatus(false)
                 setResponseData({})

@@ -58,10 +58,7 @@ const CreateCourse = ({
           let prevArr = courses.filter((ele) => {
             return ele._id !== editData?._id
           })
-
           prevArr.push(response.data)
-          console.log(prevArr);
-
           setCourses(prevArr)
         } else {
           setCourses([...courses, response?.data])

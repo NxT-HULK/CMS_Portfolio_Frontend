@@ -211,7 +211,7 @@ const AdminMain = () => {
                                     return <CourseModule setWorkspace={setWorkspace} AdminContext={adminContext__variable} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
                                 case 'add_course_pages':
-                                    return <AddCoursePages AdminContext={adminContext__variable} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
+                                    return <AddCoursePages setWorkspace={setWorkspace} AdminContext={adminContext__variable} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
                                 case 'edit_course_pages':
                                     return <EditCoursePage setWorkspace={setWorkspace} AdminContext={adminContext__variable} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />

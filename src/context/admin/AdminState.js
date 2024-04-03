@@ -116,16 +116,17 @@ const AdminState = (props) => {
         data: null
     })
 
-    useEffect(() => {
-        console.log(editModule, editPage);
-    }, [editModule, editPage])
-    
+    const [isLoadingCurrData, setIsLoadingCurrData] = useState(false)
+    const [currData, setCurrData] = useState({
+        modules: [],
+        pages: []
+    })
 
     return (
         <AdminContext.Provider value={{
             isLoadingCourse, courses, setCourses, getCourseModule, edditTargetedCourse, setEdditTargetedCourse,
             handleChangeStatus, isUpdating, editData, setEditData, addCourseresetForm, setaddCourseresetForm,
-            editModule, setEditModule, editPage, setEditPage
+            editModule, setEditModule, editPage, setEditPage, currData, setCurrData, isLoadingCurrData, setIsLoadingCurrData
         }}>
             {props.children}
         </AdminContext.Provider>

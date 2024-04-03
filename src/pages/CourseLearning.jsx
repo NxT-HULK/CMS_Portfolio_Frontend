@@ -25,7 +25,6 @@ const CourseLearning = () => {
     useEffect(() => {
         (async () => {
             try {
-                console.log('working');
                 let response = await fetch(`${backendHost}/course/learning-matarial/${course_id}`, {
                     method: 'GET',
                     headers: {
