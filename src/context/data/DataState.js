@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataContext from './DataContext'
 
 const DataState = (props) => {
@@ -23,8 +23,8 @@ const DataState = (props) => {
         message: ''
     })
 
-    const backendHost = "https://backend-portfolio-pous.onrender.com"
-    // const backendHost = "http://localhost:5000"
+    // const backendHost = "https://backend-portfolio-pous.onrender.com"
+    const backendHost = "http://localhost:5000"
 
     const [responseStatus, setResponseStatus] = useState(false)
     const [responseData, setResponseData] = useState({
@@ -67,10 +67,51 @@ const DataState = (props) => {
         }
     };
 
+    const [isLoadingCourse, setIsLoadingCourse] = useState(false);
+    const [courses, setCourses] = useState([])
+    useEffect(() => {
+        (async () => {
+            try {
+                setIsLoadingCourse(true)
+                const fetching = await fetch(`${backendHost}/course/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await fetching.json();
+                if (fetching.status === 200) {
+                    setCourses(data?.courses)
+                }
+            } catch (error) {
+                console.log(error, 'COURSES_LOAD_ERROR');
+            } finally {
+                setIsLoadingCourse(false);
+            }
+        })()
+
+    }, []);
+
+    const getCourseModule = async (courseId) => {
+        let moduleArr = courses.filter((ele) => { return ele._id === courseId })[0].modules
+        let fetching = await fetch(`${backendHost}/course/modules`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                module_arr: moduleArr
+            })
+        })
+
+        return fetching
+    }
+
     return (
         <DataContext.Provider value={{
             socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData,
             responseStatus, setResponseStatus, responseData, setResponseData, backendHost, getToken,
+            isLoadingCourse, courses, setCourses, getCourseModule
         }}>
             {props.children}
         </DataContext.Provider>

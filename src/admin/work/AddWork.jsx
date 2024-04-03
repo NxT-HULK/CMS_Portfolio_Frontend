@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { CustomBtn, CustomTags } from '../components/Utility'
+import { CustomBtn, CustomTags } from '../../components/Utility'
 import { BsFillSendFill } from 'react-icons/bs'
 import { FaEye } from 'react-icons/fa'
 

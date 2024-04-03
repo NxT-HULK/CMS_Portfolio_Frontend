@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ImSpinner4 } from 'react-icons/im'
 import { FaBookmark, FaExternalLinkAlt, FaTrash } from 'react-icons/fa'
-import { ButtonShaded, FirstLetterEffectText } from '../components/Utility'
+import { ButtonShaded, FirstLetterEffectText } from '../../components/Utility'
 import { IoOptions } from "react-icons/io5";
 
 const Work = ({ DataContext,FunctionContext, setWorkspace }) => {

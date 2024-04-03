@@ -1,8 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { FaInfo, FaLink, FaLongArrowAltRight, FaPlay } from 'react-icons/fa'
-import { Link, useLocation } from 'react-router-dom/dist'
 import DataContext from '../context/data/DataContext'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
+import { formatDistance } from 'date-fns'
+
+import { FaEdit, FaInfo, FaLink, FaLongArrowAltRight, FaPlay } from 'react-icons/fa'
 import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia'
+import { MdDelete, MdEditSquare, MdOutlineChecklistRtl } from 'react-icons/md'
+import { ImSpinner4 } from 'react-icons/im'
+import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { AiOutlineFieldTime } from "react-icons/ai";
 
 export const IcoBtn = ({ link, icon }) => {
   return (
@@ -105,7 +111,7 @@ export const ExperienceCard = ({ img, role, para }) => {
   )
 }
 
-export const FirstLetterEffectText = ({ text, className, className2 }) => {
+export const FirstLetterEffectText = ({ text, className, className2, style }) => {
 
   const pathname = useLocation().pathname
   const [firstLetterEffect, setFirstLetterEffect] = useState("")
@@ -129,7 +135,7 @@ export const FirstLetterEffectText = ({ text, className, className2 }) => {
   }, [text, className, pathname, className2])
 
   return (
-    <span className={`${className || ''} role block my-2 p-0 fw-bold`}>{firstLetterEffect}</span>
+    <span className={`${className || ''} role block my-2 p-0 fw-bold`} style={style}>{firstLetterEffect}</span>
   )
 }
 
@@ -313,7 +319,7 @@ export const StripedSliderCustom = ({ data }) => {
 
     if (scrollerContainer.current.scrollLeft === cardWidth * totalChildren.length - scrollerContainer.current.clientWidth) {
       scrollerContainer.current.scrollLeft = 0
-    } else { 
+    } else {
       scrollerContainer.current.scrollLeft += cardWidth
     }
   }
@@ -405,3 +411,181 @@ export const Toast = () => {
     </>
   );
 };
+
+export const LoadingDataSpinner = ({ className }) => {
+  return (
+    <div className='d-flex align-items-center'>
+      <div className="spinner-border border-0 d-flex align-items-center justify-content-center">
+        <ImSpinner4 className={`fs-5 ${className ? className : 'text-white'}`} />
+      </div>
+      <span className={className ? className : 'text-white'}>Loading Data</span>
+    </div>
+  )
+}
+
+export const CourseCard = ({ courseTitle, img, adminComponent, id, onClick, deleteCourse, deleteStatus, editSetter }) => {
+
+  const { setResponseData, setResponseStatus, courses } = useContext(DataContext)
+  const getOverview = () => {
+
+    let selectedCourse = courses.filter((ele) => { return ele._id === id })[0]
+    setResponseStatus(true)
+    setResponseData({
+      isLoadingData: false,
+      heading: "Course Overview",
+      message: selectedCourse?.welcome_screen
+    })
+  }
+
+  return (
+    <div className="position-relative more-blog-card d-flex align-items-center justify-content-end flex-column" style={{ '--bg': `url(${img})` }} >
+      <span className="fw-semibold d-block text-light fs-5 text-truncate" style={{ maxWidth: '250px', letterSpacing: '1px' }}> {courseTitle} </span>
+      <Link to={`/course/details/${id}/`}>Start Learning</Link>
+
+      {adminComponent ?
+        <div className='position-absolute m-3 admin-control d-flex align-items-center gap-3'>
+          <button type="button" className='btn-reset bg-theam lh-1 p-2 rounded-circle shadow-lg' onClick={() => { onClick(); editSetter(id) }}>
+            <MdEditSquare size={20} className='text-white' />
+          </button>
+          <button type="button" className='btn-reset bg-danger lh-1 p-2 rounded-circle shadow-lg' onClick={() => { deleteCourse() }}>
+            {deleteStatus?.isDeleting === true && deleteStatus?.id === id ?
+              <div className="spinner-border border-0 d-flex align-items-center justify-content-center" style={{ height: '20px', width: '20px' }}>
+                <ImSpinner4 className={`text-white`} />
+              </div>
+              :
+              <MdDelete size={20} className='text-white' />
+            }
+          </button>
+        </div>
+        :
+        <div className='position-absolute m-3 admin-control'>
+          <button type="button" className='btn-reset bg-theam lh-1 p-2 rounded-circle shadow-lg' onClick={() => { getOverview(id) }}>
+            <span className='d-flex align-items-center justify-content-center text-white fs-5 font-monospace' style={{ height: '20px', width: '20px' }}> i </span>
+          </button>
+        </div>
+      }
+    </div>
+  )
+}
+
+export const AccordianCustom = ({ 
+  children, id, idx, name, subModuleLen, lastUpdated, urlThreaten,
+  adminMode, setEditModule, setWorkspace, adminCurrData, course_id
+}) => {
+
+  const [params] = useSearchParams()
+  let currModule = params.get('module')
+  const [isOpen, setIsOpen] = useState(() => {
+    if (currModule === id && !urlThreaten) {
+      return true
+    } else {
+      return false
+    }
+  })
+
+  let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true });
+
+  const handleEditButton = () => {
+    let data = adminCurrData?.modules.find((ele) => {
+      return ele._id === id
+    })
+
+    setEditModule({
+      flag: true,
+      data: data,
+      course_id: course_id
+    })
+
+    setWorkspace('create_course_module')
+  }
+
+  return (
+    <div>
+      <div className={`custom-accordian ${isOpen && 'rounded-bottom-0 border-bottom-0'}`} onClick={() => { setIsOpen(!isOpen) }}>
+        <div>
+          <div className={`title fs-5 fw-semibold ${!isOpen && 'border-bottom'} py-2 px-3 d-flex justify-content-between gap-4 bg-theam`}>
+            <span className='text-truncate d-block col-10'>
+              <span>{idx}.&nbsp;</span><span>{name}</span>
+            </span>
+            <div className='d-flex gap-3'>
+              <IoIosArrowDropdownCircle className='fs-4' />
+              {adminMode &&
+                <button type="button" className='btn-reset' onClick={handleEditButton}>
+                  <FaEdit />
+                </button>
+              }
+            </div>
+          </div>
+
+          {!isOpen &&
+            <div className='px-2 pb-2 bg-theam-palate py-2'>
+              <div className='subtopic-len'>
+                <MdOutlineChecklistRtl />
+                <span className='text-truncate text-white col-10 d-inline-block'>{subModuleLen} Subtopics</span>
+              </div>
+              <div className='last-updated'>
+                <AiOutlineFieldTime />
+                <span className='text-truncate text-white col-10 d-inline-block'>Last update {lastUpdatedStr}</span>
+              </div>
+            </div>
+          }
+
+        </div>
+      </div>
+
+      {isOpen &&
+        <div className='p-2 accordian-main-body rounded-bottom d-flex flex-column gap-2 bg-body-tertiary'>
+          {children}
+        </div>
+      }
+    </div>
+  )
+}
+
+export const SidebarAccordianList = ({ 
+  id, name, page, lastUpdated, ofModule, adminMode, setWorkspace, setEditPage 
+}) => {
+
+  let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true })
+  const [params, setParams] = useSearchParams()
+  let currpage = params.get('page')
+
+  const handleEditButton = () => {
+    setEditPage({
+      flag: true,
+      id: id
+    })
+
+    setWorkspace('add_course_pages')
+  }
+
+  return (
+    <>
+      <div className={`bg-white border border-theam rounded-1 overflow-hidden d-flex gap-2 cursor-pointer`} onClick={() => {
+        if (adminMode === false) {
+          setParams({
+            module: ofModule,
+            page: id
+          })
+        }
+      }}
+      >
+        <span className={`col-2 text-white d-flex align-items-center justify-content-center px-3 fs-5 ${currpage === id && ofModule === params.get('module') ? 'bg-theam' : 'bg-theam-palate'}`}> {page} </span>
+        <div className='col-10 py-1 d-flex align-items-center justify-content-between pe-3'>
+          <div className='d-flex flex-column gap-1 text-truncate'>
+            <span className={`lh-1 text-truncate d-block ${currpage === id && ofModule === params.get('module') ? 'fw-semibold' : 'fw-normal'}`}> {name} </span>
+            <span className={`lh-1 ${currpage === id && ofModule === params.get('module') ? 'fw-normal' : 'fw-light'}`} style={{ fontSize: '12px' }}> Last updated {lastUpdatedStr} </span>
+          </div>
+
+          <div>
+            {adminMode &&
+              <button type="button" className='btn-reset' onClick={handleEditButton}>
+                <FaEdit size={20} className='text-theam' />
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}

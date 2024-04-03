@@ -1,0 +1,50 @@
+@import './variables.scss';
+
+.custom-accordian {
+    border: 1px solid rgba($color: #000000, $alpha: 0.3);
+    background-color: #ecececb3;
+    border-radius: 5px;
+    gap: 20px;
+
+    .title {
+        color: #222;
+        line-height: 1;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .last-updated,
+    .subtopic-len {
+        display: flex;
+        align-items: center;
+    }
+
+    .last-updated span,
+    .subtopic-len span {
+        font-size: 14px;
+    }
+
+    .last-updated svg,
+    .subtopic-len svg {
+        color: #fff;
+        margin-right: 5px;
+        font-size: 20px;
+        font-weight: 450;
+    }
+}
+
+.accordian-main-body {
+    border: 1px solid rgba($color: #000000, $alpha: .25);
+}
+
+#learning-mai-wrapper {
+    display: grid;
+    grid-template-columns: 350px calc(100vw - 380px);
+    gap: 20px;
+}
+
+#learning-sidebar {
+    border-right: 1px solid rgba($color: #000000, $alpha: 0.25);
+}
+
+#learning-main-body {}

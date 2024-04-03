@@ -8,6 +8,7 @@ import './styles/main.scss'
 import './styles/responsive.scss'
 import './styles/scroller.scss'
 import './styles/blog-main.scss'
+import './styles/learning.scss'
 // import Blogs from './pages/Blogs'
 import Contact from './pages/Contact'
 import FunctionState from './context/function/FunctionState'
@@ -21,6 +22,11 @@ import AdminHome from './admin/AdminHome'
 import AuthenticateAdmin from './pages/AuthenticateAdmin'
 import Footer2 from './components/Footer2'
 import NotFound from './pages/NotFound'
+import CommingSoon from './components/CommingSoon'
+import CourseDetails from './pages/CourseDetails'
+import CourseLearning from './pages/CourseLearning'
+import AdminState from './context/admin/AdminState'
+import Testing from './pages/Testing'
 
 const App = () => {
   return (
@@ -30,17 +36,22 @@ const App = () => {
           <Navbar />
           <BootstrapModal />
           <Toast />
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/work' element={<Work />} />
-            <Route path='/course' element={<Course />} />
-            <Route path='/blogs' element={<Course />} />
-            {/* <Route path='/blogs/:id' element={<BlogDetails />} /> */}
-            <Route path='/contact' element={<Contact />} />
-            <Route path="/auth" element={<AuthenticateAdmin />} />
-            <Route path="/admin" element={<AdminHome />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AdminState>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/work' element={<Work />} />
+              <Route path='/course' element={<Course />} />
+              <Route path='/course/details/:course_id' element={<CourseDetails />} />
+              <Route path='/course/learning/:course_id' element={<CourseLearning />} />
+              <Route path='/blogs' element={<CommingSoon />} />
+              {/* <Route path='/blogs/:id' element={<BlogDetails />} /> */}
+              <Route path='/contact' element={<Contact />} />
+              <Route path="/auth" element={<AuthenticateAdmin />} />
+              <Route path="/admin" element={<AdminHome />} />
+              <Route path="/test" element={<Testing />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AdminState>
           <Footer2 />
         </DataState>
       </FunctionState>

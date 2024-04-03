@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { FaEye } from 'react-icons/fa'
-import { CustomBtn } from '../components/Utility'
+import { CustomBtn } from '../../components/Utility'
 import { BsFillSendFill } from 'react-icons/bs'
 
 const MailNewsletter = ({ FunctionContext, DataContext }) => {

@@ -31,6 +31,10 @@ a {
     font-family: "Great Vibes", cursive;
 }
 
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
 .font-cursive {
     @include font-cursive();
 }
@@ -629,6 +633,12 @@ ul {
         overflow: hidden;
         height: 0px;
         transition: height 0.3s;
+    }
+
+    .admin-control {
+        z-index: 2;
+        top: 0;
+        right: 0;
     }
 
     &:hover {
