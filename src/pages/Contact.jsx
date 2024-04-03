@@ -55,27 +55,29 @@ const Contact = () => {
 
     return (
         <>
-            <section className="random-background py-5">
+            <section className="random-background py-md-5 py-0">
                 <div className="container-fluid">
-                    <div className="d-flex justify-content-center align-items-center gap-5 mx-3">
-                        <div className="col-md-5 d-md-block d-none">
+                    <div className="d-flex flex-wrap justify-content-center align-items-center gap-md-5 gap-0 mx-md-3 mx-0">
+                        <div className="col-md-5 col-10">
                             <img src="/contact-illus.svg" alt="" />
                         </div>
 
-                        <div className="col-md-6 col-12 p-md-3 px-2 rounded-4" style={{ background: '#6a59d115', backdropFilter: 'blur(7px)', boxShadow: '5px 5px 0 #6a59d130' }}>
-                            <FirstLetterEffectText text={"Get In Touch"} className={'text-md-start text-center'} />
+                        <div className="col-md-6 col-12 p-md-3 px-2 rounded-4 mb-3 pb-3" style={{ background: '#6a59d115', backdropFilter: 'blur(7px)', boxShadow: '5px 5px 0 #6a59d130' }}>
+                            <div className='d-flex justify-content-md-start justify-content-center'>
+                                <FirstLetterEffectText text={"Get In Touch"} />
+                            </div>
                             <form className='mt-3' onSubmit={handleSubmitContact} ref={contactForm}>
                                 <div className="mb-2">
-                                    <input type="text" name="name" className="rounded-1 custom-input-style" placeholder="Your Name*" required onChange={(e) => {handleOnChange(e, contactFormData, setContactFormData)}} />
+                                    <input type="text" name="name" className="rounded-1 custom-input-style" placeholder="Your Name*" required onChange={(e) => { handleOnChange(e, contactFormData, setContactFormData) }} />
                                 </div>
                                 <div className="mb-2">
-                                    <input type="text" name="query" className="rounded-1 custom-input-style" placeholder="Your Query*" required onChange={(e) => {handleOnChange(e, contactFormData, setContactFormData)}} />
+                                    <input type="text" name="query" className="rounded-1 custom-input-style" placeholder="Your Query*" required onChange={(e) => { handleOnChange(e, contactFormData, setContactFormData) }} />
                                 </div>
                                 <div className="mb-2">
-                                    <input type="email" name="email" className="rounded-1 custom-input-style" placeholder="youremail@domain.com*" onChange={(e) => {handleOnChange(e, contactFormData, setContactFormData)}} />
+                                    <input type="email" name="email" className="rounded-1 custom-input-style" placeholder="youremail@domain.com*" onChange={(e) => { handleOnChange(e, contactFormData, setContactFormData) }} />
                                 </div>
                                 <div className="mb-2">
-                                    <textarea name="mess" id="" rows="5" className='w-100 custom-input-style rounded-1' placeholder="Your Message*" required onChange={(e) => {handleOnChange(e, contactFormData, setContactFormData)}} />
+                                    <textarea name="mess" id="" rows="5" className='w-100 custom-input-style rounded-1' placeholder="Your Message*" required onChange={(e) => { handleOnChange(e, contactFormData, setContactFormData) }} />
                                 </div>
                                 <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} className={'mx-md-0 mx-auto'} />
                             </form>
