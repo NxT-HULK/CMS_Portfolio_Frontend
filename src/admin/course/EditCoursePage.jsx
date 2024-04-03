@@ -64,7 +64,7 @@ const EditCoursePage = ({
         setResponseData({})
       }
     })()
-
+    // eslint-disable-next-line
   }, [selectedCourse?._id, setCurrData, backendHost, setResponseData, setResponseStatus])
 
   return (

@@ -209,6 +209,7 @@ const CourseModule = ({
     if (editModule?.flag === true) {
       handleEditModule()
     }
+    // eslint-disable-next-line
   }, [editModule?.flag])
 
 
