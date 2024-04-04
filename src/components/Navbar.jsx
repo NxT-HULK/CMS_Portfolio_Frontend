@@ -6,7 +6,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaRegBell } from 'react-icons/f
 import { SiGmail } from 'react-icons/si'
 import FunctionContext from '../context/function/FunctionContext'
 import DataContext from '../context/data/DataContext'
-import { BiMenuAltLeft  } from "react-icons/bi";
+import { BiMenuAltLeft } from "react-icons/bi";
 // import { GoGear } from "react-icons/go";
 
 const Navbar = () => {
@@ -53,9 +53,11 @@ const Navbar = () => {
                         <nav className={`navbar navbar-expand-lg ${darkTheamFlag === true ? 'position-fixed' : 'position-sticky'} top-0 w-100 z-3`} style={navAddon}>
                             <div className="container-fluid">
                                 <div className='d-flex align-items-center gap-2'>
-                                    <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" data-bs-toggle="offcanvas" data-bs-target="#sidenav-menu" aria-controls="sidenav-menu">
-                                        <BiMenuAltLeft  className='text-black' size={35} />
-                                    </button>
+                                    {router.pathname.indexOf('/course/learning/') > -1 &&
+                                        <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" data-bs-toggle="offcanvas" data-bs-target="#sidenav-menu" aria-controls="sidenav-menu">
+                                            <BiMenuAltLeft className='text-black' size={35} />
+                                        </button>
+                                    }
                                     <Link className={`navbar-brand fw-bold ${darkTheamFlag === true ? 'text-white' : 'text-theam'}`} to="/">Shivam Kashyap</Link>
                                 </div>
 
@@ -97,6 +99,11 @@ const Navbar = () => {
                         <nav className={`navbar navbar-expand-lg position-fixed top-0 w-100 z-3 bg-white`} style={navAddon}>
                             <div className="container-fluid">
                                 <div>
+                                    {router.pathname.indexOf('/course/learning/') > -1 &&
+                                        <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" data-bs-toggle="offcanvas" data-bs-target="#sidenav-menu" aria-controls="sidenav-menu">
+                                            <BiMenuAltLeft className='text-black' size={35} />
+                                        </button>
+                                    }
                                     <Link className={`navbar-brand fw-bold fs-4 text-theam`} to="/"> Shivam Kashyap </Link>
                                 </div>
 
