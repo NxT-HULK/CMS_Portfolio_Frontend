@@ -64,7 +64,7 @@ const Contact = () => {
 
                         <div className="col-md-6 col-12 p-md-3 px-2 rounded-4 mb-3 pb-3" style={{ background: '#6a59d115', backdropFilter: 'blur(7px)', boxShadow: '5px 5px 0 #6a59d130' }}>
                             <div className='d-flex justify-content-md-start justify-content-center'>
-                                <FirstLetterEffectText text={"Get In Touch"} />
+                                <FirstLetterEffectText text={"Get In Touch"} className={'text-center'} />
                             </div>
                             <form className='mt-3' onSubmit={handleSubmitContact} ref={contactForm}>
                                 <div className="mb-2">

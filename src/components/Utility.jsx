@@ -135,7 +135,7 @@ export const FirstLetterEffectText = ({ text, className, className2, style }) =>
   }, [text, className, pathname, className2])
 
   return (
-    <span className={`${className || ''} role block my-2 p-0 fw-bold`} style={style}>{firstLetterEffect}</span>
+    <span className={`${className || ''} role block my-2 p-0 fw-bold`} style={{ ...style, wordBreak: 'break-word' }}>{firstLetterEffect}</span>
   )
 }
 
@@ -468,7 +468,7 @@ export const CourseCard = ({ courseTitle, img, adminComponent, id, onClick, dele
   )
 }
 
-export const AccordianCustom = ({ 
+export const AccordianCustom = ({
   children, id, idx, name, subModuleLen, lastUpdated, urlThreaten,
   adminMode, setEditModule, setWorkspace, adminCurrData, course_id
 }) => {
@@ -542,7 +542,7 @@ export const AccordianCustom = ({
   )
 }
 
-export const SidebarAccordianList = ({ 
+export const SidebarAccordianList = ({
   id, name, page, lastUpdated, ofModule, adminMode, setWorkspace, setEditPage, course_id
 }) => {
 

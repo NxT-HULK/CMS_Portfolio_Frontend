@@ -759,3 +759,7 @@ ul {
     left: 0;
     top: 60px;
 }
+
+span.role.block.my-2.p-0.fw-bold>span {
+    display: inline-block;
+}

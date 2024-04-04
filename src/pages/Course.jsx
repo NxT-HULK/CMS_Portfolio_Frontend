@@ -7,12 +7,12 @@ const Course = () => {
     let { courses, isLoadingCourse } = useContext(DataContext)
 
     return (
-        <div className='container-fluid py-4 px-md-5 px-0 mb-4' style={{ minHeight: '40vh' }}>
+        <div className='container-fluid py-4 px-md-5 mb-4' style={{ minHeight: '40vh' }}>
             {courses.length > 0 ?
                 <>
                     <div className='w-100 mb-4'>
                         <div className='width-fit'>
-                            <FirstLetterEffectText text={'with the belief of practical learning'} className={''} style={{ wordSpacing: '5px' }} />
+                            <FirstLetterEffectText text={'with the belief of practical learning'} className={'d-block text-center'} style={{ wordSpacing: '5px' }} />
                             <div className='border border-theam'></div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@ const Course = () => {
                 </>
                 :
                 <>
-                    <FirstLetterEffectText text={`i'll upload course very soon`} style={{ wordSpacing: '5px' }} />
+                    <FirstLetterEffectText text={`i'll upload course very soon`} className={'d-block text-center mb-4'} style={{ wordSpacing: '5px' }} />
                     <div className='mt-3'>
                         <span className="d-inline-block bg-body-tertiary border px-3 py-1 fw-semibold fs-5 rounded">Please visit after few days!</span>
                     </div>
