@@ -10,14 +10,9 @@ const Course = () => {
         <div className='container-fluid py-4 px-md-5 mb-4' style={{ minHeight: '40vh' }}>
             {courses.length > 0 ?
                 <>
-                    <div className='w-100 mb-4'>
-                        <div className='width-fit'>
-                            <FirstLetterEffectText text={'with the belief of practical learning'} className={'d-block text-center'} style={{ wordSpacing: '5px' }} />
-                            <div className='border border-theam'></div>
-                        </div>
-                    </div>
+                    <span className="text-decoration-underline fs-2 text-theme text-capitalize fw-semibold d-block mb-4 firstLetterEffect2"> with the belief of practical learning </span>
 
-                    <div className="w-100 d-flex flex-wrap gap-4">
+                    <div className="w-100 d-flex flex-wrap gap-4 justify-content-center">
                         {isLoadingCourse ?
                             <LoadingDataSpinner />
                             :

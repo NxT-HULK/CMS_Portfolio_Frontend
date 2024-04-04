@@ -351,6 +351,11 @@ ul {
     color: $theam-color;
 }
 
+.firstLetterEffect2::first-letter {
+    color: $theam-color;
+    font-size: calc(100% + 1rem);
+}
+
 .custom-indicators {
     height: 12px !important;
     width: 12px !important;
