@@ -6,6 +6,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaRegBell } from 'react-icons/f
 import { SiGmail } from 'react-icons/si'
 import FunctionContext from '../context/function/FunctionContext'
 import DataContext from '../context/data/DataContext'
+import { BiMenuAltLeft  } from "react-icons/bi";
 // import { GoGear } from "react-icons/go";
 
 const Navbar = () => {
@@ -51,7 +52,12 @@ const Navbar = () => {
                     {navBackdropFlag === false ?
                         <nav className={`navbar navbar-expand-lg ${darkTheamFlag === true ? 'position-fixed' : 'position-sticky'} top-0 w-100 z-3`} style={navAddon}>
                             <div className="container-fluid">
-                                <Link className={`navbar-brand fw-bold ${darkTheamFlag === true ? 'text-white' : 'text-theam'}`} to="/">Shivam Kashyap</Link>
+                                <div className='d-flex align-items-center gap-2'>
+                                    <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" data-bs-toggle="offcanvas" data-bs-target="#sidenav-menu" aria-controls="sidenav-menu">
+                                        <BiMenuAltLeft  className='text-black' size={35} />
+                                    </button>
+                                    <Link className={`navbar-brand fw-bold ${darkTheamFlag === true ? 'text-white' : 'text-theam'}`} to="/">Shivam Kashyap</Link>
+                                </div>
 
                                 <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNavOffCanvas" aria-controls="mainNavOffCanvas">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="1.4em" viewBox="0 0 512 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM64 256c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" /></svg>
@@ -90,9 +96,11 @@ const Navbar = () => {
                         :
                         <nav className={`navbar navbar-expand-lg position-fixed top-0 w-100 z-3 bg-white`} style={navAddon}>
                             <div className="container-fluid">
-                                <Link className={`navbar-brand fw-bold fs-4 text-theam`} to="/">Shivam Kashyap</Link>
+                                <div>
+                                    <Link className={`navbar-brand fw-bold fs-4 text-theam`} to="/"> Shivam Kashyap </Link>
+                                </div>
 
-                                <button className={`btn-reset navbar-toggler text-theam`} type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNavOffCanvas" aria-controls="mainNavOffCanvas">
+                                <button className={`btn-reset navbar-toggler`} type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNavOffCanvas" aria-controls="mainNavOffCanvas">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="1.4em" viewBox="0 0 512 512" style={{ fill: '#6a59d1' }}>
                                         <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM64 256c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
                                     </svg>

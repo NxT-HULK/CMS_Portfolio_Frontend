@@ -39,15 +39,24 @@
 
 #learning-mai-wrapper {
     display: grid;
-    grid-template-columns: 350px calc(100vw - 380px);
-    gap: 20px;
+    grid-template-columns: 350px calc(100vw - 360px);
 }
 
-#learning-sidebar {
-    border-right: 1px solid rgba($color: #000000, $alpha: 0.25);
+@media screen and (max-width: 992px) {
+    #learning-mai-wrapper {
+        display: block;
+    }
+
+    #learning-main-body {
+        border: unset !important;
+    }
 }
 
 pre {
     background: #f2f2f2;
     padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba($color: #000000, $alpha: 0.1);
+    max-width: 95vw;
+    overflow: auto;
 }
