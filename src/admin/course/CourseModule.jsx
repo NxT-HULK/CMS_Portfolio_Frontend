@@ -3,6 +3,7 @@ import { CustomBtn, FirstLetterEffectText, LoadingDataSpinner } from '../../comp
 import { LuFolderCog } from 'react-icons/lu'
 import { ImSpinner4 } from 'react-icons/im'
 import { MdDelete } from 'react-icons/md'
+import { GrPowerReset } from 'react-icons/gr'
 
 const CourseModule = ({
   FunctionContext, DataContext, AdminContext, setWorkspace
@@ -26,7 +27,8 @@ const CourseModule = ({
         let fetching = await getCourseModule(courseId)
         let response = await fetching.json()
         if (fetching.status === 200) {
-          setModuleArray(response)
+          let temp = response.toSorted((a, b) => { return a.module_number - b.module_number })
+          setModuleArray(temp)
         } else {
           setModuleArray([])
         }
@@ -143,53 +145,56 @@ const CourseModule = ({
     id: ''
   })
 
-  const handleDeletePage = async (moduleId) => {
-    setDeletestatus({
-      isDeleting: true,
-      id: moduleId
-    })
-
-    try {
-
-      let fetching = await fetch(`${backendHost}/course/module`, {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          course_id: data?.course,
-          module_id: moduleId
-        })
+  const handleDeleteModule = async (moduleId) => {
+    let confirmation = window.confirm('Are you sure want to delete page')
+    if (confirmation === true) {
+      setDeletestatus({
+        isDeleting: true,
+        id: moduleId
       })
 
-      if (fetching.status === 200) {
-        setModuleArray(moduleArray.filter((ele) => { return ele._id !== moduleId }))
-      } else {
-        console.log(fetching)
-        setResponseStatus(true);
+      try {
+
+        let fetching = await fetch(`${backendHost}/course/module`, {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            course_id: data?.course,
+            module_id: moduleId
+          })
+        })
+
+        if (fetching.status === 200) {
+          setModuleArray(moduleArray.filter((ele) => { return ele._id !== moduleId }))
+        } else {
+          console.log(fetching)
+          setResponseStatus(true);
+          setResponseData({
+            isLoading: false,
+            heading: 'Error while deleting module',
+            message: 'Check console for more information'
+          })
+        }
+
+      } catch (error) {
+
+        console.log(error)
+        setResponseStatus(true)
         setResponseData({
           isLoading: false,
-          heading: 'Error while deleting module',
-          message: 'Check console for more information'
+          heading: 'Module deletion failed!',
+          message: error.message
         })
+
+      } finally {
+        setDeletestatus({})
+        setTimeout(() => {
+          setResponseStatus(false)
+          setResponseData({})
+        }, 10000);
       }
-
-    } catch (error) {
-
-      console.log(error)
-      setResponseStatus(true)
-      setResponseData({
-        isLoading: false,
-        heading: 'Module deletion failed!',
-        message: error.message
-      })
-
-    } finally {
-      setDeletestatus({})
-      setTimeout(() => {
-        setResponseStatus(false)
-        setResponseData({})
-      }, 10000);
     }
 
   }
@@ -218,7 +223,7 @@ const CourseModule = ({
       {isLoadingCourse ?
         <LoadingDataSpinner className={'text-theam'} />
         :
-        <div className="w-100 d-flex flex-md-row flex-column-reverse py-5">
+        <div className="w-100 d-flex flex-md-row flex-column-reverse py-md-5 py-3 gap-md-0 gap-3">
           <div className='col-md-6 col-12 pe-md-2 pe-0'>
             <form onSubmit={handleSubmitForm}>
               <div className="d-flex flex-wrap gap-3">
@@ -227,7 +232,7 @@ const CourseModule = ({
                     name="course"
                     id="course"
                     className='rounded-1 custom-input-style'
-                    defaultValue={editModule?.course_id || ''}
+                    defaultValue={editModule ? editModule?.course_id : ''}
                     onChange={(e) => { handleOnChange(e, data, setdata); handleLoadRestData(e.target.value) }}
                   >
                     <option value="">Select Course</option>
@@ -244,7 +249,7 @@ const CourseModule = ({
                     name="name"
                     className="rounded-1 custom-input-style"
                     placeholder="Module Name*"
-                    defaultValue={editModule?.data?.module_name || ''}
+                    defaultValue={editModule?.data?.module_name ?? ''}
                     onChange={(e) => { handleOnChange(e, data, setdata) }}
                   />
                 </div>
@@ -260,12 +265,17 @@ const CourseModule = ({
                 </div>
               </div>
 
-              <div className={'mt-3'}>
+              <div className={'mt-3 d-flex gap-3'}>
                 {editModule?.flag ?
                   <CustomBtn text={"Make Changes"} icon={<LuFolderCog />} type={'submit'} />
                   :
                   <CustomBtn text={"Add Module"} icon={<LuFolderCog />} type={'submit'} />
                 }
+
+                <button type={'reset'} className={`btn-reset user-select-none theam-btn-big`} onClick={() => { setEditModule(null); setdata(null); setIsSelected(null) }}>
+                  <span><GrPowerReset /> </span>
+                  <span className='fs-6'>Reset Form</span>
+                </button>
               </div>
             </form>
           </div>
@@ -295,7 +305,7 @@ const CourseModule = ({
                             </span>
                             <span className='text-truncate py-2'>{ele?.module_name}</span>
 
-                            <button className='d-flex align-items-center justify-content-center px-2 ms-auto bg-danger border-0' onClick={() => { handleDeletePage(ele._id) }}>
+                            <button className='d-flex align-items-center justify-content-center px-2 ms-auto bg-danger border-0' onClick={() => { handleDeleteModule(ele._id) }}>
                               {deletestatus?.isDeleting === true && deletestatus?.id === ele._id ?
                                 <div className="spinner-border border-0 d-flex align-items-center justify-content-center">
                                   <ImSpinner4 className={`fs-5 text-white`} />

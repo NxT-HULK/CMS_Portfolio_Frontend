@@ -155,16 +155,17 @@ export const ProvideCard = ({ icon, text, modalId }) => {
 }
 
 export const TestimonialCard = ({ rating, message, signature }) => {
-
-  const [mess, setMess] = useState(message)
-  const [moreInfo, setMoreInfo] = useState(true)
+  const [mess, setMess] = useState()
+  const [moreInfo, setMoreInfo] = useState(false)
 
   useEffect(() => {
-    if (mess.length > 179) {
+    if (message.length > 179) {
       setMess(mess.substring(0, 179) + "...")
       setMoreInfo(true)
+    } else {
+      setMess(message)
     }
-  }, [mess])
+  }, [message, mess])
 
   const { setInformationModalData } = useContext(DataContext)
   const handleKnowMore = () => {
@@ -176,7 +177,7 @@ export const TestimonialCard = ({ rating, message, signature }) => {
 
   return (
     <>
-      <div className="testimonial-card d-flex flex-column h-100">
+      <div className="testimonial-card d-flex flex-column h-100" style={{ minHeight: '300px' }}>
         <div className="main-container d-flex flex-column align-items-center user-select-none h-100">
           <div className="d-flex gap-2 stars-wrapper">
             {
@@ -503,7 +504,7 @@ export const AccordianCustom = ({
     <div>
       <div className={`custom-accordian ${isOpen && 'rounded-bottom-0 border-bottom-0'}`} onClick={() => { setIsOpen(!isOpen) }}>
         <div>
-          <div className={`title fs-5 fw-semibold ${!isOpen && 'border-bottom'} py-2 px-3 d-flex justify-content-between gap-4 bg-theam`}>
+          <div className={`title fs-5 fw-semibold ${!isOpen && 'border-bottom'} py-2 px-3 d-flex justify-content-between gap-md-4 gap-0 bg-theam`}>
             <span className='text-truncate d-block col-10'>
               <span>{idx}.&nbsp;</span><span>{name}</span>
             </span>

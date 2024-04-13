@@ -35,19 +35,23 @@ const Contact = ({ DataContext, FunctionContext }) => {
   }, [backendHost])
 
   const handleDeleteData = async (id) => {
-    try {
-      let raw = await fetch(`${backendHost}/contact/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'Application/json'
-        }
-      })
-      let data = await raw.json()
-      setContactData(contactData.filter((ele) => ele._id !== data))
-      setIsFormProcess({ status: false, _id: "" })
+    let confirmation = window.confirm('Are you sure want to delete page')
+    if (confirmation === true) {
+      setIsFormProcess({ status: true, _id: id });
+      try {
+        let raw = await fetch(`${backendHost}/contact/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'Application/json'
+          }
+        })
+        let data = await raw.json()
+        setContactData(contactData.filter((ele) => ele._id !== data))
+        setIsFormProcess({ status: false, _id: "" })
 
-    } catch (error) {
-      console.error(error)
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 
@@ -61,7 +65,7 @@ const Contact = ({ DataContext, FunctionContext }) => {
           <span>Loading Data</span>
         </div>
         :
-        <div className="w-100 d-block mt-5 mb-auto">
+        <div className="w-100 d-block mb-auto pt-md-5 pt-3">
           <table className='w-100 border border-theam'>
             <thead>
               <tr className='bg-theam'>
@@ -89,7 +93,7 @@ const Contact = ({ DataContext, FunctionContext }) => {
                             <ImSpinner4 className='text-theam fs-5' />
                           </div>
                           :
-                          <button type="button" className='btn-reset lh-1 bg-danger p-2 rounded-circle' onClick={() => { setIsFormProcess({ status: true, _id: ele._id }); handleDeleteData(ele._id) }}>
+                          <button type="button" className='btn-reset lh-1 bg-danger p-2 rounded-circle' onClick={() => { handleDeleteData(ele._id) }}>
                             <FaTrash className='text-white' />
                           </button>
                         }

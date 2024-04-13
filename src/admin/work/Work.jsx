@@ -4,7 +4,7 @@ import { FaBookmark, FaExternalLinkAlt, FaTrash } from 'react-icons/fa'
 import { ButtonShaded, FirstLetterEffectText } from '../../components/Utility'
 import { IoOptions } from "react-icons/io5";
 
-const Work = ({ DataContext,FunctionContext, setWorkspace }) => {
+const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
 
     const { backendHost, setResponseData, setResponseStatus } = DataContext
     const { toSimpleDate } = FunctionContext
@@ -59,30 +59,33 @@ const Work = ({ DataContext,FunctionContext, setWorkspace }) => {
     }
 
     const handleDeleteData = async (id, category) => {
-        setIsFormProcess({
-            status: true,
-            _id: id
-        })
-
-        try {
-
-            await fetch(`${backendHost}/work/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+        let confirmation = window.confirm('Are you sure want to delete page')
+        if (confirmation === true) {
+            setIsFormProcess({
+                status: true,
+                _id: id
             })
 
-            let temp = mainData[category].filter(ele => ele._id !== id)
-            setMainData({ ...mainData, [category]: temp })
+            try {
 
-        } catch (error) {
-            setResponseStatus(true)
-            setResponseData({
-                isLoadingData: false,
-                heading: "Error",
-                message: error.message
-            })
+                await fetch(`${backendHost}/work/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+
+                let temp = mainData[category].filter(ele => ele._id !== id)
+                setMainData({ ...mainData, [category]: temp })
+
+            } catch (error) {
+                setResponseStatus(true)
+                setResponseData({
+                    isLoadingData: false,
+                    heading: "Error",
+                    message: error.message
+                })
+            }
         }
     }
 

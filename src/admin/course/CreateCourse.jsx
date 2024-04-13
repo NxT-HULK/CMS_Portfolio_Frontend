@@ -2,14 +2,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import { CustomBtn, CustomTags } from '../../components/Utility'
 import { FaEye } from 'react-icons/fa'
 import { HiDocumentArrowUp } from "react-icons/hi2";
+import { GrPowerReset } from "react-icons/gr";
 
 const CreateCourse = ({
-  DataContext, FunctionContext, AdminContext, setWorkspace, workspace
+  DataContext, FunctionContext, AdminContext, setWorkspace
 }) => {
 
   const { handleOnChange } = FunctionContext
   const { backendHost, setResponseStatus, setResponseData } = DataContext
-  const { courses, setCourses, editData, setEditData, addCourseresetForm } = AdminContext
+  const { courses, setCourses, editData, setEditData } = AdminContext
 
   const addWorkForm = useRef()
   const [addCourseFormData, setaddCourseFormData] = useState({
@@ -112,12 +113,6 @@ const CreateCourse = ({
 
   }, [addCourseFormData?.usedTech])
 
-  useEffect(() => {
-    if (addCourseresetForm === true) {
-      setEditData(null)
-    }
-  }, [addCourseresetForm, setEditData, setaddCourseFormData, workspace])
-
 
   return (
     <div className='w-100 my-4'>
@@ -137,7 +132,7 @@ const CreateCourse = ({
             className="rounded-1 custom-input-style"
             placeholder="Course Name*"
             onChange={(e) => { handleOnChange(e, addCourseFormData, setaddCourseFormData) }}
-            defaultValue={addCourseFormData?.name}
+            defaultValue={addCourseFormData?.name ?? ''}
           />
         </div>
 
@@ -149,7 +144,7 @@ const CreateCourse = ({
               className="rounded-1 custom-input-style"
               placeholder="(Background Image) https://www...*"
               onChange={(e) => { handleOnChange(e, addCourseFormData, setaddCourseFormData) }}
-              defaultValue={addCourseFormData?.bgUrl}
+              defaultValue={addCourseFormData?.bgUrl ?? ''}
             />
           </div>
           <div className="col-md-6 col-12">
@@ -159,7 +154,7 @@ const CreateCourse = ({
               className="rounded-1 custom-input-style"
               placeholder="Used Technology - React, Express, Node, MongoDB, MySQL ...*"
               onChange={(e) => { handleOnChange(e, addCourseFormData, setaddCourseFormData) }}
-              defaultValue={addCourseFormData?.usedTech}
+              defaultValue={addCourseFormData?.usedTech ?? ''}
             />
           </div>
         </div>
@@ -174,7 +169,7 @@ const CreateCourse = ({
             data-gramm_editor="false"
             data-enable-grammarly="false"
             onChange={(e) => { handleOnChange(e, addCourseFormData, setaddCourseFormData) }}
-            defaultValue={addCourseFormData?.welcome_screen}
+            defaultValue={addCourseFormData?.welcome_screen ?? ''}
           />
           <button type="button" className="lh-1 btn-reset position-absolute m-2" style={{ top: 0, right: 0 }} onClick={() => { handlePreviewData('welcome_screen') }}>
             <FaEye className='fs-4 text-theam bg-white' />
@@ -191,14 +186,25 @@ const CreateCourse = ({
             data-gramm_editor="false"
             data-enable-grammarly="false"
             onChange={(e) => { handleOnChange(e, addCourseFormData, setaddCourseFormData) }}
-            defaultValue={addCourseFormData?.html}
+            defaultValue={addCourseFormData?.html ?? ''}
           />
           <button type="button" className="lh-1 btn-reset position-absolute m-2" style={{ top: 0, right: 0 }} onClick={() => { handlePreviewData('html') }}>
             <FaEye className='fs-4 text-theam bg-white' />
           </button>
         </div>
 
-        <CustomBtn text="Submit" icon={<HiDocumentArrowUp />} type={'submit'} />
+        <div className='d-flex gap-3 align-items-center'>
+          {editData ?
+            <CustomBtn text="Update" icon={<HiDocumentArrowUp />} type={'submit'} />
+            :
+            <CustomBtn text="Submit" icon={<HiDocumentArrowUp />} type={'submit'} />
+          }
+
+          <button type={'reset'} className={`btn-reset user-select-none theam-btn-big`} onClick={() => { setEditData(null); setaddCourseFormData(null) }}>
+            <span><GrPowerReset /> </span>
+            <span className='fs-6'>Reset Form</span>
+          </button>
+        </div>
       </form>
     </div>
   )

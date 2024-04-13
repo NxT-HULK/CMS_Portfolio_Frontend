@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { BtnBig, CustomBtn, DetailBox, ExperienceCard, FirstLetterEffectText, IcoBtn, ProvideCard, ShadowText, SkillBox, SkillBoxContainer, TestimonialCard } from '../components/Utility'
+import { BtnBig, CustomBtn, DetailBox, ExperienceCard, FirstLetterEffectText, IcoBtn, LoadingDataSpinner, ProvideCard, ShadowText, SkillBox, SkillBoxContainer, TestimonialCard } from '../components/Utility'
 import { FaLinkedinIn, FaFacebookF, FaInstagram, FaDownload, FaReact, FaNodeJs, FaSass, FaGitAlt, FaJava, FaPython, FaPencilRuler, FaPhotoVideo, FaFileCode, FaHashtag } from 'react-icons/fa'
-import { FaBarsStaggered } from 'react-icons/fa6'
+import { FaBarsStaggered, FaCircleChevronLeft, FaCircleChevronRight } from 'react-icons/fa6'
 import { BsFillSendFill, BsMouseFill } from 'react-icons/bs'
 import { SiExpress, SiMongodb } from 'react-icons/si'
 import { GrCertificate, GrMysql } from 'react-icons/gr'
@@ -60,30 +60,43 @@ const Home = () => {
     }
 
     const testimonialCarousel_container = useRef("")
-    const [testimonialData, setTestimonialData] = useState([])
+    const [testimonialData, setTestimonialData] = useState()
+    const [isLoadingTestimonial, setIsLoadingTestimonial] = useState(false)
     useEffect(() => {
         const fetchTestimonial = async () => {
-            let raw = await fetch(`${backendHost}/testimonial`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            setIsLoadingTestimonial(true)
+            try {
+                let raw = await fetch(`${backendHost}/testimonial`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
 
-            await raw.json().then((data) => {
-                setTestimonialData(data)
-                return data
-            }).then((data) => {
-                if (data.length >= 1) {
-                    setTimeout(() => {
-                        testimonialCarousel_container.current.firstElementChild.classList.add('active')
-                    }, 100);
-                }
-            })
+                let jsonData = await raw.json()
+                jsonData.sort((a, b) => { 
+                    return 0.5 - Math.random()
+                })
+                
+                setTestimonialData(jsonData)
+
+            } catch (error) {
+                console.error(error)
+            } finally {
+                setIsLoadingTestimonial(false)
+            }
         }
 
         fetchTestimonial();
     }, [backendHost])
+
+
+    useEffect(() => {
+        if (Array.isArray(testimonialData) && testimonialData?.length >= 1) {
+            testimonialCarousel_container.current.firstElementChild.classList.add('active')
+        }
+    }, [testimonialData])
+
 
     return (
         <>
@@ -309,26 +322,34 @@ const Home = () => {
                 </div>
 
                 <div className="container-fluid d-flex flex-wrap justify-content-center">
+                    {isLoadingTestimonial ?
+                        <LoadingDataSpinner classList={'text-theam'} />
+                        :
+                        <div className="col-md-4 col-12 p-4 pb-0 pt-0">
+                            <div id="testimonialCarousel" className="carousel slide h-100 position-relative" data-bs-ride="carousel" data-bs-touch="true">
+                                <div className='d-flex align-items-center gap-3 position-absolute z-1' style={{ right: 0, top: 0 }}>
+                                    <button className="bg-transparent border-0 fs-1 lh-1 p-0" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                                        <FaCircleChevronLeft className={'text-theam'} />
+                                    </button>
+                                    <button className="bg-transparent border-0 fs-1 lh-1 p-0" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                                        <FaCircleChevronRight className={'text-theam'} />
+                                    </button>
+                                </div>
 
-                    {testimonialData && testimonialData &&
-                        <div className="col-md-4 col-12 p-4 pt-0">
-                            <div id="testimonialCarousel" className="carousel slide h-100" data-bs-ride="carousel">
                                 <div className="carousel-inner h-100" ref={testimonialCarousel_container}>
-
-                                    {testimonialData && testimonialData.map((ele) => {
+                                    {Array.isArray(testimonialData) && testimonialData.map((ele) => {
                                         return (
                                             <div className="carousel-item h-100" key={`${ele._id}`}>
                                                 <TestimonialCard message={ele.mess} signature={ele.name} rating={ele.rating} />
                                             </div>
                                         )
                                     })}
-
                                 </div>
                             </div>
                         </div>
                     }
 
-                    <div className="col-md-7 col-12 p-4 mt-3">
+                    <div className="col-md-7 col-12 p-4 px-md-4 px-2 mt-3">
                         <div>
                             <form className='rounded-3' onSubmit={handleSubmitTestimonial} ref={testimonialForm}>
                                 <div className="mb-2 d-flex flex-wrap gap-md-0 gap-2">

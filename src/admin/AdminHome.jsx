@@ -119,13 +119,13 @@ const AdminMain = () => {
                                             <FaFolderPlus className='text-white me-1' />
                                             Create Course
                                         </button>
+                                        <button type="button" className='btn-reset bg-theam px-2 py-1 text-white rounded-1' onClick={() => { setmenuModal('false'); setWorkspace('create_course_module') }}>
+                                            <MdEditDocument className='text-white me-1' />
+                                            Add Modules
+                                        </button>
                                         <button type="button" className='btn-reset bg-theam px-2 py-1 text-white rounded-1' onClick={() => { setmenuModal('false'); setWorkspace('add_course_pages') }}>
                                             <HiDocumentPlus className='text-white me-1' />
                                             Add Pages
-                                        </button>
-                                        <button type="button" className='btn-reset bg-theam px-2 py-1 text-white rounded-1' onClick={() => { setmenuModal('false'); setWorkspace('edit_course_pages') }}>
-                                            <MdEditDocument className='text-white me-1' />
-                                            Edit Page
                                         </button>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@ const AdminMain = () => {
 
                         <div className="d-lg-none d-block">
                             <div className="d-flex justify-content-between py-2">
-                                <span className='text-uppercase fw-semibold text-theam fs-4'>Admin Panel</span>
+                                <span className='user-select-none text-uppercase fw-semibold text-theam fs-4' onClick={() => { setWorkspace(0) }}>Admin Panel</span>
                                 <button type="button" className='simleButton-with-shaded btn-reset width-fit lh-1 px-2 py-1 fs-5' onClick={() => { setmenuModal(true) }} >
                                     <MdOutlineSettingsInputComponent />
                                 </button>

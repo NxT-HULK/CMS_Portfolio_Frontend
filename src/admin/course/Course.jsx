@@ -17,40 +17,43 @@ const Course = ({
     })
 
     const handleDeleteCourse = async (courseId) => {
-        setDeleteInfo({
-            isDeleting: true,
-            id: courseId
-        })
+        let confirmation = window.confirm('Are you sure want to delete page')
+        if (confirmation === true) {
+            setDeleteInfo({
+                isDeleting: true,
+                id: courseId
+            })
 
-        try {
+            try {
 
-            let fetching = await fetch(`${backendHost}/course`, {
-                method: 'DELETE',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    course_id: courseId
+                let fetching = await fetch(`${backendHost}/course`, {
+                    method: 'DELETE',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        course_id: courseId
+                    })
                 })
-            })
 
-            if (fetching.ok) {
-                setCourses(courses.filter(ele => ele._id !== courseId))
+                if (fetching.ok) {
+                    setCourses(courses.filter(ele => ele._id !== courseId))
+                }
+
+            } catch (error) {
+                setResponseStatus(true)
+                setResponseData({
+                    isLoading: false,
+                    heading: 'Error while deleting course',
+                    message: error.message
+                })
+            } finally {
+                setDeleteInfo({})
+                setTimeout(() => {
+                    setResponseStatus(false)
+                    setResponseData({})
+                }, 10000);
             }
-
-        } catch (error) {
-            setResponseStatus(true)
-            setResponseData({
-                isLoading: false,
-                heading: 'Error while deleting course',
-                message: error.message
-            })
-        } finally {
-            setDeleteInfo({})
-            setTimeout(() => {
-                setResponseStatus(false)
-                setResponseData({})
-            }, 10000);
         }
     }
 
@@ -58,7 +61,7 @@ const Course = ({
         <div className='w-100 mb-auto'>
             <div className='w-100 mb-4'>
                 <div className='my-4'>
-                    <div className='d-flex gap-3'>
+                    <div className='d-flex gap-3 flex-wrap'>
                         <button type="button" className='simleButton-with-shaded width-fit px-2' onClick={() => { setWorkspace('create_course') }}>
                             <FaFolderPlus className='text-white me-1' />
                             Create Course
@@ -75,7 +78,7 @@ const Course = ({
                 </div>
             </div>
 
-            <div className='w-100 d-flex flex-wrap gap-4'>
+            <div className='w-100 d-flex flex-wrap gap-4 justify-content-md-start justify-content-center'>
                 {isLoadingCourse ?
                     <LoadingDataSpinner />
                     :

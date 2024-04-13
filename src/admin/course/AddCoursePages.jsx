@@ -4,6 +4,7 @@ import { HiDocumentPlus } from "react-icons/hi2";
 import { FaEye } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { ImSpinner4 } from 'react-icons/im';
+import { GrPowerReset } from 'react-icons/gr';
 
 const AddCoursePages = ({
   FunctionContext, DataContext, AdminContext, setWorkspace
@@ -74,11 +75,11 @@ const AddCoursePages = ({
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          module_id: editPage.flag === true ? data.module : selectedModule._id,
+          module_id: editPage?.flag === true ? data.module : selectedModule._id,
           page_name: data?.page_name,
           page_number: data?.page_number,
           html: data?.html,
-          updateFlag: editPage.flag ?? false,
+          updateFlag: editPage?.flag ?? false,
           pageId: editPage.data
         })
       })
@@ -157,45 +158,60 @@ const AddCoursePages = ({
     id: ''
   })
   const handleDeletePage = async (pageId) => {
-    setDeletestatus({
-      isDeleting: true,
-      id: pageId
-    })
 
-    try {
+    let confirmation = window.confirm('Are you sure want to delete page')
 
-      let fetching = await fetch(`${backendHost}/course/modules/page`, {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          module_id: selectedModule._id,
-          page_id: pageId
+    if (confirmation === true) {
+      setDeletestatus({
+        isDeleting: true,
+        id: pageId
+      })
+
+      try {
+
+        let fetching = await fetch(`${backendHost}/course/modules/page`, {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            module_id: selectedModule._id,
+            page_id: pageId
+          })
         })
-      })
 
-      if (fetching.status === 200) {
-        setPages(pages.filter((ele) => { return ele._id !== pageId }))
-      } else {
-        console.log(fetching);
+        if (fetching.status === 200) {
+          setPages(pages.filter((ele) => { return ele._id !== pageId }))
+        } else {
+          console.log(fetching);
+        }
+
+      } catch (error) {
+        setResponseStatus(true);
+        setResponseData({
+          isLoading: false,
+          heading: 'Error occured while deleting page from module',
+          message: error.message
+        })
       }
-
-    } catch (error) {
-      setResponseStatus(true);
-      setResponseData({
-        isLoading: false,
-        heading: 'Error occured while deleting page from module',
-        message: error.message
-      })
     }
   }
 
+  const setCurrentPageAsync = () => {
+    return new Promise((resolve, reject) => {
+      const foundPage = currData?.pages.find((ele) => ele._id === editPage.data);
+      if (foundPage) {
+        resolve(foundPage);
+      } else {
+        reject(new Error("Page not found"));
+      }
+    });
+  }
+
   const [currPage, setCurrPage] = useState({})
-  const handleEditPage = () => {
-    setCurrPage(() => {
-      return currData?.pages.find((ele) => ele._id === editPage.data) || {}
-    })
+  const handleEditPage = async () => {
+    const temp = await setCurrentPageAsync()
+    setCurrPage(temp)
 
     setdata({
       module: editPage.ofModule,
@@ -207,20 +223,26 @@ const AddCoursePages = ({
   }
 
   useEffect(() => {
-    if (editPage.flag === true) {
+    if (editPage?.flag === true) {
       handleEditPage()
     }
     // eslint-disable-next-line
-  }, [editPage])
+  }, [editPage, pages])
 
   return (
-    <div className='d-flex py-5'>
+    <div className='d-flex py-md-5 py-3 flex-wrap-reverse gap-md-0 gap-4'>
       <div className='col-md-6 col-12 pe-md-2 pe-0'>
         <form className='w-100' onSubmit={handleSubmitForm}>
           <div className="d-flex flex-wrap gap-3">
             <div className="d-flex flex-wrap w-100">
-              <div className="col-md-6 col-12 pe-md-2 pe-0">
-                <select name="course" id="course" className='rounded-1 custom-input-style' value={data.course || ''} onChange={(e) => { handleOnChange(e, data, setdata) }}>
+              <div className="col-md-6 col-12 pe-md-2 pe-0 mb-md-0 mb-3">
+                <select
+                  name="course"
+                  id="course"
+                  className='rounded-1 custom-input-style'
+                  value={data?.course ?? ''}
+                  onChange={(e) => { handleOnChange(e, data, setdata) }}
+                >
                   <option value="">Select Course</option>
                   {courses.map((ele) => {
                     return (
@@ -230,7 +252,17 @@ const AddCoursePages = ({
                 </select>
               </div>
               <div className="col-md-6 col-12">
-                <select name="module" id="course" value={data.module || ''} className={`rounded-1 custom-input-style ${(!(selectInfo?.course && courseModules.length > 0) && 'opacity-50') || ''}`} onChange={(e) => { handleOnChange(e, data, setdata); handleLoadSelectedModule(e.target.value) }} disabled={!(selectInfo?.course && courseModules.length > 0)}>
+                <select
+                  name="module"
+                  id="course"
+                  value={data?.module ?? ''}
+                  className={
+                    `rounded-1 custom-input-style
+                    ${(!(selectInfo?.course && courseModules.length > 0) && 'opacity-50') || ''}`
+                  }
+                  onChange={(e) => { handleOnChange(e, data, setdata); handleLoadSelectedModule(e.target.value) }}
+                  disabled={!(selectInfo?.course && courseModules.length > 0)}
+                >
                   <option value="">Select Module</option>
                   {Array.isArray(courseModules) && courseModules.map((ele) => {
                     return (
@@ -242,16 +274,40 @@ const AddCoursePages = ({
             </div>
 
             <div className="col-12">
-              <input type="text" name="page_name" className="rounded-1 custom-input-style" placeholder="Page Name*" value={data.page_name} onChange={(e) => { handleOnChange(e, data, setdata) }} />
+              <input
+                type="text"
+                name="page_name"
+                className="rounded-1 custom-input-style"
+                placeholder="Page Name*"
+                value={data?.page_name ?? ''}
+                onChange={(e) => { handleOnChange(e, data, setdata) }}
+              />
             </div>
 
             <div className="col-12">
-              <input type="text" name="page_number" className="rounded-1 custom-input-style" placeholder="Page Number*" value={data.page_number} onChange={(e) => { handleOnChange(e, data, setdata) }} />
+              <input
+                type="text"
+                name="page_number"
+                className="rounded-1 custom-input-style"
+                placeholder="Page Number*"
+                value={data?.page_number ?? ''}
+                onChange={(e) => { handleOnChange(e, data, setdata) }}
+              />
             </div>
 
             <div className='col-12'>
               <div className="mb-2 position-relative">
-                <textarea name="html" id="" cols="" rows="8" className='w-100 custom-input-style rounded-1 font-monospace' placeholder="Page Content - Raw html*" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" value={data.html || ''} onChange={(e) => { handleOnChange(e, data, setdata) }} />
+                <textarea
+                  name="html"
+                  rows="8"
+                  className='w-100 custom-input-style rounded-1 font-monospace'
+                  placeholder="Page Content - Raw html*"
+                  data-gramm="false"
+                  data-gramm_editor="false"
+                  data-enable-grammarly="false"
+                  value={data?.html ?? ''}
+                  onChange={(e) => { handleOnChange(e, data, setdata) }}
+                />
                 <button type="button" className="lh-1 btn-reset position-absolute m-2" style={{ top: 0, right: 0 }} onClick={handlePreviewData}>
                   <FaEye className='fs-4 text-theam bg-white' />
                 </button>
@@ -259,11 +315,22 @@ const AddCoursePages = ({
             </div>
           </div>
 
-          <CustomBtn text={"Add Page"} icon={<HiDocumentPlus />} type={'submit'} />
+          <div className='d-flex gap-3'>
+            {editPage ?
+              <CustomBtn text={"Update Page"} icon={<HiDocumentPlus />} type={'submit'} />
+              :
+              <CustomBtn text={"Add Page"} icon={<HiDocumentPlus />} type={'submit'} />
+            }
+
+            <button type={'reset'} className={`btn-reset user-select-none theam-btn-big`} onClick={() => { setEditPage(null); setdata(null); }}>
+              <span><GrPowerReset /> </span>
+              <span className='fs-6'>Reset Form</span>
+            </button>
+          </div>
         </form>
       </div>
 
-      {!editPage.flag ?
+      {!editPage?.flag ?
         <div className='col-md-6 col-12 ps-md-2 ps-0'>
           {selectInfo?.course === true && selectInfo?.module === true ?
             selectInfo?.module === true &&
@@ -323,7 +390,7 @@ const AddCoursePages = ({
         </div>
         :
         <>
-          <div className='p-3 ms-2 border rounded-2 shadow-sm' style={{ whiteSpace: 'break-space' }} dangerouslySetInnerHTML={{ __html: currPage?.html ?? '' }}></div>
+          <div className='p-3 border rounded-2 shadow-sm col-md-6 col-12' style={{ whiteSpace: 'break-space', wordBreak: 'break-word' }} dangerouslySetInnerHTML={{ __html: currPage?.html ?? '' }}></div>
         </>
       }
     </div>
