@@ -1,22 +1,12 @@
 import React, { useRef, useState } from 'react'
-import { FaEye } from 'react-icons/fa'
 import { CustomBtn } from '../../components/Utility'
 import { BsFillSendFill } from 'react-icons/bs'
+import JoditEditor from 'jodit-react'
 
 const MailNewsletter = ({ FunctionContext, DataContext }) => {
 
-    const [htmlData, setHtmlData] = useState("")
     const { handleOnChange } = FunctionContext
     const { setResponseStatus, setResponseData, backendHost } = DataContext
-
-    const handlePreviewData = () => {
-        setResponseStatus(true)
-        setResponseData({
-            isLoading: false,
-            heading: 'Live Preview',
-            message: htmlData.html
-        })
-    }
 
     const [formData, setFormData] = useState({
         toSend: []
@@ -101,14 +91,14 @@ const MailNewsletter = ({ FunctionContext, DataContext }) => {
                 </div>
 
                 <div className="w-100 mt-3">
-                    <div className="w-100 mb-2">
+                    <div className="w-100 mb-3">
                         <input type="text" name="subject" className="rounded-1 custom-input-style" placeholder="Subject*" onChange={(e) => { handleOnChange(e, formData, setFormData) }} />
                     </div>
-                    <div className="mb-2 position-relative">
-                        <textarea name="html" rows="10" className='w-100 custom-input-style rounded-1' placeholder="Body*" onChange={(e) => { handleOnChange(e, formData, setFormData); handleOnChange(e, htmlData, setHtmlData) }} />
-                        <button type="button" className="lh-1 btn-reset position-absolute m-2" style={{ top: 0, right: 0 }} onClick={handlePreviewData}>
-                            <FaEye className='fs-4 text-theam bg-white' />
-                        </button>
+                    <div className="mb-3 position-relative">
+                        <JoditEditor
+                            value={formData?.html ?? ''}
+                            onChange={(value) => setFormData({ ...formData, html: value })}
+                        />
                     </div>
                 </div>
 

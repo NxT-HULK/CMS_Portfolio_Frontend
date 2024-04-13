@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { CustomBtn, CustomTags } from '../../components/Utility'
-import { FaEye } from 'react-icons/fa'
 import { HiDocumentArrowUp } from "react-icons/hi2";
 import { GrPowerReset } from "react-icons/gr";
+import JoditEditor from 'jodit-react';
 
 const CreateCourse = ({
   DataContext, FunctionContext, AdminContext, setWorkspace
@@ -84,15 +84,6 @@ const CreateCourse = ({
     }
   }
 
-  const handlePreviewData = (key) => {
-    setResponseStatus(true)
-    setResponseData({
-      isLoading: false,
-      heading: 'Live Preview',
-      message: addCourseFormData[key] || ""
-    })
-  }
-
   const [usedTech, setUsedTech] = useState([])
   useEffect(() => {
     (() => {
@@ -125,7 +116,7 @@ const CreateCourse = ({
       </div>
 
       <form className='rounded-3' onSubmit={handleSubmitForm} ref={addWorkForm}>
-        <div className="mb-2 d-flex flex-wrap gap-md-0 gap-2">
+        <div className="mb-3 d-flex flex-wrap gap-md-0 gap-2">
           <input
             type="text"
             name="name"
@@ -136,7 +127,7 @@ const CreateCourse = ({
           />
         </div>
 
-        <div className="mb-2 d-flex flex-wrap gap-md-0 gap-2">
+        <div className="mb-3 d-flex flex-wrap gap-md-0 gap-2">
           <div className="col-md-6 col-12 pe-md-2 pe-0">
             <input
               type="text"
@@ -159,41 +150,27 @@ const CreateCourse = ({
           </div>
         </div>
 
-        <div className="mb-2 position-relative">
-          <textarea
-            name="welcome_screen"
-            rows="5"
-            className='w-100 custom-input-style rounded-1 font-monospace'
-            placeholder="Welcome screen raw html/First page(Prerequest, Module description, ...etc)*"
-            data-gramm="false"
-            data-gramm_editor="false"
-            data-enable-grammarly="false"
-            onChange={(e) => { handleOnChange(e, addCourseFormData, setaddCourseFormData) }}
-            defaultValue={addCourseFormData?.welcome_screen ?? ''}
+        <div className="mb-2 position-relative mt-3">
+          <span className='opacity-75 d-block col-12 text-truncate' style={{ fontSize: '14px' }}>
+            Welcome screen raw html/First page(Prerequest, Module description, ...etc)
+          </span>
+          <JoditEditor
+            value={addCourseFormData?.welcome_screen ?? ''}
+            onChange={(value) => setaddCourseFormData({ ...addCourseFormData, welcome_screen: value })}
           />
-          <button type="button" className="lh-1 btn-reset position-absolute m-2" style={{ top: 0, right: 0 }} onClick={() => { handlePreviewData('welcome_screen') }}>
-            <FaEye className='fs-4 text-theam bg-white' />
-          </button>
         </div>
 
-        <div className="mb-2 position-relative">
-          <textarea
-            name="html"
-            rows="5"
-            className='w-100 custom-input-style rounded-1 font-monospace'
-            placeholder="Course description raw html/Introduction and overview of course(Introduction, What we'll going to learn)*"
-            data-gramm="false"
-            data-gramm_editor="false"
-            data-enable-grammarly="false"
-            onChange={(e) => { handleOnChange(e, addCourseFormData, setaddCourseFormData) }}
-            defaultValue={addCourseFormData?.html ?? ''}
+        <div className="mb-2 position-relative mt-3">
+          <span className='opacity-75 d-block col-12 text-truncate' style={{ fontSize: '14px' }}>
+            Course description raw html/Introduction and overview of course(Introduction, What we'll going to learn)
+          </span>
+          <JoditEditor
+            value={addCourseFormData?.html ?? ''}
+            onChange={(value) => setaddCourseFormData({ ...addCourseFormData, html: value })}
           />
-          <button type="button" className="lh-1 btn-reset position-absolute m-2" style={{ top: 0, right: 0 }} onClick={() => { handlePreviewData('html') }}>
-            <FaEye className='fs-4 text-theam bg-white' />
-          </button>
         </div>
 
-        <div className='d-flex gap-3 align-items-center'>
+        <div className='d-flex gap-3 align-items-center mt-3'>
           {editData ?
             <CustomBtn text="Update" icon={<HiDocumentArrowUp />} type={'submit'} />
             :

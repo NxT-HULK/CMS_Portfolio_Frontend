@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { CustomBtn, FirstLetterEffectText, LoadingDataSpinner } from '../../components/Utility'
 import { HiDocumentPlus } from "react-icons/hi2";
-import { FaEye } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { ImSpinner4 } from 'react-icons/im';
 import { GrPowerReset } from 'react-icons/gr';
+import JoditEditor from 'jodit-react';
 
 const AddCoursePages = ({
   FunctionContext, DataContext, AdminContext, setWorkspace
@@ -47,15 +47,6 @@ const AddCoursePages = ({
   const handleLoadSelectedModule = (courseId) => {
     setSelectedModule(() => {
       return courseModules.filter(ele => ele._id === courseId)[0] || {}
-    })
-  }
-
-  const handlePreviewData = () => {
-    setResponseStatus(true)
-    setResponseData({
-      isLoading: false,
-      heading: 'Live Preview',
-      message: data.html
     })
   }
 
@@ -231,7 +222,7 @@ const AddCoursePages = ({
 
   return (
     <div className='d-flex py-md-5 py-3 flex-wrap-reverse gap-md-0 gap-4'>
-      <div className='col-md-6 col-12 pe-md-2 pe-0'>
+      <div className='col-12'>
         <form className='w-100' onSubmit={handleSubmitForm}>
           <div className="d-flex flex-wrap gap-3">
             <div className="d-flex flex-wrap w-100">
@@ -297,25 +288,18 @@ const AddCoursePages = ({
 
             <div className='col-12'>
               <div className="mb-2 position-relative">
-                <textarea
-                  name="html"
-                  rows="8"
-                  className='w-100 custom-input-style rounded-1 font-monospace'
-                  placeholder="Page Content - Raw html*"
-                  data-gramm="false"
-                  data-gramm_editor="false"
-                  data-enable-grammarly="false"
+                <span className='opacity-75 d-block col-12 text-truncate' style={{ fontSize: '14px' }}>
+                  Page Content - Raw html
+                </span>
+                <JoditEditor
                   value={data?.html ?? ''}
-                  onChange={(e) => { handleOnChange(e, data, setdata) }}
+                  onChange={(value) => setdata({ ...data, html: value })}
                 />
-                <button type="button" className="lh-1 btn-reset position-absolute m-2" style={{ top: 0, right: 0 }} onClick={handlePreviewData}>
-                  <FaEye className='fs-4 text-theam bg-white' />
-                </button>
               </div>
             </div>
           </div>
 
-          <div className='d-flex gap-3'>
+          <div className='d-flex gap-3 mt-2'>
             {editPage ?
               <CustomBtn text={"Update Page"} icon={<HiDocumentPlus />} type={'submit'} />
               :
@@ -331,7 +315,7 @@ const AddCoursePages = ({
       </div>
 
       {!editPage?.flag ?
-        <div className='col-md-6 col-12 ps-md-2 ps-0'>
+        <div className='col-12 mb-3'>
           {selectInfo?.course === true && selectInfo?.module === true ?
             selectInfo?.module === true &&
             <div className="bg-body-tertiary p-3 border rounded-1">
