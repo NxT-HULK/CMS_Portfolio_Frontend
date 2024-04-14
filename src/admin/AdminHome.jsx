@@ -20,6 +20,7 @@ import EditCoursePage from './course/EditCoursePage'
 import AddCoursePages from './course/AddCoursePages'
 import CourseModule from './course/CourseModule'
 import AdminContext from '../context/admin/AdminContext'
+import Notification from './notification/Notification'
 
 const CustomLi = ({ text, index, setWorkspace, className }) => {
     return (
@@ -70,7 +71,7 @@ const AdminMain = () => {
         navigate('/auth')
     }
 
-    const menu = ["Testimonial", "Contact", "Work", "News Letter", "Course"]
+    const menu = ["Testimonial", "Contact", "Work", "News Letter", "Course", "Notifications"]
     const [menuModal, setmenuModal] = useState(false)
 
     return (
@@ -197,6 +198,9 @@ const AdminMain = () => {
 
                                 case 4:
                                     return <Course AdminContext={adminContext__variable} setWorkspace={setWorkspace} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
+                                
+                                case 5:
+                                    return <Notification AdminContext={adminContext__variable} setWorkspace={setWorkspace} DataContext={dataContext__variable} FunctionContext={functionContext__variable} />
 
                                 case 'send_mail':
                                     return <MailNewsletter DataContext={dataContext__variable} FunctionContext={functionContext__variable} />

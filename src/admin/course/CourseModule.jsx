@@ -225,7 +225,7 @@ const CourseModule = ({
         :
         <div className="w-100 d-flex flex-md-row flex-column-reverse py-md-5 py-3 gap-md-0 gap-3">
           <div className='col-md-6 col-12 pe-md-2 pe-0'>
-            <form onSubmit={handleSubmitForm}>
+            <form className='w-100 z-0 position-relative' onSubmit={handleSubmitForm}>
               <div className="d-flex flex-wrap gap-3">
                 <div className="col-12">
                   <select

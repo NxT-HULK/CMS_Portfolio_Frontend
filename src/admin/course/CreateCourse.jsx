@@ -115,7 +115,7 @@ const CreateCourse = ({
         <CustomTags tag="." className={'opacity-0'} />
       </div>
 
-      <form className='rounded-3' onSubmit={handleSubmitForm} ref={addWorkForm}>
+      <form className='rounded-3 w-100 z-0 position-relative' onSubmit={handleSubmitForm} ref={addWorkForm}>
         <div className="mb-3 d-flex flex-wrap gap-md-0 gap-2">
           <input
             type="text"

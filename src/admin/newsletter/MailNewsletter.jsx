@@ -65,7 +65,7 @@ const MailNewsletter = ({ FunctionContext, DataContext }) => {
 
     return (
         <div className='my-4 w-100'>
-            <form className='w-100' onSubmit={handleSubmitForm} ref={form}>
+            <form className='w-100 z-0 position-relative' onSubmit={handleSubmitForm} ref={form}>
                 <div className="w-100">
                     <div className="d-flex flex-wrap gap-3 w-100">
                         <div className="d-flex gap-1 align-items-center">

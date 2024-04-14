@@ -107,11 +107,27 @@ const DataState = (props) => {
         return fetching
     }
 
+    // getting site notification from backend
+    const [notify, setNotify] = useState({})
+    useEffect(() => {
+        (async () => {
+            let raw = await fetch(`${backendHost}/notify`, {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+
+            let data = await raw.json()
+            setNotify(data)
+        })();
+    }, [backendHost, setNotify])
+
     return (
         <DataContext.Provider value={{
             socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData,
             responseStatus, setResponseStatus, responseData, setResponseData, backendHost, getToken,
-            isLoadingCourse, courses, setCourses, getCourseModule
+            isLoadingCourse, courses, setCourses, getCourseModule, notify, setNotify
         }}>
             {props.children}
         </DataContext.Provider>

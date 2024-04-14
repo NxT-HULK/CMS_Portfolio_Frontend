@@ -223,7 +223,7 @@ const AddCoursePages = ({
   return (
     <div className='d-flex py-md-5 py-3 flex-wrap-reverse gap-md-0 gap-4'>
       <div className='col-12'>
-        <form className='w-100' onSubmit={handleSubmitForm}>
+        <form className='w-100 z-0 position-relative' onSubmit={handleSubmitForm}>
           <div className="d-flex flex-wrap gap-3">
             <div className="d-flex flex-wrap w-100">
               <div className="col-md-6 col-12 pe-md-2 pe-0 mb-md-0 mb-3">
@@ -328,8 +328,8 @@ const AddCoursePages = ({
                   <LoadingDataSpinner className={'text-theam fw-bold'} />
                   :
                   <>
-                    <div className='d-flex border border-theam bg-white bg-theam px-3 py-2 rounded-1 fs-5 fw-bold'>
-                      <span className='text-white text-truncate'>{selectedModule.module_name}</span>
+                    <div className='bg-theam px-3 py-2 rounded-1 fs-5 fw-bold word-wrap text-white'>
+                      {selectedModule.module_name}
                     </div>
 
                     {selectedModule?.pages?.length > 0 && pages.map((ele) => {
@@ -339,7 +339,7 @@ const AddCoursePages = ({
                             <span>{ele?.page_number}</span>
                             <span>.&nbsp;</span>
                           </span>
-                          <span className='word-wrap py-1' style={{fontSize: '14px'}}>{ele?.name}</span>
+                          <span className='py-1'>{ele?.name}</span>
 
                           <button className='d-flex align-items-center justify-content-center px-2 ms-auto bg-danger border-0' onClick={() => { handleDeletePage(ele._id) }}>
                             {deletestatus?.isDeleting === true && deletestatus?.id === ele._id ?

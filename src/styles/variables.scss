@@ -1,4 +1,5 @@
 $theam-color: #6a59d1;
+$theam-color-dark: #3f2e9f;
 $gray-light: #e3e1ef;
 $custom-gray: #808080;
 
@@ -10,8 +11,24 @@ $custom-gray: #808080;
     color: $theam-color !important;
 }
 
+@mixin text-theme-dark() {
+    color: $theam-color-dark !important;
+}
+
+@mixin bg-theme-dark() {
+    background-color: $theam-color-dark !important;
+}
+
 .bg-theam {
     @include bg-theam();
+}
+
+.bg-theme-dark {
+    @include bg-theme-dark();
+}
+
+.text-theme-dark {
+    @include text-theme-dark();
 }
 
 .bg-theam-palate {
