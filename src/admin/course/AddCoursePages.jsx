@@ -339,7 +339,7 @@ const AddCoursePages = ({
                             <span>{ele?.page_number}</span>
                             <span>.&nbsp;</span>
                           </span>
-                          <span className='text-truncate py-1 d-block col-12'>{ele?.name}</span>
+                          <span className='word-wrap py-1' style={{fontSize: '14px'}}>{ele?.name}</span>
 
                           <button className='d-flex align-items-center justify-content-center px-2 ms-auto bg-danger border-0' onClick={() => { handleDeletePage(ele._id) }}>
                             {deletestatus?.isDeleting === true && deletestatus?.id === ele._id ?
