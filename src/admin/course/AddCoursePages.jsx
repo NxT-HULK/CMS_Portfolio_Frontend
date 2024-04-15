@@ -31,7 +31,7 @@ const AddCoursePages = ({
     (async () => {
       if (data?.course?.length > 0) {
         setIsLoadingModule(true)
-        let fetching = await getCourseModule(data.course)
+        let fetching = await getCourseModule(data?.course)
         let res = await fetching.json()
         setCourseModules(res)
         setIsLoadingModule(false)
@@ -66,12 +66,12 @@ const AddCoursePages = ({
           'content-type': 'application/json'
         },
         body: JSON.stringify({
-          module_id: editPage?.flag === true ? data.module : selectedModule._id,
+          module_id: editPage?.flag === true ? data?.module : selectedModule._id,
           page_name: data?.page_name,
           page_number: data?.page_number,
           html: data?.html,
           updateFlag: editPage?.flag ?? false,
-          pageId: editPage.data
+          pageId: editPage?.data
         })
       })
 
@@ -115,6 +115,10 @@ const AddCoursePages = ({
         heading: 'Form Status: Error',
         message: error.message
       })
+    } finally {
+      e.target.reset();
+      setEditPage(null)
+      setdata(null)
     }
   }
 
@@ -190,7 +194,7 @@ const AddCoursePages = ({
 
   const setCurrentPageAsync = () => {
     return new Promise((resolve, reject) => {
-      const foundPage = currData?.pages.find((ele) => ele._id === editPage.data);
+      const foundPage = currData?.pages.find((ele) => ele._id === editPage?.data);
       if (foundPage) {
         resolve(foundPage);
       } else {
@@ -205,11 +209,11 @@ const AddCoursePages = ({
     setCurrPage(temp)
 
     setdata({
-      module: editPage.ofModule,
+      module: editPage?.ofModule,
       page_name: currPage.name,
       page_number: currPage.page_number,
       html: currPage.html,
-      course: editPage.ofCourse
+      course: editPage?.ofCourse
     })
   }
 
@@ -300,7 +304,7 @@ const AddCoursePages = ({
           </div>
 
           <div className='d-flex gap-3 mt-2'>
-            {editPage ?
+            {editPage?.flag === true ?
               <CustomBtn text={"Update Page"} icon={<HiDocumentPlus />} type={'submit'} />
               :
               <CustomBtn text={"Add Page"} icon={<HiDocumentPlus />} type={'submit'} />

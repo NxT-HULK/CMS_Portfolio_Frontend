@@ -60,3 +60,29 @@ pre {
     max-width: 95vw;
     overflow: auto;
 }
+
+#course-learning-main-container {
+    img {
+        max-width: 100%;
+        object-fit: contain;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #course-learning-main-container {
+        ul,
+        ol {
+            padding-left: 15px;
+        }
+
+        p {
+            &:has(img) {
+                margin: 0 !important;
+            }
+
+            img {
+                width: 100% !important;
+            }
+        }
+    }
+}

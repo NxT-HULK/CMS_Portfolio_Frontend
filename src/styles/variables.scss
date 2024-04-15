@@ -44,3 +44,13 @@ $custom-gray: #808080;
     align-items: center;
     justify-content: center;
 }
+
+.themed-first-letter {
+    display: inline-block;
+    
+    &::first-letter {
+        color: $theam-color !important;
+        text-transform: uppercase;
+        font-size: calc(100% + 5px);
+    }
+}

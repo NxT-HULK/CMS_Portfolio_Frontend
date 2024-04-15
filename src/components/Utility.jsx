@@ -484,6 +484,13 @@ export const AccordianCustom = ({
     }
   })
 
+  useEffect(() => {
+    if (currModule === id) {
+      setIsOpen(true)
+    }
+  }, [currModule, id, setIsOpen])
+
+
   let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true });
 
   const handleEditButton = () => {
@@ -504,7 +511,7 @@ export const AccordianCustom = ({
     <div>
       <div className={`custom-accordian ${isOpen && 'rounded-bottom-0 border-bottom-0'}`} onClick={() => { setIsOpen(!isOpen) }}>
         <div>
-          <div className={`title fs-5 fw-semibold ${!isOpen && 'border-bottom'} py-2 px-3 d-flex justify-content-between gap-md-4 gap-0 bg-theam`}>
+          <div className={`text-capitalize title fs-5 fw-semibold ${!isOpen && 'border-bottom'} py-2 px-3 d-flex justify-content-between gap-md-4 gap-0 ${currModule === id ? 'bg-theam' : 'bg-theam-palate'}`}>
             <span className='text-truncate d-block col-10'>
               <span>{idx}.&nbsp;</span><span>{name}</span>
             </span>
@@ -576,7 +583,7 @@ export const SidebarAccordianList = ({
         <span className={`col-2 text-white d-flex align-items-center justify-content-center px-3 fs-5 ${currpage === id && ofModule === params.get('module') ? 'bg-theam' : 'bg-theam-palate'}`}> {page} </span>
         <div className='col-10 py-1 d-flex align-items-center justify-content-between pe-3'>
           <div className='d-flex flex-column gap-1 text-truncate'>
-            <span className={`lh-1 text-truncate d-block ${currpage === id && ofModule === params.get('module') ? 'fw-semibold' : 'fw-normal'}`}> {name} </span>
+            <span className={`text-capitalize text-truncate d-block ${currpage === id && ofModule === params.get('module') ? 'fw-semibold' : 'fw-normal'}`}> {name} </span>
             <span className={`lh-1 ${currpage === id && ofModule === params.get('module') ? 'fw-normal' : 'fw-light'}`} style={{ fontSize: '12px' }}> Last updated {lastUpdatedStr} </span>
           </div>
 
@@ -589,6 +596,28 @@ export const SidebarAccordianList = ({
           </div>
         </div>
       </div>
+    </>
+  )
+}
+
+export const FirstLetterEffectText2 = ({ text }) => {
+
+  const [textArr, setTextArr] = useState([])
+  useEffect(() => {
+    let arr = text.split(" ");
+    setTextArr(arr)
+  }, [text])
+
+  return (
+    <>
+      <span>
+        {textArr.map((ele, idx) => {
+          return (
+            <span className={`themed-first-letter`} key={`${ele}-idx-${idx}`}>{ele}&nbsp;</span>
+          )
+        })
+        }
+      </span>
     </>
   )
 }

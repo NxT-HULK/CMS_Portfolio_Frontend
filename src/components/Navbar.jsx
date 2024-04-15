@@ -56,7 +56,7 @@ const Navbar = () => {
         <>
             {notify?.mess?.length > 0 && notifyFlag &&
                 <div className={`bg-theme-dark py-1 px-2 w-100 position-relative d-flex align-items-center ${notifyFlag ? 'd-block' : 'd-none'}`}>
-                    <div id='notification-container' className="text-center mb-0 text-white w-100" dangerouslySetInnerHTML={{ __html: notify?.mess }}></div>
+                    <div id='notification-container' className="col-md-12 col-10 mx-auto d-block text-center mb-0 text-white" dangerouslySetInnerHTML={{ __html: notify?.mess }}></div>
                     <button type="button" className="bg-transparent border-0 position-absolute" style={{ right: 0 }} onClick={() => { setNotifyFlag(false) }}>
                         <MdClose className='text-white' size={25} />
                     </button>
