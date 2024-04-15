@@ -47,7 +47,7 @@ const CourseLearning = () => {
                         })
                     }
                 } else {
-                    return;
+                    navigate('/course')
                 }
             } catch (error) {
                 navigate('/course')
