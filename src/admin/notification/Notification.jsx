@@ -31,13 +31,23 @@ const Notification = ({
             })
 
             let data = await raw.json()
-            setNotify(data)
 
-            setResponseData({
-                isLoading: false,
-                heading: "Form Response",
-                message: JSON.stringify(data?.mess)
-            })
+            if (raw.status === 201) {
+                setResponseData({
+                    isLoading: false,
+                    heading: "Form Response",
+                    message: data?.mess
+                })
+                
+                setNotify(data)
+                setEditorValue(data?.mess)
+            } else {
+                setResponseData({
+                    isLoading: false,
+                    heading: "Form Response",
+                    message: data
+                })
+            }
 
         } catch (error) {
             setResponseData({
