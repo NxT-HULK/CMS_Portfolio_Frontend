@@ -440,7 +440,7 @@ export const CourseCard = ({ courseTitle, img, adminComponent, id, onClick, dele
 
   return (
     <div className="position-relative more-blog-card d-flex align-items-center justify-content-end flex-column" style={{ '--bg': `url(${img})` }} >
-      <span className="fw-semibold d-block text-light fs-5 text-truncate" style={{ maxWidth: '250px', letterSpacing: '1px' }}> {courseTitle} </span>
+      <span className="fw-semibold d-block text-light fs-5 text-truncate col-10" style={{ letterSpacing: '1px' }}> {courseTitle} </span>
       <Link to={`/course/details/${id}/`}>Start Learning</Link>
 
       {adminComponent ?

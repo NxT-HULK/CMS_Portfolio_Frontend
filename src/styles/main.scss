@@ -610,8 +610,7 @@ ul {
 .more-blog-card {
     background-image: var(--bg);
     height: 200px;
-    min-width: 300px;
-    width: 300px;
+    aspect-ratio: 16/9;
     position: relative;
     background-size: cover;
     background-position: center;
@@ -658,7 +657,7 @@ ul {
         position: absolute;
         display: block;
         height: inherit;
-        width: inherit;
+        aspect-ratio: inherit;
         background-image: linear-gradient(to top, #000000d8, #000000c0, #00000060, #00000000, #00000000);
         bottom: 0;
     }

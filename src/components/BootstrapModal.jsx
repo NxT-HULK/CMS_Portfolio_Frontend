@@ -173,7 +173,7 @@ const ResponseBox = () => {
                                 </div>
 
                                 {!responseData.isLoading && responseData.message &&
-                                    <div style={{ whiteSpace: 'break-spaces' }} dangerouslySetInnerHTML={{ __html: responseData.message }}></div>
+                                    <div dangerouslySetInnerHTML={{ __html: responseData.message }}></div>
                                 }
                             </div>
                         </div>
