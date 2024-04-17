@@ -378,7 +378,7 @@ const AddCoursePages = ({
         </div>
         :
         <>
-          <div className='p-3 border rounded-2 shadow-sm col-md-6 col-12' style={{ whiteSpace: 'break-space', wordBreak: 'break-word' }} dangerouslySetInnerHTML={{ __html: currPage?.html ?? '' }}></div>
+          <div className='p-3 border rounded-2 shadow-sm col-12 mb-3' style={{ whiteSpace: 'break-space', wordBreak: 'break-word' }} dangerouslySetInnerHTML={{ __html: currPage?.html ?? '' }}></div>
         </>
       }
     </div>

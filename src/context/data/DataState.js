@@ -111,15 +111,23 @@ const DataState = (props) => {
     const [notify, setNotify] = useState({})
     useEffect(() => {
         (async () => {
-            let raw = await fetch(`${backendHost}/notify`, {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json'
-                }
-            })
+            try {
+                let raw = await fetch(`${backendHost}/notify`, {
+                    method: 'GET',
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                })
 
-            let data = await raw.json()
-            setNotify(data)
+                if (raw.status === 200) {
+                    let data = await raw.json()
+                    setNotify(data)
+                } else {
+                    setNotify(null)
+                }
+            } catch (error) {
+                setNotify(null)
+            }
         })();
     }, [backendHost, setNotify])
 

@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DataContext from '../context/data/DataContext';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { BtnBig, FirstLetterEffectText } from '../components/Utility';
 import dateFormat from 'dateformat'
-import { TbPlayerTrackNextFilled } from "react-icons/tb"
 import { FaBookReader } from 'react-icons/fa';
 
 const CourseDetails = () => {
@@ -42,10 +41,7 @@ const CourseDetails = () => {
                 <div>
                     <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedCourse?.welcome_screen || '') }}></div>
                     <div className='mt-3'>
-                        <Link to={`/course/learning/${selectedCourse?._id}?module=${selectedCourse?.first_module}&page=${selectedCourse?.first_page}`} className='bg-theam text-white py-1 rounded-1 px-2 text-decoration-none'>
-                            <TbPlayerTrackNextFilled className='mb-1 me-1' />
-                            Start Course
-                        </Link>
+                        <BtnBig text={'Start Learning'} icon={<FaBookReader />} link={`/course/learning/${selectedCourse?._id}?module=${selectedCourse?.first_module}&page=${selectedCourse?.first_page}`} target={false} />
                     </div>
                 </div>
             </div>

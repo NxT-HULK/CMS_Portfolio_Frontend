@@ -35,7 +35,8 @@ const EditCoursePage = ({
           let fetching = await fetch(`${backendHost}/course/learning-matarial/${selectedCourse?._id}`, {
             method: 'GET',
             headers: {
-              'content-type': 'application/json'
+              'content-type': 'application/json',
+              'admin': true
             }
           })
 

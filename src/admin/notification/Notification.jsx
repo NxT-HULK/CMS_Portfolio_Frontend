@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTrash } from 'react-icons/fa'
 import { CustomBtn, FirstLetterEffectText } from '../../components/Utility'
 import JoditEditor from 'jodit-react'
@@ -38,7 +38,7 @@ const Notification = ({
                     heading: "Form Response",
                     message: data?.mess
                 })
-                
+
                 setNotify(data)
                 setEditorValue(data?.mess)
             } else {
@@ -80,6 +80,15 @@ const Notification = ({
         }
     }
 
+    useEffect(() => {
+
+        if (notify?.mess?.length > 0) { 
+            setEditorValue(notify?.mess)
+        }
+
+    }, [notify?.mess])
+
+
     return (
         <div className='container mb-auto mt-4'>
             <div className='mb-3'>
@@ -89,7 +98,7 @@ const Notification = ({
                 </button>
             </div>
 
-            <div className='d-flex flex-wrap'>
+            <div className='d-flex flex-wrap gap-md-0 gap-3'>
                 <div className="col-md-6 pe-md-2 pe-0">
                     <div className='bg-light p-3 rounded-2 border shadow-sm'>
                         <FirstLetterEffectText text={'Current Notification'} className={'mb-3'} />
@@ -105,7 +114,7 @@ const Notification = ({
                             </div>
                         </div>
 
-                        <div className='d-flex justify-content-center my-3'>
+                        <div className='d-flex justify-content-md-center my-3'>
                             <CustomBtn text="Set Notification" icon={<HiDocumentArrowUp />} type={'submit'} />
                         </div>
                     </form>
