@@ -4,7 +4,6 @@ import LearningSidebar from '../components/LearningSidebar'
 import { FirstLetterEffectText, FirstLetterEffectText2, LoadingDataSpinner } from '../components/Utility'
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
-import DOMPurify from 'dompurify';
 import DataContext from '../context/data/DataContext';
 import { formatDistance } from 'date-fns';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -158,7 +157,7 @@ const CourseLearning = () => {
                                         <span className='lh-1 fs-4 fw-semibold d-block'> <FirstLetterEffectText2 text={currentPage?.name ?? ''} /> </span>
                                         <span style={{ fontSize: '14px' }}>Last updated {formatDistance(currentPage?.updatedAt || new Date(), new Date(), { addSuffix: true })}</span>
                                     </div>
-                                    <div id='course-learning-main-container' dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(pageData || '') }} ></div>
+                                    <div id='course-learning-main-container' dangerouslySetInnerHTML={{ __html: pageData ?? '' }} ></div>
                                     <hr />
                                     <div className='d-flex flex-column gap-3'>
                                         <div className="d-flex justify-content-between flex-wrap gap-md-0 gap-3">
