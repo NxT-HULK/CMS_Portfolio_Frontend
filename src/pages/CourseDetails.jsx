@@ -9,7 +9,7 @@ import { FaBookReader } from 'react-icons/fa';
 
 const CourseDetails = () => {
     const { course_id } = useParams();
-    const { courses } = useContext(DataContext);
+    const { courses, backendHost } = useContext(DataContext);
     const navigate = useNavigate();
 
     const [sanitizedHtml, setSanitizedHtml] = useState('');
@@ -26,17 +26,36 @@ const CourseDetails = () => {
     }, [course_id, courses, navigate]);
 
     // get last updated on api call
-    // const lastUpdatedAt = ""
+    const [date, setDate] = useState({})
+    useEffect(() => {
+        (async () => {
+            let raw = await fetch(`${backendHost}/course/last-updated/`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    course_id: course_id
+                })
+            })
+
+            let jsonData = await raw.json()
+            setDate(jsonData)
+        })();
+    }, [backendHost, course_id, setDate])
 
     return (
         <div className='py-4 px-md-4 px-2 mb-5 container-fluid'>
             <div className='mb-4'>
                 <div className='mb-3 border-bottom d-flex flex-wrap justify-content-between align-items-center'>
-                    <FirstLetterEffectText text={selectedCourse?.name || ''} className={'lh-1'} />
+                    <div className='d-flex flex-column'>
+                        <FirstLetterEffectText text={selectedCourse?.name || ''} className={'lh-1'} />
+                        <span className='lh-1 mb-1 fst-italic' style={{ fontSize: '14px' }}> Last Update on {dateFormat(date?.last || new Date(), "dS, mmmm yyyy")} </span>
+                    </div>
 
-                    <div>
+                    <div className='d-flex flex-column gap-1'>
                         <span className='fst-italic' style={{ fontSize: '14px' }}>
-                            Last Update on: {dateFormat(selectedCourse?.updatedAt || new Date(), "dS, mmmm yyyy")}
+                            Stared on: {dateFormat(date?.start || new Date(), "dS, mmmm yyyy")}
                         </span>
                     </div>
                 </div>
