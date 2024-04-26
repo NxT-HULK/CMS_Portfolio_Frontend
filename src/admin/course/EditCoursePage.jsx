@@ -111,6 +111,11 @@ const EditCoursePage = ({
             <>
               <div className='d-flex flex-column gap-3 my-3'>
                 {Array.isArray(currData.modules) && currData.modules.map((ele, index) => {
+
+                  let lastUpdate = currData?.pages.find((pages) => {
+                    return pages._id === ele?.pages[ele?.pages?.length - 1]
+                  })
+
                   return (
                     <AccordianCustom
                       id={ele._id}
@@ -118,9 +123,8 @@ const EditCoursePage = ({
                       name={ele.module_name}
                       subModuleLen={ele.pages.length}
                       key={ele._id + `${index}-module`}
-                      lastUpdated={ele.updatedAt}
+                      lastUpdated={lastUpdate.updatedAt}
                       setEditModule={setEditModule}
-                      
                       adminMode={true}
                       setWorkspace={setWorkspace}
                       adminCurrData={currData}
@@ -137,7 +141,6 @@ const EditCoursePage = ({
                             lastUpdated={data.updatedAt}
                             key={page._id + `${idx}-page`}
                             setEditPage={setEditPage}
-                            
                             adminMode={true}
                             setWorkspace={setWorkspace}
                             adminCurrData={currData}

@@ -25,6 +25,9 @@ const CourseDetails = () => {
         }
     }, [course_id, courses, navigate]);
 
+    // get last updated on api call
+    // const lastUpdatedAt = ""
+
     return (
         <div className='py-4 px-md-4 px-2 mb-5 container-fluid'>
             <div className='mb-4'>
