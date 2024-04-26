@@ -7,6 +7,11 @@ const LearningSidebar = ({ modules, pages, urlThreaten }) => {
         <div className='d-flex flex-column gap-3 my-3'>
             {Array.isArray(modules) && modules.map((ele, index) => {
                 if (ele.pages.length > 0) {
+                    
+                    let lastUpdate = pages.find((pages) => {
+                        return pages._id === ele?.pages[ele?.pages?.length-1]
+                    })
+
                     return (
                         <AccordianCustom
                             id={ele._id}
@@ -15,7 +20,7 @@ const LearningSidebar = ({ modules, pages, urlThreaten }) => {
                             subModuleLen={ele.pages.length}
                             key={ele._id + `${index}-module`}
                             urlThreaten={urlThreaten}
-                            lastUpdated={ele.updatedAt}
+                            lastUpdated={lastUpdate?.updatedAt}
                             adminMode={false}
                         >
                             {ele.pages.map((page, idx) => {
