@@ -4,6 +4,7 @@ import { FirstLetterEffectText } from '../components/Utility'
 import DataContext from '../context/data/DataContext'
 import FunctionContext from '../context/function/FunctionContext'
 import { useNavigate } from 'react-router-dom'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const AuthenticateAdmin = () => {
   const { setResponseStatus, setResponseData, backendHost, getToken } = useContext(DataContext)
@@ -95,6 +96,11 @@ const AuthenticateAdmin = () => {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Admin Login</title>
+        </Helmet>
+      </HelmetProvider>
       <div id='auth-main-container'>
         <div className="container d-flex align-items-center justify-content-center">
           <div className="col-md-6">

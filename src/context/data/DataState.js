@@ -131,11 +131,14 @@ const DataState = (props) => {
         })();
     }, [backendHost, setNotify])
 
+    const [courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag] = useState(false)
+
     return (
         <DataContext.Provider value={{
             socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData,
             responseStatus, setResponseStatus, responseData, setResponseData, backendHost, getToken,
-            isLoadingCourse, courses, setCourses, getCourseModule, notify, setNotify
+            isLoadingCourse, courses, setCourses, getCourseModule, notify, setNotify,
+            courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag
         }}>
             {props.children}
         </DataContext.Provider>

@@ -13,7 +13,7 @@ import { MdClose } from 'react-icons/md'
 const Navbar = () => {
 
     const { darkTheamFlag, navBackdropFlag } = useContext(FunctionContext)
-    const { socialLinks, notify } = useContext(DataContext)
+    const { socialLinks, notify, setCourseLearning_offCanvasFlag } = useContext(DataContext)
     // const { socialLinks, setToastModalData } = useContext(DataContext)
 
     const { facebook, insta, linkedin, mail } = socialLinks
@@ -70,7 +70,7 @@ const Navbar = () => {
                             <div className="container-fluid">
                                 <div className='d-flex align-items-center gap-2'>
                                     {router.pathname.indexOf('/course/learning/') > -1 &&
-                                        <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" data-bs-toggle="offcanvas" data-bs-target="#sidenav-menu" aria-controls="sidenav-menu">
+                                        <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" onClick={() => {setCourseLearning_offCanvasFlag(true)}}>
                                             <BiMenuAltLeft className='text-black' size={35} />
                                         </button>
                                     }
@@ -116,7 +116,7 @@ const Navbar = () => {
                             <div className="container-fluid">
                                 <div>
                                     {router.pathname.indexOf('/course/learning/') > -1 &&
-                                        <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" data-bs-toggle="offcanvas" data-bs-target="#sidenav-menu" aria-controls="sidenav-menu">
+                                        <button className={`btn-reset navbar-toggler ${darkTheamFlag === true ? 'text-white' : 'text-dark'} `} type="button" onClick={() => {setCourseLearning_offCanvasFlag(true)}}>
                                             <BiMenuAltLeft className='text-black' size={35} />
                                         </button>
                                     }

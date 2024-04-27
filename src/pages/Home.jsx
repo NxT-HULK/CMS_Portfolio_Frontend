@@ -8,6 +8,7 @@ import { GrCertificate, GrMysql } from 'react-icons/gr'
 import Typewriter from 'typewriter-effect';
 import DataContext from '../context/data/DataContext'
 import FunctionContext from '../context/function/FunctionContext'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const Home = () => {
 
@@ -74,10 +75,10 @@ const Home = () => {
                 })
 
                 let jsonData = await raw.json()
-                jsonData.sort((a, b) => { 
+                jsonData.sort((a, b) => {
                     return 0.5 - Math.random()
                 })
-                
+
                 setTestimonialData(jsonData)
 
             } catch (error) {
@@ -100,6 +101,11 @@ const Home = () => {
 
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Portfolio | Shivam Kashyap</title>
+                </Helmet>
+            </HelmetProvider>
             <section className='d-flex align-items-center justify-content-center home-scren-1st-vh' id='intro'>
                 <div className="d-flex flex-column justify-content-center">
                     <div className="container d-flex align-items-center flex-xxl-row flex-md-row flex-sm-column-reverse flex-column-reverse">
@@ -182,7 +188,7 @@ const Home = () => {
                             <ul className='w-100 d-flex flex-wrap justify-content-between pe-4'>
                                 <li className='col-xxl-3 col-md-3 col-sm-12 col-12 d-flex align-items-center gap-2'>
                                     <div>
-                                        <span className='fw-bold fs-2'>02</span>
+                                        <span className='fw-bold fs-2'>1+</span>
                                     </div>
                                     <div>
                                         <span className='fw-medium'>Years of Experience</span>
@@ -190,7 +196,7 @@ const Home = () => {
                                 </li>
                                 <li className='col-xxl-3 col-md-3 col-sm-12 col-12 d-flex align-items-center gap-2'>
                                     <div>
-                                        <span className='fw-bold fs-2'>10+</span>
+                                        <span className='fw-bold fs-2'>12+</span>
                                     </div>
                                     <div>
                                         <span className='fw-medium'>Industry Projects</span>

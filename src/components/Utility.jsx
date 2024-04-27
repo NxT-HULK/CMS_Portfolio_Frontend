@@ -9,6 +9,7 @@ import { MdDelete, MdEditSquare, MdOutlineChecklistRtl } from 'react-icons/md'
 import { ImSpinner4 } from 'react-icons/im'
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { AiOutlineFieldTime } from "react-icons/ai";
+import FunctionContext from '../context/function/FunctionContext'
 
 export const IcoBtn = ({ link, icon }) => {
   return (
@@ -569,6 +570,9 @@ export const SidebarAccordianList = ({
     setWorkspace('add_course_pages')
   }
 
+  const { setCourseLearning_offCanvasFlag } = useContext(DataContext)
+  const { scrollTop } = useContext(FunctionContext)
+
   return (
     <>
       <div className={`bg-white border border-theam rounded-1 overflow-hidden d-flex gap-2 cursor-pointer`} onClick={() => {
@@ -578,6 +582,8 @@ export const SidebarAccordianList = ({
             page: id
           })
         }
+
+        setCourseLearning_offCanvasFlag(false); scrollTop();
       }}
       >
         <span className={`col-2 text-white d-flex align-items-center justify-content-center px-3 fs-5 ${currpage === id && ofModule === params.get('module') ? 'bg-theam' : 'bg-theam-palate'}`}> {page} </span>

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { FirstLetterEffectText, CourseCard, LoadingDataSpinner } from '../components/Utility'
 import DataContext from '../context/data/DataContext'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const Course = () => {
 
@@ -8,6 +9,11 @@ const Course = () => {
 
     return (
         <div className='container-fluid py-4 px-md-5 mb-4' style={{ minHeight: '40vh' }}>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Course | Shivam Kashyap</title>
+                </Helmet>
+            </HelmetProvider>
             {isLoadingCourse ?
                 <div className='d-flex justify-content-center py-5'>
                     <LoadingDataSpinner className={'text-theam fw-bold'} />

@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom'
 import DataContext from '../context/data/DataContext';
 import { formatDistance } from 'date-fns';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import FunctionContext from '../context/function/FunctionContext';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const CourseLearning = () => {
 
@@ -14,7 +17,8 @@ const CourseLearning = () => {
     const { course_id } = useParams();
     const navigate = useNavigate()
 
-    const { backendHost } = useContext(DataContext)
+    const { backendHost, courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag } = useContext(DataContext)
+    const { scrollTop } = useContext(FunctionContext)
 
     const [pageData, setPageData] = useState("")
     const [isLoadingData, setIsLoadingData] = useState(true)
@@ -122,6 +126,11 @@ const CourseLearning = () => {
 
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <title>{currentPage?.name ?? ''} | Shivam Kashyap</title>
+                </Helmet>
+            </HelmetProvider>
             {isLoadingData ?
                 <div className={'w-100 d-flex align-items-center justify-content-center'} style={{ height: '60vh' }} >
                     <LoadingDataSpinner className={'text-theam'} />
@@ -162,33 +171,53 @@ const CourseLearning = () => {
                                     <div className='d-flex flex-column gap-3'>
                                         <div className="d-flex justify-content-between flex-wrap gap-md-0 gap-3">
                                             {nextPage &&
-                                                <Link to={`/course/learning/${course_id}?module=${currentModule?._id}&page=${nextPage?._id}`} className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center">
-                                                    NEXT PAGE
-                                                    <FaChevronRight />
-                                                </Link>
+                                                <div className="d-inline-block" onClick={() => { scrollTop() }}>
+                                                    <Link
+                                                        to={`/course/learning/${course_id}?module=${currentModule?._id}&page=${nextPage?._id}`}
+                                                        className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
+                                                    >
+                                                        NEXT PAGE
+                                                        <FaChevronRight />
+                                                    </Link>
+                                                </div>
                                             }
 
                                             {prevPage &&
-                                                <Link to={`/course/learning/${course_id}?module=${currentModule?._id}&page=${prevPage?._id}`} className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center">
-                                                    <FaChevronLeft />
-                                                    PREV PAGE
-                                                </Link>
+                                                <div className="d-inline-block" onClick={() => { scrollTop() }}>
+                                                    <Link
+                                                        to={`/course/learning/${course_id}?module=${currentModule?._id}&page=${prevPage?._id}`}
+                                                        className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
+                                                    >
+                                                        <FaChevronLeft />
+                                                        PREV PAGE
+                                                    </Link>
+                                                </div>
                                             }
                                         </div>
 
                                         <div className="d-flex justify-content-between flex-wrap gap-md-0 gap-3">
                                             {nextModule &&
-                                                <Link to={`/course/learning/${course_id}?module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })._id}`} className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center">
-                                                    NEXT MODULE
-                                                    <FaChevronRight />
-                                                </Link>
+                                                <div className="d-inline-block" onClick={() => { scrollTop() }}>
+                                                    <Link
+                                                        to={`/course/learning/${course_id}?module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })._id}`}
+                                                        className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
+                                                    >
+                                                        NEXT MODULE
+                                                        <FaChevronRight />
+                                                    </Link>
+                                                </div>
                                             }
 
                                             {prevModule &&
-                                                <Link to={`/course/learning/${course_id}?module=${prevModule?._id}&page=${pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })._id}`} className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center">
-                                                    <FaChevronLeft />
-                                                    PREV MODULE
-                                                </Link>
+                                                <div className="d-inline-block" onClick={() => { scrollTop() }}>
+                                                    <Link
+                                                        to={`/course/learning/${course_id}?module=${prevModule?._id}&page=${pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })._id}`}
+                                                        className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
+                                                    >
+                                                        <FaChevronLeft />
+                                                        PREV MODULE
+                                                    </Link>
+                                                </div>
                                             }
                                         </div>
                                     </div>
@@ -197,18 +226,16 @@ const CourseLearning = () => {
                         </div>
                     </div >
 
-                    {/* offcanvas of subMenu */}
-                    <div className="offcanvas offcanvas-start" tabIndex="-1" id="sidenav-menu" aria-labelledby="sidenav-menuLabel" >
-                        <div className="offcanvas-header border-bottom">
-                            <h5 className="offcanvas-title" id="sidenav-menuLabel">
+                    <Offcanvas show={courseLearning_offCanvasFlag} onHide={() => { setCourseLearning_offCanvasFlag(false) }}>
+                        <Offcanvas.Header closeButton className='border-bottom'>
+                            <Offcanvas.Title>
                                 <FirstLetterEffectText text={"Chapters / Module"} />
-                            </h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div className="offcanvas-body py-1">
+                            </Offcanvas.Title>
+                        </Offcanvas.Header>
+                        <Offcanvas.Body>
                             <LearningSidebar modules={modules} pages={pages} urlThreaten={urlThreaten} />
-                        </div>
-                    </div>
+                        </Offcanvas.Body>
+                    </Offcanvas>
                 </>
             }
         </>

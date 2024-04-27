@@ -3,6 +3,7 @@ import { CustomBtn, FirstLetterEffectText } from '../components/Utility'
 import { BsFillSendFill } from 'react-icons/bs'
 import DataContext from '../context/data/DataContext'
 import FunctionContext from '../context/function/FunctionContext'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const Contact = () => {
 
@@ -55,6 +56,11 @@ const Contact = () => {
 
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Connect to Me || Shivam Kashyap</title>
+                </Helmet>
+            </HelmetProvider>
             <section className="random-background py-md-5 py-0">
                 <div className="container-fluid">
                     <div className="d-flex flex-wrap justify-content-center align-items-center gap-md-5 gap-0 mx-md-3 mx-0">

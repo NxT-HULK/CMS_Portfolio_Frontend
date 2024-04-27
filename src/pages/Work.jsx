@@ -5,6 +5,7 @@ import { FaInfo, FaWpexplorer } from 'react-icons/fa'
 import { GiSpeaker, GiSpeakerOff } from "react-icons/gi";
 import DataContext from '../context/data/DataContext';
 import { ImSpinner4 } from 'react-icons/im'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const Work = () => {
 
@@ -64,6 +65,11 @@ const Work = () => {
 
     return (
         <>
+            <HelmetProvider>
+                <Helmet>
+                    <title>Work - Gem 💎 | Shivam Kashyap</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="p-0 m-0 w-100 min-vh-100 position-relative">
                 <div className="position-relative w-100 p-0 m-0 d-flex align-items-end" style={{ minHeight: '100vh' }}>
                     <video loop={true} muted={audioFlag} autoPlay={true} className='h-100 w-100 p-0 m-0 object-fit-cover position-absolute' style={{ zIndex: '-1' }}>

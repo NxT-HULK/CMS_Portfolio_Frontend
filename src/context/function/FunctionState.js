@@ -39,8 +39,12 @@ const FunctionState = (props) => {
     return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`
   }
 
+  const scrollTop = () => {
+    window.scrollTo(0, 0)
+  }
+
   return (
-    <FunctionContext.Provider value={{ darkTheamFlag, darkPages, navBackdropFlag, navBackdropRemoved, handleOnChange, toSimpleDate }}>
+    <FunctionContext.Provider value={{ darkTheamFlag, darkPages, navBackdropFlag, navBackdropRemoved, handleOnChange, toSimpleDate, scrollTop }}>
       {props.children}
     </FunctionContext.Provider>
   )

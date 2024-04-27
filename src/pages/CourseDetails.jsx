@@ -6,6 +6,7 @@ import DOMPurify from 'dompurify';
 import { BtnBig, FirstLetterEffectText } from '../components/Utility';
 import dateFormat from 'dateformat'
 import { FaBookReader } from 'react-icons/fa';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const CourseDetails = () => {
     const { course_id } = useParams();
@@ -46,6 +47,12 @@ const CourseDetails = () => {
 
     return (
         <div className='py-4 px-md-4 px-2 mb-5 container-fluid'>
+            <HelmetProvider>
+                <Helmet>
+                    <title>{selectedCourse?.name ?? ''} | Shivam Kashyap</title>
+                    <meta name="description" content={selectedCourse?.welcome_screen ?? ''} />
+                </Helmet>
+            </HelmetProvider>
             <div className='mb-4'>
                 <div className='mb-3 border-bottom d-flex flex-wrap justify-content-between align-items-center'>
                     <div className='d-flex flex-column'>
