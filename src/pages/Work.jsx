@@ -31,6 +31,9 @@ const Work = () => {
                 }
             })
             let data = await raw.json()
+            data.sort((a, b) => {
+                return a.order - b.order
+            })
             setProfessionalData(data)
             setIsLoadingProfessionalProjects(false)
         })();
@@ -44,6 +47,9 @@ const Work = () => {
                 }
             })
             let data = await raw.json()
+            data.sort((a, b) => {
+                return a.order - b.order
+            })
             setPersonalProjects(data)
             setIsLoadingPersonalProjects(false)
         })();
@@ -57,6 +63,9 @@ const Work = () => {
                 }
             })
             let data = await raw.json()
+            data.sort((a, b) => {
+                return a.order - b.order
+            })
             setHobbyProjects(data)
             setIsLoadingHobbyProjects(false)
         })();

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { CustomBtn, CustomTags } from '../../components/Utility'
 import { BsFillSendFill } from 'react-icons/bs'
-import { FaEye } from 'react-icons/fa'
+import JoditEditor from 'jodit-react'
 
 const AddWork = ({ DataContext, FunctionContext }) => {
 
@@ -72,15 +72,6 @@ const AddWork = ({ DataContext, FunctionContext }) => {
         }
     }
 
-    const handlePreviewData = () => {
-        setResponseStatus(true)
-        setResponseData({
-            isLoading: false,
-            heading: 'Live Preview',
-            message: workFormData.html
-        })
-    }
-
     return (
         <>
             <div className="w-100 my-2">
@@ -127,10 +118,10 @@ const AddWork = ({ DataContext, FunctionContext }) => {
                     </div>
 
                     <div className="mb-2 position-relative">
-                        <textarea name="html" id="" cols="" rows="5" className='w-100 custom-input-style rounded-1 font-monospace' placeholder="Raw HTML - Modal Data*" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" onChange={(e) => { handleOnChange(e, workFormData, setWorkFormData) }} />
-                        <button type="button" className="lh-1 btn-reset position-absolute m-2" style={{ top: 0, right: 0 }} onClick={handlePreviewData}>
-                            <FaEye className='fs-4 text-theam bg-white' />
-                        </button>
+                        <JoditEditor
+                            value={workFormData?.html ?? ''}
+                            onChange={(value) => setWorkFormData({ ...workFormData, html: value })}
+                        />
                     </div>
 
                     <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} />

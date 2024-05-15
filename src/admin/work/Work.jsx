@@ -9,6 +9,7 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
     const { backendHost, setResponseData, setResponseStatus } = DataContext
     const { toSimpleDate } = FunctionContext
 
+    const [workRawData, setWorkRawData] = useState([])
     const [mainData, setMainData] = useState([])
     const [isLoadingData, setIsLoadingData] = useState(false)
     const [isFormProcess, setIsFormProcess] = useState({
@@ -28,6 +29,8 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
             })
             let data = await raw.json()
 
+            setWorkRawData(data)
+
             // Categorize data based on 'type'
             const categorizedData = data.reduce((result, currentItem) => {
                 const type = currentItem.type;
@@ -42,6 +45,12 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
 
                 return result;
             }, {});
+
+            for (let cat in categorizedData) {
+                categorizedData[cat].sort((a, b) => {
+                    return a.order - b.order
+                })
+            }
 
             setMainData(categorizedData)
             setIsLoadingData(false)
@@ -89,6 +98,65 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
         }
     }
 
+    const handleWorkOrderChange = async (e, id, type) => {
+        try {
+
+            setResponseStatus(true);
+            setResponseData({
+                isLoadingData: true,
+                heading: 'Form Processing - Changing order'
+            })
+
+            let raw = await fetch(`${backendHost}/work/change-order`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    order: e.target.value,
+                    _id: id
+                })
+            })
+
+            let resposnse = await raw.json()
+
+            if (raw.status === 200) {
+                let temp = mainData[type].filter(ele => ele._id !== id)
+                temp.push(resposnse)
+
+                temp.sort((a, b) => {
+                    return a.order - b.order
+                })
+
+                setMainData({ ...mainData, [type]: temp })
+                setResponseData({
+                    isLoadingData: false,
+                    heading: "Status: OK",
+                    message: "Data has been updated"
+                })
+
+            } else {
+                setResponseData({
+                    isLoadingData: false,
+                    heading: "Somthing went wrong",
+                    message: resposnse
+                })
+            }
+
+        } catch (error) {
+            setResponseData({
+                isLoadingData: false,
+                heading: "Error",
+                message: error.message
+            })
+        } finally {
+            setTimeout(() => {
+                setResponseStatus(false);
+                setResponseData({})
+            }, 5000);
+        }
+    }
+
     return (
         <>
             {isLoadingData === true ?
@@ -115,6 +183,7 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
                                     <thead>
                                         <tr className='bg-theam'>
                                             <th className='py-2 text-white border-end text-center px-2'>Date</th>
+                                            <th className='py-2 text-white border-end text-center px-2'>Order</th>
                                             <th className='py-2 text-white border-end text-center px-2'>Name</th>
                                             <th className='py-2 text-white border-end text-center px-2'>Back Img</th>
                                             <th className='py-2 text-white border-end text-center px-2'>Modal Data</th>
@@ -129,6 +198,14 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
                                             return (
                                                 <tr key={inner._id} className='border-bottom last-child-no-border'>
                                                     <td className='py-1 px-2 border-end text-center'> {toSimpleDate(inner.createdAt)} </td>
+                                                    <td className='py-1 px-2 border-end text-center'>
+                                                        <select name="order" style={{ minWidth: '75px' }} className='rounded-1 custom-input-style' onChange={(e) => { handleWorkOrderChange(e, inner._id, ele) }} defaultValue={inner?.order ?? ""}>
+                                                            <option value="">0</option>
+                                                            {workRawData.map((ele, idx) => {
+                                                                return <option key={ele._id} value={idx + 1}>{idx + 1}</option>
+                                                            })}
+                                                        </select>
+                                                    </td>
                                                     <td className='py-1 px-2 border-end text-center'>
                                                         <a href={inner.link} target="_blank" rel="noopener noreferrer" className='text-decoration-none'>
                                                             <ButtonShaded type="button" text={inner.name} className={'width-fit lh-1 px-1 d-block mx-auto'} />

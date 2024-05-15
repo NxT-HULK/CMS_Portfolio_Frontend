@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { IoCloseOutline } from 'react-icons/io5'
 import DataContext from '../context/data/DataContext'
 import { ButtonShaded } from './Utility'
@@ -146,6 +146,19 @@ const NewsLetterSubscribe = () => {
 const ResponseBox = () => {
 
     const { responseStatus, responseData, setResponseStatus } = useContext(DataContext)
+    
+    const handleEscapePress = useCallback((event) => {
+        if (event.key === 'Escape') {
+            setResponseStatus(false)
+        }
+    }, [setResponseStatus]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleEscapePress)
+        return () => {
+            document.removeEventListener('keydown', handleEscapePress)
+        };
+    }, [handleEscapePress]);
 
     return (
         <>
