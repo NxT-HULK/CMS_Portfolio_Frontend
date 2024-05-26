@@ -63,7 +63,7 @@ const AddWork = ({ DataContext, FunctionContext }) => {
 
             if (data === "Work Post added") {
                 addWorkForm.current.reset()
-                usedTech([])
+                setUsedTech([])
             }
 
         } catch (error) {
@@ -124,7 +124,7 @@ const AddWork = ({ DataContext, FunctionContext }) => {
                         />
                     </div>
 
-                    <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} />
+                    <CustomBtn text="Post Project and send Mails" icon={<BsFillSendFill />} type={'submit'} />
                 </form>
             </div>
         </>
