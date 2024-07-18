@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DataContext from '../context/data/DataContext'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { formatDistance } from 'date-fns'
-
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { FaEdit, FaInfo, FaLink, FaLongArrowAltRight, FaPlay } from 'react-icons/fa'
-import { LiaAngleLeftSolid, LiaAngleRightSolid } from 'react-icons/lia'
 import { MdDelete, MdEditSquare, MdOutlineChecklistRtl } from 'react-icons/md'
 import { ImSpinner4 } from 'react-icons/im'
 import { IoIosArrowDropdownCircle } from "react-icons/io";
@@ -145,7 +146,7 @@ export const ProvideCard = ({ icon, text, modalId }) => {
     <>
       <div className="whatIProvideCard">
         <span className="icon">{icon}</span>
-        <span className="fs-4 fw-bold">{text}</span>
+        <span className="fs-md-4 fs-5 fw-bold">{text}</span>
         <button type="button" className='d-flex gap-2 align-items-center px-2 py-1 rounded'>
           {/* <button type="button" className='d-flex gap-2 align-items-center px-2 py-1 rounded' data-bs-toggle="modal" data-bs-target={`#${modalId}`}> */}
           Know More <FaLongArrowAltRight />
@@ -307,25 +308,6 @@ export const ButtonShaded = ({ type, className, text, onClick }) => {
 
 export const StripedSliderCustom = ({ data }) => {
 
-  const scrollerContainer = useRef("")
-  const card = useRef("")
-
-  const hanleLeftClick = (e) => {
-    const cardWidth = card.current.clientWidth
-    scrollerContainer.current.scrollLeft -= cardWidth
-  }
-
-  const hanleRightClick = (e) => {
-    const totalChildren = scrollerContainer.current.querySelectorAll('.work-card-custom')
-    const cardWidth = card.current.clientWidth
-
-    if (scrollerContainer.current.scrollLeft === cardWidth * totalChildren.length - scrollerContainer.current.clientWidth) {
-      scrollerContainer.current.scrollLeft = 0
-    } else {
-      scrollerContainer.current.scrollLeft += cardWidth
-    }
-  }
-
   const { setResponseStatus, setResponseData } = useContext(DataContext)
   const hanleSetInformationData = (projectName, html) => {
     setResponseStatus(true)
@@ -336,18 +318,54 @@ export const StripedSliderCustom = ({ data }) => {
     })
   }
 
-  return (
-    <div className='d-flex align-items-stretch custom-strip-scroller'>
-      <div className="controller">
-        <button type="button" onClick={hanleLeftClick}>
-          <LiaAngleLeftSolid />
-        </button>
-      </div>
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    arrows: false,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    autoplay: true,
+    responsive: [
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 425,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          fade: true
+        }
+      },
+    ]
+  };
 
-      <div className="d-flex overflow-hidden scroll-smoth" ref={scrollerContainer}>
-        {data && data.map((ele, idx) => {
-          return (
-            <div className="work-card-custom" key={`professional-cards-${idx}-${ele._id}`} ref={card}>
+  return (
+    <Slider {...settings}>
+      {data && data.map((ele, idx) => {
+        return (
+          <div className='px-2'>
+            <div className="work-card-custom" key={`professional-cards-${idx}-${ele._id}`}>
               <img src={ele.background} alt="" loading='eager' />
 
               <div className='detailed-controller'>
@@ -364,16 +382,10 @@ export const StripedSliderCustom = ({ data }) => {
                 </div>
               </div>
             </div>
-          )
-        })}
-      </div>
-
-      <div className="controller">
-        <button type="button" onClick={hanleRightClick}>
-          <LiaAngleRightSolid />
-        </button>
-      </div>
-    </div>
+          </div>
+        )
+      })}
+    </Slider>
   )
 }
 

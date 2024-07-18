@@ -62,9 +62,9 @@ const Contact = () => {
                 </Helmet>
             </HelmetProvider>
             <section className="random-background py-md-5 py-0">
-                <div className="container-fluid">
+                <div className="container-fluid px-md-2 px-0">
                     <div className="d-flex flex-wrap justify-content-center align-items-center gap-md-5 gap-0 mx-md-3 mx-0">
-                        <div className="col-md-5 col-10">
+                        <div className="col-md-5 col-11">
                             <img src="/contact-illus.svg" alt="" />
                         </div>
 

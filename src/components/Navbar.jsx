@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-// import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { IcoBtn } from './Utility'
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaRegBell } from 'react-icons/fa'
@@ -8,13 +7,11 @@ import FunctionContext from '../context/function/FunctionContext'
 import DataContext from '../context/data/DataContext'
 import { BiMenuAltLeft } from "react-icons/bi";
 import { MdClose } from 'react-icons/md'
-// import { GoGear } from "react-icons/go";
 
 const Navbar = () => {
 
     const { darkTheamFlag, navBackdropFlag } = useContext(FunctionContext)
     const { socialLinks, notify, setCourseLearning_offCanvasFlag } = useContext(DataContext)
-    // const { socialLinks, setToastModalData } = useContext(DataContext)
 
     const { facebook, insta, linkedin, mail } = socialLinks
 
@@ -23,25 +20,6 @@ const Navbar = () => {
         backgroundColor: 'rgba(255, 255, 255, 0.15)',
         boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
     }
-
-    // const [workPresentation, setWorkPresentation] = useState(false)
-    // useEffect(() => {
-    //     if (navBackdropFlag === true) {
-    //         if (workPresentation === true) {
-    //             setToastModalData({
-    //                 multipliedBy: 20,
-    //                 time: 5,
-    //                 message: 'Presenting learning projects compled by me'
-    //             })
-    //         } else {
-    //             setToastModalData({
-    //                 multipliedBy: 20,
-    //                 time: 5,
-    //                 message: 'Presenting professional projects compled by me'
-    //             })
-    //         }
-    //     }
-    // }, [workPresentation, navBackdropFlag, setToastModalData])
 
     const router = useLocation()
     const noNav = ['/admin', '/auth']
@@ -153,13 +131,7 @@ const Navbar = () => {
                                             <button type="button" className="btn-reset p-0 m-0 lh-1 bg-theam text-white p-2 rounded-circle" data-bs-toggle="modal" data-bs-target="#subscribeNewsLetter">
                                                 <FaRegBell className='fs-4' />
                                             </button>
-                                        </li>
-                                        {/* <li className="nav-item">
-                                            <button className="btn-reset bg-theam p-1 rounded-1 d-flex align-items-center justify-content-center text-white" type="button" onClick={() => { setWorkPresentation(!workPresentation) }}></button>
-                                            <button className="btn-reset bg-theam p-1 rounded-1 d-flex align-items-center justify-content-center text-white" type="button">
-                                                <GoGear className='fs-6 spinner-border border-0' style={{ '--bs-spinner-animation-speed': '3s' }} />
-                                            </button>
-                                        </li> */}
+                                        </li>   
                                     </ul>
                                 </div>
                             </div>

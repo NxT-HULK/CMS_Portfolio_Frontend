@@ -275,7 +275,7 @@ const Home = () => {
                                 <div className="tab-pane fade" id="pills-education" role="tabpanel" aria-labelledby="pills-education-tab" tabIndex="0">
                                     <div className="d-flex flex-column gap-3">
                                         <DetailBox year={'2018 - 2021'} title={'Diploma'} para={'Government Polytechnic, Ranchi - Jharkhand India'} />
-                                        <DetailBox year={'2021 - 2024 (Current)'} title={'B.Tech'} para={'LNCT, Bhopal - Madhya Pradesh India'} />
+                                        <DetailBox year={'2021 - 2024'} title={'B.Tech'} para={'LNCT, Bhopal - Madhya Pradesh India'} />
                                     </div>
                                 </div>
                             </div>
@@ -310,7 +310,9 @@ const Home = () => {
                 <section className='my-5'>
                     <div className="container">
                         <FirstLetterEffectText text="What I Provide" />
-                        <div className="d-flex gap-4 justify-content-center flex-wrap my-3">
+                    </div>
+                    <div className='container-fluid'>
+                        <div className="d-flex gap-md-4 gap-3 justify-content-center flex-wrap my-3">
                             <ProvideCard icon={<FaPencilRuler />} text={'UI/UX Consultency'} modalId="testing" />
                             <ProvideCard icon={<FaPhotoVideo />} text={'Branding & Design'} modalId={'testing'} />
                             <ProvideCard icon={<FaFileCode />} text={'Web Development'} modalId={'testing'} />

@@ -117,7 +117,7 @@ const Work = () => {
                             </div>
                         </div>
 
-                        <div className="vw-100 left-0 position-relative z-2 px-3 mt-4" style={{ marginBottom: '-80px' }}>
+                        <div className="vw-100-2 left-0 position-relative z-2 px-2 mt-4" style={{ marginBottom: '-80px' }}>
                             <div className='w-100 d-flex justify-content-between align-items-center'>
                                 <FirstLetterEffectText text="Professional Works" className2={'text-white'} />
                                 <div className='text-white fs-4 fw-bold bg-white px-4 lh-1 rounded-pill bg-theam py-2'>
@@ -160,7 +160,7 @@ const Work = () => {
             </div>
 
             <div className="container-fluid pt-5" id="work_svg_bg">
-                <div className="pt-5 mt-2">
+                <div className="pt-5 mt-5">
                     <div className='w-100 d-flex justify-content-between align-items-center'>
                         <FirstLetterEffectText text="Frelance Works" className2={'text-white'} />
                         <div className='text-white fs-4 fw-bold bg-white px-4 lh-1 rounded-pill bg-theam py-2'>
@@ -182,7 +182,7 @@ const Work = () => {
                     </div>
                 </div>
 
-                <div className="pt-3 pb-5">
+                <div className="pt-3 pb-5 mt-4 mb-3">
                     <div className='w-100 d-flex justify-content-between align-items-center'>
                         <FirstLetterEffectText text="Learning Projects" className2={'text-white'} />
                         <div className='text-white fs-4 fw-bold bg-white px-4 lh-1 rounded-pill bg-theam py-2'>

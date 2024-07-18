@@ -369,8 +369,8 @@ ul {
     align-items: flex-start;
     flex-direction: column;
     gap: 5px;
-    width: 240px !important;
-    height: 200px !important;
+    width: 240px;
+    height: 200px;
     padding: 20px 25px;
     border-radius: 8px;
     box-shadow:
@@ -690,6 +690,10 @@ ul {
 
 .vw-100 {
     width: calc(100dvw - 6px) !important;
+}
+
+.vw-100-2 {
+    width: 100dvw !important;
 }
 
 .scroll-smoth {

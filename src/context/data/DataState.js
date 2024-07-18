@@ -121,7 +121,9 @@ const DataState = (props) => {
 
                 if (raw.status === 200) {
                     let data = await raw.json()
-                    setNotify(data)
+                    if (raw?.status === 200) {
+                        setNotify(data)
+                    }
                 } else {
                     setNotify(null)
                 }
