@@ -1,50 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { AccordianCustom, LoadingDataSpinner, SidebarAccordianList } from '../../components/Utility'
+import { useSearchParams } from 'react-router-dom'
+import axios from 'axios'
 
-const EditCoursePage = ({
-  AdminContext, setWorkspace, DataContext
-}) => {
+const EditCoursePage = ({ AdminContext, DataContext }) => {
 
   const { backendHost, setResponseStatus, setResponseData } = DataContext
-  const { edditTargetedCourse, courses, isUpdating, handleChangeStatus, setEditData, setaddCourseresetForm, setEditModule, setEditPage, currData, setCurrData, isLoadingCurrData, setIsLoadingCurrData } = AdminContext
+  const { edditTargetedCourse, courses, setCourses, isUpdating, handleChangeStatus, currData, setCurrData, isLoadingCurrData, setIsLoadingCurrData, deletestatus, handleDeleteModule } = AdminContext
   const [selectedCourse, setSelectedCourse] = useState(null)
 
-  useEffect(() => {
-    let data = courses.find((ele) => {
-      return ele._id === edditTargetedCourse
-    })
-
-    setSelectedCourse(data)
-  }, [courses, edditTargetedCourse])
-
-  useEffect(() => {
-    setaddCourseresetForm(true)
-  }, [setaddCourseresetForm])
-
-  const handleBasicDetails = () => {
-    setEditData(courses.find((ele) => { return ele._id === edditTargetedCourse }))
-    setWorkspace('create_course')
-  }
-
+  const [params] = useSearchParams()
   useEffect(() => {
     (async () => {
-      setIsLoadingCurrData(true)
+      if (courses?.length === 0) {
+        setIsLoadingCurrData(true)
+        const fetch = await axios.get(`${backendHost}/api/admin/course`, { withCredentials: true })
+        if (fetch.status === 200) {
+          setCourses(fetch?.data)
+        }
+      }
+
+      const curr = courses.find(ele => ele?._id === params.get("id"))
+      if (curr) {
+        setSelectedCourse(curr)
+      }
+    })();
+    // eslint-disable-next-line
+  }, [courses, params, backendHost])
+
+  const [isLoadingModules, setIsLoadingModules] = useState(null)
+  useEffect(() => {
+    (async () => {
       try {
+        if (selectedCourse && selectedCourse?._id) {
+          setIsLoadingModules(true)
+          const fetching = await axios.post(`${backendHost}/api/admin/course/learning-material/`, {
+            course: selectedCourse?._id
+          }, { withCredentials: true })
 
-        if (selectedCourse && selectedCourse._id) {
-          let fetching = await fetch(`${backendHost}/course/learning-matarial/${selectedCourse?._id}`, {
-            method: 'GET',
-            headers: {
-              'content-type': 'application/json',
-              'admin': true
-            }
-          })
-
-          let data = await fetching.json()
+          let data = fetching?.data
           setCurrData({
             modules: data?.modules,
             pages: data?.pages
           })
+          setIsLoadingModules(false)
         }
 
       } catch (error) {
@@ -59,105 +58,99 @@ const EditCoursePage = ({
         setResponseStatus(false)
         setResponseData({})
       }
-    })()
+    })();
     // eslint-disable-next-line
-  }, [selectedCourse?._id, setCurrData, backendHost, setResponseData, setResponseStatus])
+  }, [selectedCourse, setCurrData, backendHost])
 
   return (
     <>
-      <div className='w-100 mb-auto my-4'>
-        <div className="d-flex flex-wrap gap-md-0 gap-2 border-bottom px-2 py-1">
-          <div className="col-md-10 col-12">
-            <span className="d-block col-12 text-truncate fs-5 fw-semibold"> {selectedCourse?.name} </span>
+      {isLoadingCurrData === true ?
+        <div className='d-flex align-items-center justify-content-center my-5 py-5'>
+          <LoadingDataSpinner className={'text-theam'} />
+        </div>
+        :
+        <div className='w-100 mb-auto my-4'>
+          <div className="d-flex flex-wrap gap-md-0 gap-2 border-bottom px-2 py-1">
+            <div className="col-md-10 col-12">
+              <span className="d-block col-12 text-truncate fs-5 fw-semibold"> {selectedCourse?.name} </span>
+            </div>
+            <div className="col-md-2 col-12 d-flex align-items-center justify-content-md-end justify-content-start">
+              {isUpdating ?
+                <>
+                  <LoadingDataSpinner className={'text-theam'} />
+                </>
+                :
+                <div className='d-flex gap-1 user-select-none'>
+                  <span className='fw-medium'>Course Status</span>
+                  <div className="form-check form-switch">
+                    <input
+                      className="form-check-input shadow-none order-2"
+                      type="checkbox"
+                      role="switch"
+                      id='course_update'
+                      checked={selectedCourse?.status || false}
+                      onChange={(e) => {
+                        handleChangeStatus(e, edditTargetedCourse)
+                      }}
+                    />
+                  </div>
+                </div>
+              }
+            </div>
           </div>
 
-          <div className="col-md-2 col-12 d-flex align-items-center justify-content-md-end justify-content-start">
-            {isUpdating ?
-              <>
-                <LoadingDataSpinner className={'text-theam'} />
-              </>
-              :
-              <div className="form-check form-switch">
-                <label className="form-check-label" htmlFor="course_update"> Status </label>
-                <input
-                  className="form-check-input shadow-none"
-                  type="checkbox"
-                  role="switch"
-                  id='course_update'
-                  checked={selectedCourse?.status || false}
-                  onChange={(e) => {
-                    handleChangeStatus(e, edditTargetedCourse)
-                  }}
-                />
-              </div>
-            }
-          </div>
-        </div>
-
-        <div className='my-3'>
-          <button
-            className='btn-reset user-select-none theam-btn-big text-white'
-            type="button"
-            onClick={handleBasicDetails}
-          >
-            Edit Basic Details
-          </button>
-        </div>
-
-        <div>
-          {isLoadingCurrData === true ?
-            <LoadingDataSpinner className={'text-theam'} />
+          {isLoadingModules === true ?
+            <div className='d-flex align-items-center justify-content-center my-5 py-5'>
+              <LoadingDataSpinner className={'text-theam'} />
+            </div>
             :
-            <>
-              <div className='d-flex flex-column gap-3 my-3'>
-                {Array.isArray(currData.modules) && currData.modules.map((ele, index) => {
+            <div className='d-flex flex-column gap-3 my-3'>
+              {Array.isArray(currData.modules) && currData.modules.map((ele, index) => {
+                let lastUpdate = currData?.pages.find((pages) => {
+                  return pages._id === ele?.pages[ele?.pages?.length - 1]
+                })
 
-                  let lastUpdate = currData?.pages.find((pages) => {
-                    return pages._id === ele?.pages[ele?.pages?.length - 1]
-                  })
+                return (
+                  <AccordianCustom
+                    id={ele?._id}
+                    idx={index + 1}
+                    name={ele?.module_name}
+                    subModuleLen={ele?.pages?.length}
+                    key={ele._id + `${index}-module`}
+                    lastUpdated={lastUpdate?.updatedAt}
+                    adminMode={true}
+                    adminCurrData={currData}
+                    course_id={selectedCourse?._id}
 
-                  return (
-                    <AccordianCustom
-                      id={ele._id}
-                      idx={index + 1}
-                      name={ele.module_name}
-                      subModuleLen={ele.pages.length}
-                      key={ele._id + `${index}-module`}
-                      lastUpdated={lastUpdate.updatedAt}
-                      setEditModule={setEditModule}
-                      adminMode={true}
-                      setWorkspace={setWorkspace}
-                      adminCurrData={currData}
-                      course_id={selectedCourse?._id}
-                    >
-                      {ele.pages.map((page, idx) => {
-                        let data = currData.pages.find((val) => val._id === page)
-                        return (
-                          <SidebarAccordianList
-                            ofModule={ele._id}
-                            id={data._id}
-                            name={data.name}
-                            page={idx + 1}
-                            lastUpdated={data.updatedAt}
-                            key={page._id + `${idx}-page`}
-                            setEditPage={setEditPage}
-                            adminMode={true}
-                            setWorkspace={setWorkspace}
-                            adminCurrData={currData}
-                            course_id={selectedCourse?._id}
-                          />
-                        )
-                      })}
-                    </AccordianCustom>
-                  )
-                })}
-
-              </div>
-            </>
+                    setCurrModuleData={setCurrData}
+                    deletestatus={deletestatus}
+                    handleDeleteModule={handleDeleteModule}
+                    setResponseStatus={setResponseStatus}
+                    setResponseData={setResponseData}
+                  >
+                    {ele.pages.map((page, idx) => {
+                      let data = currData?.pages?.find((val) => val?._id === page)
+                      return (
+                        <SidebarAccordianList
+                          id={data?._id}
+                          ofModule={ele?._id}
+                          course_id={selectedCourse?._id}
+                          name={data?.name}
+                          page={idx + 1}
+                          lastUpdated={data?.updatedAt}
+                          key={page?._id + `${idx}-page`}
+                          adminMode={true}
+                          adminCurrData={currData}
+                        />
+                      )
+                    })}
+                  </AccordianCustom>
+                )
+              })}
+            </div>
           }
         </div>
-
-      </div>
+      }
     </>
   )
 }

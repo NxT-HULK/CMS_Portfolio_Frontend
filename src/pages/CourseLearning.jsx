@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import LearningSidebar from '../components/LearningSidebar'
 import { FirstLetterEffectText, FirstLetterEffectText2, LoadingDataSpinner } from '../components/Utility'
-import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import DataContext from '../context/data/DataContext';
 import { formatDistance } from 'date-fns';
@@ -10,11 +9,12 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import FunctionContext from '../context/function/FunctionContext';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import axios from 'axios'
 
 const CourseLearning = () => {
 
     const [params, setParams] = useSearchParams()
-    const { course_id } = useParams();
+    const course_id = params.get('course');
     const navigate = useNavigate()
 
     const { backendHost, courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag } = useContext(DataContext)
@@ -23,7 +23,7 @@ const CourseLearning = () => {
     const [pageData, setPageData] = useState("")
     const [isLoadingData, setIsLoadingData] = useState(true)
     const [modules, setModules] = useState([])
-    const [pages, setPages] = useState([])
+    const [pages, setPages] = useState([])        
 
     const [currentPage, setCurrentPage] = useState(null)
     const [currentModule, setCurrentModule] = useState(null)
@@ -32,25 +32,18 @@ const CourseLearning = () => {
     useEffect(() => {
         (async () => {
             try {
-                let response = await fetch(`${backendHost}/course/learning-matarial/${course_id}`, {
-                    method: 'GET',
-                    headers: {
-                        'content-Type': 'application/json'
-                    }
-                })
-
-                let data = await response.json()
+                let response = await axios.get(`${backendHost}/api/client/course/learning-matarial/${course_id}`)
                 if (response.status === 200) {
-                    setModules(data.modules)
-                    setPages(data.pages)
+                    setModules(response?.data?.modules)
+                    setPages(response?.data.pages)
                     if (!params.get('module') * 1 > 1 && !params.get('page') * 1 > 1) {
                         setParams({
-                            module: data.modules[0]._id,
-                            page: data.pages[0]._id
+                            module: response?.data.modules[0]._id,
+                            page: response?.data.pages[0]._id
                         })
                     }
                 } else {
-                    navigate('/course')
+                    // navigate('/course')
                 }
             } catch (error) {
                 navigate('/course')
@@ -143,7 +136,7 @@ const CourseLearning = () => {
                                 <FirstLetterEffectText text={"Chapters / Module"} />
                             </div>
                             <div className='px-3 mb-5'>
-                                <LearningSidebar modules={modules} pages={pages} urlThreaten={urlThreaten} />
+                                <LearningSidebar course_id={course_id} modules={modules} pages={pages} urlThreaten={urlThreaten} />
                             </div>
                         </div>
 
@@ -155,7 +148,7 @@ const CourseLearning = () => {
                                     </p>
 
                                     <div>
-                                        <Link to={`/course/learning/${course_id}?module=${modules[0]?._id}&page=${pages[0]?._id}`} className='bg-theam px-3 py-2 rounded-1 text-white text-decoration-none'>
+                                        <Link to={`/course/learning?course=${course_id}&module=${modules[0]?._id}&page=${pages[0]?._id}`} className='bg-theam px-3 py-2 rounded-1 text-white text-decoration-none'>
                                             Goto - Module: 1, Page: 1
                                         </Link>
                                     </div>
@@ -173,7 +166,7 @@ const CourseLearning = () => {
                                             {nextPage &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
-                                                        to={`/course/learning/${course_id}?module=${currentModule?._id}&page=${nextPage?._id}`}
+                                                        to={`/course/learning?course=${course_id}&module=${currentModule?._id}&page=${nextPage?._id}`}
                                                         className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
                                                     >
                                                         NEXT PAGE
@@ -185,7 +178,7 @@ const CourseLearning = () => {
                                             {prevPage &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
-                                                        to={`/course/learning/${course_id}?module=${currentModule?._id}&page=${prevPage?._id}`}
+                                                        to={`/course/learning?course=${course_id}&module=${currentModule?._id}&page=${prevPage?._id}`}
                                                         className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
                                                     >
                                                         <FaChevronLeft />
@@ -199,7 +192,7 @@ const CourseLearning = () => {
                                             {nextModule &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
-                                                        to={`/course/learning/${course_id}?module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })._id}`}
+                                                        to={`/course/learning?course=${course_id}&module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })._id}`}
                                                         className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
                                                     >
                                                         NEXT MODULE
@@ -211,7 +204,7 @@ const CourseLearning = () => {
                                             {prevModule &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
-                                                        to={`/course/learning/${course_id}?module=${prevModule?._id}&page=${pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })._id}`}
+                                                        to={`/course/learning?course=${course_id}&module=${prevModule?._id}&page=${pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })._id}`}
                                                         className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
                                                     >
                                                         <FaChevronLeft />

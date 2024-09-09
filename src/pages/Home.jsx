@@ -9,6 +9,7 @@ import Typewriter from 'typewriter-effect';
 import DataContext from '../context/data/DataContext'
 import FunctionContext from '../context/function/FunctionContext'
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import axios from 'axios'
 
 const Home = () => {
 
@@ -25,38 +26,32 @@ const Home = () => {
             setResponseStatus(true)
             setResponseData({ ...responseData, "isLoading": true, "heading": 'Sending Feedback' })
 
-            let response = await fetch(`${backendHost}/testimonial/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "name": testimonialFormData.name,
-                    "rating": testimonialFormData.rating,
-                    "email": testimonialFormData.email,
-                    "mess": testimonialFormData.message
-                })
+            let response = await axios.post(`${backendHost}/api/client/testimonial`, {
+                "name": testimonialFormData?.name,
+                "rating": testimonialFormData?.rating,
+                "email": testimonialFormData?.email,
+                "mess": testimonialFormData?.message
             })
 
-            let data = await response.json()
-            setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Feedback', "message": data })
+            if (response.status === 201) {
+                setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Feedback', "message": response?.data })
+            } else {
+                setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Feedback', "message": "Oops! Something went wrong on our server. Please try again after some time. Thank you for your patience." })
+            }
 
+        } catch (error) {
+
+            setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Feedback', "message": "Oops! Something went wrong on our server. Please try again after some time. Thank you for your patience." })
+            console.error(error.message)
+
+        } finally {
             setTimeout(() => {
                 setResponseStatus(false)
                 setResponseData({})
             }, 4000);
 
             testimonialForm.current.reset()
-
-        } catch (error) {
-
-            setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Feedback', "message": "Oops! Something went wrong on our server. Please try again after some time. Thank you for your patience." })
-            setTimeout(() => {
-                setResponseStatus(false)
-                setResponseData({})
-            }, 4000);
-
-            console.error(error.message)
+            settestimonialFormData({})
         }
     }
 
@@ -67,19 +62,16 @@ const Home = () => {
         const fetchTestimonial = async () => {
             setIsLoadingTestimonial(true)
             try {
-                let raw = await fetch(`${backendHost}/testimonial`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
 
-                let jsonData = await raw.json()
-                jsonData.sort((a, b) => {
-                    return 0.5 - Math.random()
-                })
-
-                setTestimonialData(jsonData)
+                let raw = await axios.get(`${backendHost}/api/client/testimonial`)
+                if (raw.status === 200) {
+                    raw?.data?.sort((a, b) => {
+                        return 0.5 - Math.random()
+                    })
+                    setTestimonialData(raw?.data)
+                } else {
+                    setTestimonialData(null)
+                }
 
             } catch (error) {
                 console.error(error)

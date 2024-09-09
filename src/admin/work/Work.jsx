@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { ImSpinner4 } from 'react-icons/im'
-import { FaBookmark, FaExternalLinkAlt, FaTrash } from 'react-icons/fa'
+import { FaExternalLinkAlt, FaTrash } from 'react-icons/fa'
 import { ButtonShaded, FirstLetterEffectText } from '../../components/Utility'
 import { IoOptions } from "react-icons/io5";
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa6';
+import axios from 'axios';
 
-const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
+const Work = ({ DataContext, FunctionContext }) => {
 
     const { backendHost, setResponseData, setResponseStatus } = DataContext
     const { toSimpleDate } = FunctionContext
@@ -18,44 +20,49 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
     })
 
     useEffect(() => {
-
         (async () => {
-            setIsLoadingData(true)
-            let raw = await fetch(`${backendHost}/work`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
+            try {
+                setIsLoadingData(true)
+                const raw = await axios.get(`${backendHost}/api/admin/work`, { withCredentials: true })
+                let data = raw?.data
+                setWorkRawData(data)
+
+                // Categorize data based on 'type'
+                const categorizedData = data.reduce((result, currentItem) => {
+                    const type = currentItem.type;
+
+                    // Create an array for the type if it doesn't exist
+                    if (!result[type]) {
+                        result[type] = [];
+                    }
+
+                    // Push the current item to the array of its type
+                    result[type].push(currentItem);
+
+                    return result;
+                }, {});
+
+                for (let cat in categorizedData) {
+                    categorizedData[cat].sort((a, b) => {
+                        return a.order - b.order
+                    })
                 }
-            })
-            let data = await raw.json()
 
-            setWorkRawData(data)
-
-            // Categorize data based on 'type'
-            const categorizedData = data.reduce((result, currentItem) => {
-                const type = currentItem.type;
-
-                // Create an array for the type if it doesn't exist
-                if (!result[type]) {
-                    result[type] = [];
+                setMainData(categorizedData)
+                setIsLoadingData(false)
+            } catch (error) {
+                if (error.status === 400) {
+                    setResponseStatus(true)
+                    setResponseData({
+                        isLoadingData: false,
+                        heading: "Authority Error",
+                        message: error?.response?.data
+                    })
+                    setIsLoadingData(false)
                 }
-
-                // Push the current item to the array of its type
-                result[type].push(currentItem);
-
-                return result;
-            }, {});
-
-            for (let cat in categorizedData) {
-                categorizedData[cat].sort((a, b) => {
-                    return a.order - b.order
-                })
+                console.error(error);
             }
-
-            setMainData(categorizedData)
-            setIsLoadingData(false)
         })()
-
     }, [backendHost])
 
     const handleSetData__modalData = (html) => {
@@ -77,13 +84,7 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
 
             try {
 
-                await fetch(`${backendHost}/work/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-
+                await axios.delete(`${backendHost}/api/admin/work/${id}`, { withCredentials: true })
                 let temp = mainData[category].filter(ele => ele._id !== id)
                 setMainData({ ...mainData, [category]: temp })
 
@@ -100,29 +101,20 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
 
     const handleWorkOrderChange = async (e, id, type) => {
         try {
-
             setResponseStatus(true);
             setResponseData({
                 isLoadingData: true,
                 heading: 'Form Processing - Changing order'
             })
 
-            let raw = await fetch(`${backendHost}/work/change-order`, {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    order: e.target.value,
-                    _id: id
-                })
+            const raw = await axios.post(`${backendHost}/api/admin/work/change-order`, {
+                order: e.target.value,
+                _id: id
             })
-
-            let resposnse = await raw.json()
 
             if (raw.status === 200) {
                 let temp = mainData[type].filter(ele => ele._id !== id)
-                temp.push(resposnse)
+                temp.push(raw?.data)
 
                 temp.sort((a, b) => {
                     return a.order - b.order
@@ -139,7 +131,7 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
                 setResponseData({
                     isLoadingData: false,
                     heading: "Somthing went wrong",
-                    message: resposnse
+                    message: raw?.data
                 })
             }
 
@@ -147,7 +139,7 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
             setResponseData({
                 isLoadingData: false,
                 heading: "Error",
-                message: error.message
+                message: error?.message
             })
         } finally {
             setTimeout(() => {
@@ -156,6 +148,12 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
             }, 5000);
         }
     }
+
+    const [accordianStatus, setAccordianStatus] = useState({
+        professional: true,
+        hobby: false,
+        personal: false
+    })
 
     return (
         <>
@@ -167,19 +165,27 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
                     <span>Loading Data</span>
                 </div>
                 :
-                <>
-                    <div className="w-100 my-4 d-block mb-4">
-                        <button type="button" className='simleButton-with-shaded width-fit px-2' onClick={() => { setWorkspace('add_work') }}>
-                            <FaBookmark className='text-white me-1' />
-                            Add Work
-                        </button>
-                    </div>
-
+                <div className='col-12'>
                     {Object.keys(mainData).map((ele) => {
                         return (
-                            <div className='w-100 mb-4' key={`work-main-div-${ele}`}>
-                                <FirstLetterEffectText text={ele} />
-                                <table className='w-100 border border-theam mb-auto'>
+                            <div className='w-100 mb-4 overflow-auto' key={`work-main-div-${ele}`}>
+                                <div className={`user-select-none d-flex align-items-center justify-content-between ${accordianStatus[ele] === false && 'border-bottom'}`}>
+                                    <FirstLetterEffectText text={ele} />
+                                    <button
+                                        type="button"
+                                        className={`text-white btn-reset bg-theam rounded-circle d-flex align-items-center justify-content-center lh-1`}
+                                        style={{ height: '35px', width: '35px' }}
+                                        onClick={() => setAccordianStatus({ ...accordianStatus, [ele]: !accordianStatus[ele] })}
+                                    >
+                                        {accordianStatus[ele] === true ?
+                                            <FaAngleUp />
+                                            :
+                                            <FaAngleDown className='mt-1' />
+                                        }
+                                    </button>
+                                </div>
+
+                                <table className={`w-100 border border-theam mb-auto ${accordianStatus[ele] === false && 'd-none'}`}>
                                     <thead>
                                         <tr className='bg-theam'>
                                             <th className='py-2 text-white border-end text-center px-2'>Date</th>
@@ -193,7 +199,6 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         {mainData && mainData[ele].map((inner) => {
                                             return (
                                                 <tr key={inner._id} className='border-bottom last-child-no-border'>
@@ -258,7 +263,7 @@ const Work = ({ DataContext, FunctionContext, setWorkspace }) => {
                             <span className="fs-4 fw-bold">No Data Found</span>
                         </div>
                     }
-                </>
+                </div>
             }
         </>
     )

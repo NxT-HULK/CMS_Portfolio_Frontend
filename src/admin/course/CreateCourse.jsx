@@ -1,29 +1,59 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CustomBtn, CustomTags } from '../../components/Utility'
 import { HiDocumentArrowUp } from "react-icons/hi2";
 import { GrPowerReset } from "react-icons/gr";
 import JoditEditor from 'jodit-react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
-const CreateCourse = ({
-  DataContext, FunctionContext, AdminContext, setWorkspace
-}) => {
+const CreateCourse = ({ DataContext, FunctionContext, AdminContext }) => {
 
-  const { handleOnChange } = FunctionContext
+  const { handleOnChange, removeSlash } = FunctionContext
   const { backendHost, setResponseStatus, setResponseData } = DataContext
-  const { courses, setCourses, editData, setEditData } = AdminContext
+  const { courses, setCourses, fetchAndSetCourse } = AdminContext
 
-  const addWorkForm = useRef()
   const [addCourseFormData, setaddCourseFormData] = useState({
-    name: editData?.name || '',
-    html: editData?.information || "",
-    usedTech: (editData && JSON.parse(JSON.stringify(editData?.usedTech || "")).toString()) || "",
-    welcome_screen: editData?.welcome_screen || "",
-    bgUrl: editData?.img || ''
+    name: '',
+    html: "",
+    usedTech: "",
+    welcome_screen: "",
+    bgUrl: ''
   })
+
+  const location = useLocation()
+  const [params] = useSearchParams()
+  const [updateFlag, setUpdateFlag] = useState(false)
+  const navigate = useNavigate()
+  useEffect(() => {
+    (async () => {
+      if (removeSlash(location.pathname).indexOf("edit-details") > 0) {
+        if (!courses) {
+          await fetchAndSetCourse()
+        }
+
+        setaddCourseFormData(() => {
+          let curr = courses?.find(ele => ele._id === params.get('id'))
+
+          if (!curr) {
+            navigate("/admin/course/new-course")
+          }
+
+          setUpdateFlag(curr)
+
+          return {
+            name: curr?.name,
+            html: curr?.information,
+            usedTech: curr?.usedTech?.join(", "),
+            welcome_screen: curr?.welcome_screen,
+            bgUrl: curr?.img
+          }
+        })
+      }
+    })();
+  }, [courses, params])
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-
     setResponseStatus(true)
     setResponseData({
       isLoading: true,
@@ -31,72 +61,64 @@ const CreateCourse = ({
     })
 
     try {
-      let fetching = await fetch(`${backendHost}/course`, {
-        method: 'POST',
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({
-          name: addCourseFormData?.name || '',
-          img: addCourseFormData?.bgUrl || '',
-          usedTech: usedTech || [],
-          information: addCourseFormData?.html || '',
-          welcome_screen: addCourseFormData?.welcome_screen || '',
-          id: editData?._id || ""
-        })
-      })
+      const fetch = await axios.post(`${backendHost}/api/admin/course`, {
+        name: addCourseFormData?.name || '',
+        img: addCourseFormData?.bgUrl || '',
+        usedTech: usedTech || [],
+        information: addCourseFormData?.html || '',
+        welcome_screen: addCourseFormData?.welcome_screen || '',
+        id: updateFlag?._id ?? ""
+      }, { withCredentials: true })
 
-      let response = await fetching.json()
-      if (fetching.ok) {
+      if (fetch?.status === 201) {
         setResponseData({
           isLoading: false,
-          heading: `Course ${editData ? 'updatation' : 'creation'} success`,
-          message: response.message
+          heading: `Course creation success`,
+          message: fetch?.data?.message
         })
 
-        let curr = courses.find((ele) => { return ele._id === editData?._id || "" })
-        if (curr) {
-          let prevArr = courses.filter((ele) => {
-            return ele._id !== editData?._id
-          })
-          prevArr.push(response.data)
-          setCourses(prevArr)
-        } else {
-          setCourses([...courses, response?.data])
-        }
-      }
+        setCourses([...courses, fetch?.data?.data])
+        setTimeout(() => {
+          navigate("/admin/course")
+        }, 2000);
+      } else if (fetch?.status === 200) {
+        setResponseData({
+          isLoading: false,
+          heading: `Course updatation success`,
+          message: fetch?.data?.message
+        })
 
+        setCourses([...courses.filter(ele => ele?._id !== updateFlag?._id), fetch?.data?.data])
+        setUpdateFlag({ welcome_screen: "", html: "" })
+        setaddCourseFormData({ welcome_screen: "", html: "" })
+
+        setTimeout(() => {
+          navigate("/admin/course")
+        }, 2500);
+      }
     } catch (error) {
       console.error(error)
       setResponseData({
         isLoading: false,
-        heading: 'Processing: Course Creation',
-        message: error.message
+        heading: 'Error',
+        message: error.response?.data
       })
-    } finally {
-      setTimeout(() => {
-        setResponseData({})
-        setResponseStatus(false)
-        setEditData({})
-        setaddCourseFormData({})
-        setWorkspace(4)
-      }, 5000);
     }
   }
 
   const [usedTech, setUsedTech] = useState([])
   useEffect(() => {
     (() => {
-      if (addCourseFormData?.usedTech.length === 0) {
+      if (addCourseFormData?.usedTech?.length === 0) {
         setUsedTech([])
         return;
       }
 
-      let arr = addCourseFormData?.usedTech.split(",")
+      let arr = addCourseFormData?.usedTech?.split(",")
       let finalArr = []
 
-      Array.isArray(arr) && arr.forEach((ele) => {
-        finalArr.push(ele.trim())
+      Array.isArray(arr) && arr?.forEach((ele) => {
+        finalArr.push(ele?.trim())
       });
 
       setUsedTech(finalArr)
@@ -106,16 +128,14 @@ const CreateCourse = ({
 
 
   return (
-    <div className='w-100 my-4'>
-
+    <div className='w-100 mb-4'>
       <div className='d-flex flex-wrap gap-2 mb-3'>
         {usedTech?.map((ele, idx) => {
           return <CustomTags tag={ele} key={`used-tech-arr-${idx}`} />
         })}
-        <CustomTags tag="." className={'opacity-0'} />
       </div>
 
-      <form className='rounded-3 w-100 z-0 position-relative' onSubmit={handleSubmitForm} ref={addWorkForm}>
+      <form className='rounded-3 w-100 z-0 position-relative' onSubmit={handleSubmitForm}>
         <div className="mb-3 d-flex flex-wrap gap-md-0 gap-2">
           <input
             type="text"
@@ -170,14 +190,14 @@ const CreateCourse = ({
           />
         </div>
 
-        <div className='d-flex gap-3 align-items-center mt-3'>
-          {editData ?
+        <div className='d-flex gap-3 align-items-center justify-content-center mt-3'>
+          {updateFlag ?
             <CustomBtn text="Update" icon={<HiDocumentArrowUp />} type={'submit'} />
             :
             <CustomBtn text="Submit" icon={<HiDocumentArrowUp />} type={'submit'} />
           }
 
-          <button type={'reset'} className={`btn-reset user-select-none theam-btn-big`} onClick={() => { setEditData(null); setaddCourseFormData(null) }}>
+          <button type={'reset'} className={`btn-reset user-select-none theam-btn-big`} onClick={() => { setaddCourseFormData(null) }}>
             <span><GrPowerReset /> </span>
             <span className='fs-6'>Reset Form</span>
           </button>

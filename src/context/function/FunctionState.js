@@ -1,34 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import FunctionContext from './FunctionContext'
-import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const FunctionState = (props) => {
-  const [darkTheamFlag, setDarkTheamFlag] = useState(false)
-  const [navBackdropFlag, setnavBackdropFlag] = useState(false)
-  const pathname = useLocation().pathname
 
-  const darkPages = useMemo(() => [], []);
-  // const darkPages = useMemo(() => ['/blogs', '/work'], []);
-  // const navBackdropRemoved = useMemo(() => [], []);
-  const navBackdropRemoved = useMemo(() => [], []);
-
-  useEffect(() => {
-
-    // Checking for dark theam pages
-    if (darkPages.indexOf(pathname) >= 0) {
-      setDarkTheamFlag(true)
-    } else {
-      setDarkTheamFlag(false)
-    }
-
-    // Checking for Navbar Backdrop Filter
-    if (navBackdropRemoved.indexOf(pathname) >= 0) {
-      setnavBackdropFlag(true)
-    } else {
-      setnavBackdropFlag(false)
-    }
-
-  }, [pathname, darkPages, navBackdropRemoved])
+  const navigate = useNavigate()
 
   const handleOnChange = (e, state, func) => {
     func({ ...state, [e.target.name]: e.target.value })
@@ -43,8 +19,19 @@ const FunctionState = (props) => {
     window.scrollTo(0, 0)
   }
 
+  const handleLogoutAdmin = () => {
+    localStorage.removeItem('auth-token')
+    navigate('/auth')
+  }
+
+  const removeSlash = (str) => {
+    return str.replace(/\//g, "");
+  }
+
   return (
-    <FunctionContext.Provider value={{ darkTheamFlag, darkPages, navBackdropFlag, navBackdropRemoved, handleOnChange, toSimpleDate, scrollTop }}>
+    <FunctionContext.Provider
+      value={{ handleOnChange, toSimpleDate, scrollTop, handleLogoutAdmin, removeSlash }}
+    >
       {props.children}
     </FunctionContext.Provider>
   )

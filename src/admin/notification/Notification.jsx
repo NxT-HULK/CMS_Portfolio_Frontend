@@ -3,6 +3,7 @@ import { FaTrash } from 'react-icons/fa'
 import { CustomBtn, FirstLetterEffectText } from '../../components/Utility'
 import JoditEditor from 'jodit-react'
 import { HiDocumentArrowUp } from 'react-icons/hi2'
+import axios from 'axios'
 
 const Notification = ({
     DataContext
@@ -20,17 +21,11 @@ const Notification = ({
         })
 
         try {
-            let raw = await fetch(`${backendHost}/notify`, {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                    mess: editorValue
-                })
-            })
+            const raw = await axios.post(`${backendHost}/api/admin/notification`, {
+                mess: editorValue
+            }, { withCredentials: true })
 
-            let data = await raw.json()
+            let data = raw?.data
 
             if (raw.status === 201) {
                 setResponseData({
@@ -50,10 +45,11 @@ const Notification = ({
             }
 
         } catch (error) {
+            console.error(error)
             setResponseData({
                 isLoading: false,
                 heading: "Error",
-                message: error
+                message: error?.response?.data
             })
         } finally {
             setTimeout(() => {
@@ -66,33 +62,25 @@ const Notification = ({
     const handleDelete = async () => {
         let cnf = window.confirm('Are you sure to remove notification')
         if (cnf === true) {
-            await fetch(`${backendHost}/notify`, {
-                method: 'DELETE',
-                headers: {
-                    'content-type': 'application/json'
-                }
-            })
-
-            setNotify({
-                ...notify,
-                mess: ""
-            })
+            const fetch = await axios.delete(`${backendHost}/api/admin/notification`, { withCredentials: true })
+            if (fetch.status === 200) {
+                setEditorValue("")
+                setNotify({ ...notify, mess: "" })
+            }
         }
     }
 
     useEffect(() => {
-
-        if (notify?.mess?.length > 0) { 
+        if (notify?.mess?.length > 0) {
             setEditorValue(notify?.mess)
         }
-
     }, [notify?.mess])
 
 
     return (
-        <div className='container mb-auto mt-4'>
+        <div className='mb-auto w-100'>
             <div className='mb-3'>
-                <button type="button" className="btn btn-danger d-flex align-items-center gap-1 py-1" onClick={() => { handleDelete() }}>
+                <button type="button" className="btn btn-danger d-flex align-items-center gap-1 py-1" onClick={handleDelete}>
                     <FaTrash />
                     Delete Notification
                 </button>
@@ -100,13 +88,6 @@ const Notification = ({
 
             <div className='d-flex flex-wrap gap-md-0 gap-3'>
                 <div className="col-md-6 pe-md-2 pe-0">
-                    <div className='bg-light p-3 rounded-2 border shadow-sm'>
-                        <FirstLetterEffectText text={'Current Notification'} className={'mb-3'} />
-                        <div className='bg-white p-2 border rounded-2' dangerouslySetInnerHTML={{ __html: notify?.mess }}></div>
-                    </div>
-                </div>
-
-                <div className="col-md-6 ps-md-2 ps-0">
                     <form onSubmit={(e) => { handleFormSubmit(e) }}>
                         <div className="d-flex flex-wrap gap-3">
                             <div className="col-12">
@@ -119,10 +100,21 @@ const Notification = ({
                         </div>
                     </form>
                 </div>
+                <div className="col-md-6 ps-md-2 ps-0">
+                    <div className='bg-light p-3 rounded-2 border shadow-sm'>
+                        {notify?.mess ?
+                            <>
+                                <FirstLetterEffectText text={'Current Notification'} className={'mb-3'} />
+                                <div className='bg-white p-2 border rounded-2' dangerouslySetInnerHTML={{ __html: notify?.mess }}></div>
+                            </>
+                            :
+                            <FirstLetterEffectText text={'No Notification available'} className={'mb-3'} />
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     )
-
 }
 
 export default Notification

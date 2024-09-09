@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DataContext from './DataContext'
+import axios from 'axios'
 
 const DataState = (props) => {
 
@@ -25,6 +26,7 @@ const DataState = (props) => {
 
     const backendHost = "https://backend-portfolio-pous.onrender.com"
     // const backendHost = "http://localhost:5000"
+    // const backendHost = "http://192.168.43.41:5000"
 
     const [responseStatus, setResponseStatus] = useState(false)
     const [responseData, setResponseData] = useState({
@@ -33,55 +35,15 @@ const DataState = (props) => {
         message: ""
     })
 
-    const getToken = async () => {
-        try {
-            const data = localStorage.getItem('auth-token');
-
-            if (!data) {
-                throw new Error('No Token Found');
-            }
-
-            const raw = await fetch(`${backendHost}/admin/verify`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    token: data,
-                }),
-            });
-
-            if (!raw.ok) {
-                throw new Error(`Error verifying token: ${raw.statusText}`);
-            }
-
-            const response = await raw.json();
-
-            if (response === 'Admin Verified') {
-                return 'OK';
-            } else {
-                throw new Error('Invalid Token');
-            }
-        } catch (error) {
-            throw error;
-        }
-    };
-
     const [isLoadingCourse, setIsLoadingCourse] = useState(false);
     const [courses, setCourses] = useState([])
     useEffect(() => {
         (async () => {
             try {
                 setIsLoadingCourse(true)
-                const fetching = await fetch(`${backendHost}/course/`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await fetching.json();
+                let fetching = await axios.get(`${backendHost}/api/client/course`)
                 if (fetching.status === 200) {
-                    setCourses(data?.courses)
+                    setCourses(fetching?.data)
                 }
             } catch (error) {
                 console.log(error, 'COURSES_LOAD_ERROR');
@@ -94,17 +56,15 @@ const DataState = (props) => {
 
     const getCourseModule = async (courseId) => {
         let moduleArr = courses.filter((ele) => { return ele._id === courseId })[0].modules
-        let fetching = await fetch(`${backendHost}/course/modules`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                module_arr: moduleArr
-            })
+        let fetching = await axios.post(`${backendHost}/api/client/course/modules`, {
+            module_arr: moduleArr
         })
 
-        return fetching
+        if (fetching?.status === 200) {
+            return fetching?.data
+        } else {
+            return null
+        }
     }
 
     // getting site notification from backend
@@ -112,15 +72,10 @@ const DataState = (props) => {
     useEffect(() => {
         (async () => {
             try {
-                let raw = await fetch(`${backendHost}/notify`, {
-                    method: 'GET',
-                    headers: {
-                        'content-type': 'application/json'
-                    }
-                })
+                let raw = await axios.get(`${backendHost}/api/client/notification`)
 
                 if (raw.status === 200) {
-                    let data = await raw.json()
+                    let data = raw?.data
                     if (raw?.status === 200) {
                         setNotify(data)
                     }
@@ -135,12 +90,55 @@ const DataState = (props) => {
 
     const [courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag] = useState(false)
 
+    const noNav = ["", "work", "course", "coursedetails", "courselearning", "blogs", "contact", "editor", "unsubscribe", "accountcreate", "accountverify"]
+
+    const handleSubmitSubscriptionForm = async (e, data) => {
+        e.preventDefault();
+        try {
+
+            setResponseStatus(true)
+            setResponseData({
+                heading: 'Submitting Form',
+                isLoading: true,
+            })
+
+            let raw = await axios.post(`${backendHost}/api/client/news`, {
+                "name": data?.name ?? 'No Name',
+                "email": data?.email,
+                "type": data?.subs_type ?? 'all',
+            })
+
+            if (raw?.status === 201) {
+                setResponseData({
+                    heading: 'Submitting Form',
+                    isLoading: false,
+                    message: raw?.data
+                })
+
+                e.target.reset();
+            }
+
+        } catch (error) {
+            console.error(error);
+            setResponseStatus(true)
+            setResponseData({
+                heading: 'Error',
+                isLoading: false,
+                message: error?.response?.data ?? 'Error on submiting form'
+            })
+        } finally {
+            setTimeout(() => {
+                setResponseData({})
+            }, 4000);
+        }
+    }
+
     return (
         <DataContext.Provider value={{
             socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData,
-            responseStatus, setResponseStatus, responseData, setResponseData, backendHost, getToken,
+            responseStatus, setResponseStatus, responseData, setResponseData, backendHost,
             isLoadingCourse, courses, setCourses, getCourseModule, notify, setNotify,
-            courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag
+            courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag, noNav, handleSubmitSubscriptionForm
         }}>
             {props.children}
         </DataContext.Provider>

@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { CustomBtn } from '../../components/Utility'
 import { BsFillSendFill } from 'react-icons/bs'
 import JoditEditor from 'jodit-react'
+import axios from 'axios'
 
 const MailNewsletter = ({ FunctionContext, DataContext }) => {
 
@@ -27,38 +28,32 @@ const MailNewsletter = ({ FunctionContext, DataContext }) => {
                 heading: 'Sending Newsletter',
             })
 
-            let raw = await fetch(`${backendHost}/mail`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'auth_token': localStorage.getItem("auth-token")
-                },
-                body: JSON.stringify({
-                    "service": "news",
-                    "subject": formData.subject,
-                    "body": formData.html,
-                    "toSend": formData.toSend
-                })
-            })
-            let res = await raw.json()
+            const raw = await axios.post(`${backendHost}/api/admin/mail`, {
+                "service": "news",
+                "subject": formData.subject,
+                "body": formData.html,
+                "toSend": formData.toSend
+            }, { withCredentials: true })
+
+
+            if (raw.status === 200) {
+                setFormData({ html: "" })
+                form.current.reset()
+            }
 
             setResponseData({
                 isLoading: false,
                 heading: 'Sending Newsletter',
-                message: res
+                message: raw?.data
             })
 
-            form.current.reset()
-
         } catch (error) {
-
             console.error(error)
-
             setResponseStatus(true)
             setResponseData({
                 isLoading: false,
                 heading: 'Error',
-                message: error
+                message: error?.response?.data ?? "Server Error"
             })
         }
     }

@@ -1,15 +1,15 @@
 import React from 'react'
 import { AccordianCustom, SidebarAccordianList } from '../components/Utility'
 
-const LearningSidebar = ({ modules, pages, urlThreaten }) => {
+const LearningSidebar = ({ course_id, modules, pages, urlThreaten }) => {
 
     return (
         <div className='d-flex flex-column gap-3 my-3'>
             {Array.isArray(modules) && modules.map((ele, index) => {
                 if (ele.pages.length > 0) {
-                    
+
                     let lastUpdate = pages.find((pages) => {
-                        return pages._id === ele?.pages[ele?.pages?.length-1]
+                        return pages._id === ele?.pages[ele?.pages?.length - 1]
                     })
 
                     return (
@@ -27,14 +27,15 @@ const LearningSidebar = ({ modules, pages, urlThreaten }) => {
                                 let data = pages.find((val) => val._id === page)
                                 return (
                                     <SidebarAccordianList
-                                        ofModule={ele._id}
+                                        key={page._id + `${idx}-page`}
                                         id={data._id}
                                         name={data.name}
                                         page={idx + 1}
                                         lastUpdated={data.updatedAt}
-                                        key={page._id + `${idx}-page`}
-                                        urlThreaten={urlThreaten}
+                                        ofModule={ele._id}
                                         adminMode={false}
+                                        urlThreaten={urlThreaten}
+                                        course_id={course_id}
                                     />
                                 )
                             })}

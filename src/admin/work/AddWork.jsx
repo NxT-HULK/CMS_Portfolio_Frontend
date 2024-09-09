@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { CustomBtn, CustomTags } from '../../components/Utility'
 import { BsFillSendFill } from 'react-icons/bs'
 import JoditEditor from 'jodit-react'
+import axios from 'axios'
 
 const AddWork = ({ DataContext, FunctionContext }) => {
 
@@ -41,27 +42,20 @@ const AddWork = ({ DataContext, FunctionContext }) => {
         setResponseData({ isLoading: true, heading: 'Adding up work data' })
 
         try {
+            const raw = await axios.post(`${backendHost}/api/admin/work`, {
+                "name": workFormData.name,
+                "shortDesc": workFormData.description,
+                "html": workFormData.html,
+                "link": workFormData.link,
+                "background": workFormData.bgUrl,
+                "techUsed": usedTech,
+                "type": workFormData.type,
+                "mailFlag": workFormData?.mailFlag ?? false
+            }, { withCredentials: true })
 
-            let raw = await fetch(`${backendHost}/work`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "name": workFormData.name,
-                    "shortDesc": workFormData.description,
-                    "html": workFormData.html,
-                    "link": workFormData.link,
-                    "background": workFormData.bgUrl,
-                    "techUsed": usedTech,
-                    "type": workFormData.type
-                })
-            })
-            let data = await raw.json()
+            setResponseData({ isLoading: false, heading: 'Adding up work data', message: raw?.data })
 
-            setResponseData({ isLoading: false, heading: 'Adding up work data', message: data })
-
-            if (data === "Work Post added") {
+            if (raw?.data === "Work Post added") {
                 addWorkForm.current.reset()
                 setUsedTech([])
             }
@@ -124,7 +118,14 @@ const AddWork = ({ DataContext, FunctionContext }) => {
                         />
                     </div>
 
-                    <CustomBtn text="Post Project and send Mails" icon={<BsFillSendFill />} type={'submit'} />
+                    <div className='my-3 d-flex gap-2 align-items-center'>
+                        <input type="checkbox" name="mailFlag" id="mailFlag" onChange={(e) => setWorkFormData({ ...workFormData, mailFlag: e.target.checked})} />
+                        <label htmlFor="mailFlag">Also send mail to subscriber</label>
+                    </div>
+
+                    <div className="mt-3 mb-5">
+                        <CustomBtn text="Post Project" icon={<BsFillSendFill />} type={'submit'} />
+                    </div>
                 </form>
             </div>
         </>

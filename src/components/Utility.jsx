@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import DataContext from '../context/data/DataContext'
-import { Link, useLocation, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { formatDistance } from 'date-fns'
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { FaEdit, FaInfo, FaLink, FaLongArrowAltRight, FaPlay } from 'react-icons/fa'
-import { MdDelete, MdEditSquare, MdOutlineChecklistRtl } from 'react-icons/md'
+import { FaEdit, FaInfo, FaLink, FaLongArrowAltRight, FaPlay, FaTrash } from 'react-icons/fa'
+import { MdDelete, MdOutlineChecklistRtl } from 'react-icons/md'
 import { ImSpinner4 } from 'react-icons/im'
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import FunctionContext from '../context/function/FunctionContext'
+import AdminContext from '../context/admin/AdminContext';
 
 export const IcoBtn = ({ link, icon }) => {
   return (
@@ -364,7 +365,7 @@ export const StripedSliderCustom = ({ data }) => {
     <Slider {...settings}>
       {data && data.map((ele, idx) => {
         return (
-          <div className='px-2'>
+          <div className='px-2' key={`${ele?._id}`}>
             <div className="work-card-custom" key={`professional-cards-${idx}-${ele._id}`}>
               <img src={ele.background} alt="" loading='eager' />
 
@@ -426,23 +427,22 @@ export const Toast = () => {
   );
 };
 
-export const LoadingDataSpinner = ({ className }) => {
+export const LoadingDataSpinner = ({ className, textClassName }) => {
   return (
     <div className='d-flex align-items-center'>
       <div className="spinner-border border-0 d-flex align-items-center justify-content-center">
         <ImSpinner4 className={`fs-5 ${className ? className : 'text-white'}`} />
       </div>
-      <span className={className ? className : 'text-white'}>Loading Data</span>
+      <span className={`${className ? className : 'text-white'} ${textClassName}`}>Loading Data</span>
     </div>
   )
 }
 
-export const CourseCard = ({ courseTitle, img, adminComponent, id, onClick, deleteCourse, deleteStatus, editSetter }) => {
+export const CourseCard = ({ courseTitle, img, adminComponent, id, deleteCourse, deleteStatus }) => {
 
   const { setResponseData, setResponseStatus, courses } = useContext(DataContext)
   const getOverview = () => {
-
-    let selectedCourse = courses.filter((ele) => { return ele._id === id })[0]
+    let selectedCourse = courses.find(ele =>  ele._id === id)
     setResponseStatus(true)
     setResponseData({
       isLoadingData: false,
@@ -451,43 +451,60 @@ export const CourseCard = ({ courseTitle, img, adminComponent, id, onClick, dele
     })
   }
 
-  return (
-    <div className="position-relative more-blog-card d-flex align-items-center justify-content-end flex-column" style={{ '--bg': `url(${img})` }} >
-      <span className="fw-semibold d-block text-light fs-5 text-truncate col-10" style={{ letterSpacing: '1px' }}> {courseTitle} </span>
-      <Link to={`/course/details/${id}/`}>Start Learning</Link>
+  const navigate = useNavigate()
 
-      {adminComponent ?
-        <div className='position-absolute m-3 admin-control d-flex align-items-center gap-3'>
-          <button type="button" className='btn-reset bg-theam lh-1 p-2 rounded-circle shadow-lg' onClick={() => { onClick(); editSetter(id) }}>
-            <MdEditSquare size={20} className='text-white' />
-          </button>
-          <button type="button" className='btn-reset bg-danger lh-1 p-2 rounded-circle shadow-lg' onClick={() => { deleteCourse() }}>
-            {deleteStatus?.isDeleting === true && deleteStatus?.id === id ?
-              <div className="spinner-border border-0 d-flex align-items-center justify-content-center" style={{ height: '20px', width: '20px' }}>
-                <ImSpinner4 className={`text-white`} />
-              </div>
-              :
-              <MdDelete size={20} className='text-white' />
-            }
-          </button>
-        </div>
-        :
-        <div className='position-absolute m-3 admin-control'>
-          <button type="button" className='btn-reset bg-theam lh-1 p-2 rounded-circle shadow-lg' onClick={() => { getOverview(id) }}>
+  return (
+    <div className='d-flex flex-column'>
+      <div className="position-relative more-blog-card d-flex align-items-center justify-content-end flex-column" style={{ '--bg': `url(${img})` }} >
+        <span className="fw-semibold d-block text-light fs-5 text-truncate col-10" style={{ letterSpacing: '1px' }}> {courseTitle} </span>
+        <Link to={`/course/details?course=${id}`}>Start Learning</Link>
+        <div className='position-absolute m-3 admin-control d-flex gap-2 align-items-center'>
+          <button type="button" className='btn-reset bg-theam lh-1 p-2 rounded-circle shadow-lg fw-bold' onClick={() => { getOverview(id) }}>
             <span className='d-flex align-items-center justify-content-center text-white fs-5 font-monospace' style={{ height: '20px', width: '20px' }}> i </span>
           </button>
+          {adminComponent === true &&
+            <button type="button" className='btn-reset bg-danger lh-1 p-2 rounded-circle shadow-lg text-white' onClick={() => { deleteCourse() }} disabled={deleteStatus?.isDeleting === true ? true : false}>
+              {deleteStatus?.isDeleting === true && deleteStatus?.id === id ?
+                <div className="spinner-border fw-medium border-0 d-inline-flex align-items-center justify-content-center me-1" style={{ height: '20px', width: '20px' }}>
+                  <ImSpinner4 />
+                </div>
+                :
+                <MdDelete size={20} />
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      {adminComponent === true &&
+        <div className='mt-1 d-flex flex-wrap'>
+          <div className="col-6 pe-1">
+            <button type="button" className='btn btn-warning text-white fw-medium px-2 py-1 w-100' onClick={() => { navigate(`/admin/course/edit-details?id=${id}`) }}>
+              Edit Course
+            </button>
+          </div>
+
+          <div className="col-6 ps-1">
+            <button type="button" className='btn btn-success fw-medium px-2 py-1 w-100' onClick={() => { navigate(`/admin/course/edit-content?id=${id}`) }}>
+              Modify Content
+            </button>
+          </div>
         </div>
       }
+
     </div>
   )
 }
 
 export const AccordianCustom = ({
-  children, id, idx, name, subModuleLen, lastUpdated, urlThreaten,
-  adminMode, setEditModule, setWorkspace, adminCurrData, course_id
+  children, id, idx, name, subModuleLen, lastUpdated,
+  urlThreaten, adminMode, course_id, deletestatus,
+  handleDeleteModule, setCurrModuleData, setResponseStatus,
+  setResponseData
 }) => {
 
   const [params] = useSearchParams()
+  const navigate = useNavigate()
   let currModule = params.get('module')
   const [isOpen, setIsOpen] = useState(() => {
     if (currModule === id && !urlThreaten) {
@@ -503,21 +520,36 @@ export const AccordianCustom = ({
     }
   }, [currModule, id, setIsOpen])
 
-
   let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true });
-
   const handleEditButton = () => {
-    let data = adminCurrData?.modules.find((ele) => {
-      return ele._id === id
-    })
+    navigate(`/admin/course/edit-module?course=${course_id}&module=${id}`)
+  }
 
-    setEditModule({
-      flag: true,
-      data: data,
-      course_id: course_id
-    })
+  const handleDelete = async (course_id, module_id) => {
+    try {
+      let confirmation = window.confirm('Are you sure want to delete page')
+      if (confirmation) {
+        let fetching = await handleDeleteModule(course_id, module_id)
+        if (fetching.status === 200) {
+          setCurrModuleData((prev) => {
+            let curr = prev
+            curr.modules = curr.modules.filter(ele => ele?._id !== module_id)
+            return curr
+          })
+        }
+      } else {
+        return;
+      }
 
-    setWorkspace('create_course_module')
+    } catch (error) {
+      console.log(error);
+      setResponseStatus(true)
+      setResponseData({
+        flag: true,
+        heading: 'Somthing got wrong!',
+        message: error?.message
+      })
+    }
   }
 
   return (
@@ -525,15 +557,33 @@ export const AccordianCustom = ({
       <div className={`custom-accordian ${isOpen && 'rounded-bottom-0 border-bottom-0'}`} onClick={() => { setIsOpen(!isOpen) }}>
         <div>
           <div className={`text-capitalize title fs-5 fw-semibold ${!isOpen && 'border-bottom'} py-2 px-3 d-flex justify-content-between gap-md-4 gap-0 ${currModule === id ? 'bg-theam' : 'bg-theam-palate'}`}>
-            <span className='text-truncate d-block col-10'>
+            <span className='text-truncate d-block col-md-10 col-8'>
               <span>{idx}.&nbsp;</span><span>{name}</span>
             </span>
-            <div className='d-flex gap-3'>
+            <div className='d-flex gap-3 align-items-center'>
               <IoIosArrowDropdownCircle className='fs-4' />
               {adminMode &&
-                <button type="button" className='btn-reset' onClick={handleEditButton}>
-                  <FaEdit />
-                </button>
+                <div className='d-flex gap-3'>
+                  <button
+                    type="button"
+                    className='btn-reset bg-warning rounded-circle lh-1 d-flex align-items-center justify-content-center'
+                    style={{ height: '30px', width: '30px' }}
+                    onClick={handleEditButton}>
+                    <FaEdit size={16} />
+                  </button>
+
+                  <button
+                    type="button"
+                    className='btn-reset bg-danger rounded-circle lh-1 d-flex align-items-center justify-content-center'
+                    style={{ height: '30px', width: '30px' }}
+                    onClick={() => handleDelete(course_id, id)}
+                    disabled={deletestatus === true ? true : false}>
+                    {deletestatus === true &&
+                      <LoadingDataSpinner className={'text-white'} textClassName={'d-none'} />
+                    }
+                    <FaTrash size={16} />
+                  </button>
+                </div>
               }
             </div>
           </div>
@@ -550,7 +600,6 @@ export const AccordianCustom = ({
               </div>
             </div>
           }
-
         </div>
       </div>
 
@@ -564,24 +613,19 @@ export const AccordianCustom = ({
 }
 
 export const SidebarAccordianList = ({
-  id, name, page, lastUpdated, ofModule, adminMode, setWorkspace, setEditPage, course_id
+  id, name, page, lastUpdated, ofModule, adminMode, course_id
 }) => {
 
   let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true })
   const [params, setParams] = useSearchParams()
   let currpage = params.get('page')
 
+  const navigate = useNavigate()
   const handleEditButton = () => {
-    setEditPage({
-      flag: true,
-      data: id,
-      ofModule: ofModule,
-      ofCourse: course_id
-    })
-
-    setWorkspace('add_course_pages')
+    navigate(`/admin/course/edit-page?course=${course_id}&module=${ofModule}&page=${id}`)
   }
 
+  const { handleDeletePage, deletePageStatus } = useContext(AdminContext)
   const { setCourseLearning_offCanvasFlag } = useContext(DataContext)
   const { scrollTop } = useContext(FunctionContext)
 
@@ -590,6 +634,7 @@ export const SidebarAccordianList = ({
       <div className={`bg-white border border-theam rounded-1 overflow-hidden d-flex gap-2 cursor-pointer`} onClick={() => {
         if (adminMode === false) {
           setParams({
+            course: course_id,
             module: ofModule,
             page: id
           })
@@ -605,11 +650,30 @@ export const SidebarAccordianList = ({
             <span className={`lh-1 ${currpage === id && ofModule === params.get('module') ? 'fw-normal' : 'fw-light'}`} style={{ fontSize: '12px' }}> Last updated {lastUpdatedStr} </span>
           </div>
 
-          <div>
+          <div className='d-flex gap-3'>
             {adminMode &&
-              <button type="button" className='btn-reset' onClick={handleEditButton}>
-                <FaEdit size={20} className='text-theam' />
-              </button>
+              <>
+                <button type="button"
+                  className='btn-reset bg-warning rounded-circle lh-1 d-flex align-items-center justify-content-center'
+                  style={{ height: '30px', width: '30px' }}
+                  onClick={handleEditButton}>
+                  <FaEdit size={16} className='text-white' />
+                </button>
+                <button type="button"
+                  className='btn-reset bg-danger rounded-circle lh-1 d-flex align-items-center justify-content-center'
+                  style={{ height: '30px', width: '30px' }}
+                  onClick={() => handleDeletePage(ofModule, id)}
+                  disabled={deletePageStatus?.isDeleting}
+                >
+                  {deletePageStatus?.isDeleting === true && deletePageStatus?.id === id ?
+                    <div className="spinner-border border-0 d-flex align-items-center justify-content-center">
+                      <ImSpinner4 className={`fs-5 text-white`} />
+                    </div>
+                    :
+                    <FaTrash size={16} className='text-white' />
+                  }
+                </button>
+              </>
             }
           </div>
         </div>

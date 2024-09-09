@@ -4,6 +4,7 @@ import { BsFillSendFill } from 'react-icons/bs'
 import DataContext from '../context/data/DataContext'
 import FunctionContext from '../context/function/FunctionContext'
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import axios from 'axios'
 
 const Contact = () => {
 
@@ -15,42 +16,34 @@ const Contact = () => {
     const handleSubmitContact = async (e) => {
         e.preventDefault()
         try {
-
             setResponseStatus(true)
             setResponseData({ ...responseData, "isLoading": true, "heading": 'Sending Contact' })
-
-            let raw = await fetch(`${backendHost}/contact`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "name": contactFormData.name,
-                    "query": contactFormData.query,
-                    "email": contactFormData.email,
-                    "mess": contactFormData.mess
-                })
+            let raw = await axios.post(`${backendHost}/api/client/contact`, {
+                "name": contactFormData.name,
+                "query": contactFormData.query,
+                "email": contactFormData.email,
+                "mess": contactFormData.mess
             })
 
-            let data = await raw.json()
-
-            setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Contact', "message": data[0].msg || data })
-            setTimeout(() => {
-                setResponseStatus(false)
-                setResponseData({})
-            }, 4000);
-
-            contactForm.current.reset()
+            if (raw?.status === 201) {
+                setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Contact', "message": raw.data })
+                contactForm({})
+                contactForm.current.reset()
+            }
 
         } catch (error) {
+            if (error?.status === 400) {
+                setResponseData({ ...responseData, "isLoading": false, "heading": 'Error', "message": error?.response.data })
+            } else {
+                setResponseData({ ...responseData, "isLoading": false, "heading": 'Error', "message": error?.message })
+            }
 
-            setResponseData({ ...responseData, "isLoading": false, "heading": 'Sending Contact', "message": "Oops! Something went wrong on our server. Please try again after some time. Thank you for your patience." })
+            console.error(error)
+        } finally {
             setTimeout(() => {
                 setResponseStatus(false)
                 setResponseData({})
             }, 4000);
-
-            console.error(error.message)
         }
     }
 

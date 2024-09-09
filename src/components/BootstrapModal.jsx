@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { IoCloseOutline } from 'react-icons/io5'
 import DataContext from '../context/data/DataContext'
 import { ButtonShaded } from './Utility'
@@ -52,52 +52,7 @@ const InformationModal = () => {
 const NewsLetterSubscribe = () => {
 
     const [data, setData] = useState({})
-    const { setResponseStatus, setResponseData, backendHost } = useContext(DataContext)
-    const { handleOnChange } = useContext(FunctionContext)
-
-    const form = useRef("")
-    const handleSubmitForm = async (e) => {
-        e.preventDefault();
-        try {
-
-            setResponseStatus(true)
-            setResponseData({
-                heading: 'Submitting Form',
-                isLoading: true,
-            })
-
-            let raw = await fetch(`${backendHost}/news/subscribe`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'Application/json'
-                },
-                body: JSON.stringify({
-                    "name": data.name,
-                    "email": data.email,
-                    "type": data.subs_type,
-                })
-            })
-
-            let res = await raw.json()
-            setResponseData({
-                heading: 'Submitting Form',
-                isLoading: false,
-                message: res
-            })
-
-            form.current.reset();
-
-        } catch (error) {
-            console.error(error);
-            setResponseStatus(true)
-            setResponseData({
-                heading: 'Error',
-                isLoading: false,
-                message: 'Error on submiting form'
-            })
-            form.current.reset();
-        }
-    }
+    const { handleOnChange, handleSubmitSubscriptionForm } = useContext(FunctionContext)
 
     return (
         <>
@@ -113,7 +68,7 @@ const NewsLetterSubscribe = () => {
                             </button>
                         </div>
                         <div className="modal-body rounded-bottom-1">
-                            <form className='rounded-3' onSubmit={handleSubmitForm} ref={form}>
+                            <form className='rounded-3' onSubmit={(e) => { handleSubmitSubscriptionForm(e, data) }}>
                                 <div className="mb-2 d-flex flex-wrap gap-md-0 gap-2">
                                     <div className="col-md-6 col-12 pe-md-2 pe-0">
                                         <input name='name' type="text" className="rounded-1 custom-input-style" placeholder="Your Name*" required onChange={(e) => { handleOnChange(e, data, setData) }} />
@@ -146,7 +101,7 @@ const NewsLetterSubscribe = () => {
 const ResponseBox = () => {
 
     const { responseStatus, responseData, setResponseStatus } = useContext(DataContext)
-    
+
     const handleEscapePress = useCallback((event) => {
         if (event.key === 'Escape') {
             setResponseStatus(false)

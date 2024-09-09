@@ -6,6 +6,7 @@ import { GiSpeaker, GiSpeakerOff } from "react-icons/gi";
 import DataContext from '../context/data/DataContext';
 import { ImSpinner4 } from 'react-icons/im'
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import axios from 'axios';
 
 const Work = () => {
 
@@ -24,49 +25,25 @@ const Work = () => {
     useEffect(() => {
         (async () => {
             setIsLoadingProfessionalProjects(true)
-            let raw = await fetch(`${backendHost}/work/get-data/professional`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            let data = await raw.json()
-            data.sort((a, b) => {
-                return a.order - b.order
-            })
-            setProfessionalData(data)
+            let raw = await axios.get(`${backendHost}/api/client/work/professional`)
+            raw?.data?.sort((a, b) => a.order - b.order)
+            setProfessionalData(raw?.data)
             setIsLoadingProfessionalProjects(false)
         })();
 
         (async () => {
             setIsLoadingPersonalProjects(true)
-            let raw = await fetch(`${backendHost}/work/get-data/personal`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            let data = await raw.json()
-            data.sort((a, b) => {
-                return a.order - b.order
-            })
-            setPersonalProjects(data)
+            let raw = await axios.get(`${backendHost}/api/client/work/personal`)
+            raw?.data.sort((a, b) => a.order - b.order)
+            setPersonalProjects(raw?.data)
             setIsLoadingPersonalProjects(false)
         })();
 
         (async () => {
             setIsLoadingHobbyProjects(true)
-            let raw = await fetch(`${backendHost}/work/get-data/hobby`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            let data = await raw.json()
-            data.sort((a, b) => {
-                return a.order - b.order
-            })
-            setHobbyProjects(data)
+            let raw = await axios.get(`${backendHost}/api/client/work/hobby`)
+            raw?.data.sort((a, b) => a.order - b.order)
+            setHobbyProjects(raw?.data)
             setIsLoadingHobbyProjects(false)
         })();
     }, [backendHost])

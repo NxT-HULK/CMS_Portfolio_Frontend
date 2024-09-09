@@ -2,78 +2,101 @@ import React, { useEffect, useState } from 'react'
 import AdminContext from './AdminContext'
 import { useContext } from 'react';
 import DataContext from '../data/DataContext';
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import FunctionContext from '../function/FunctionContext';
 
 const AdminState = (props) => {
 
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const { removeSlash } = useContext(FunctionContext)
     let { backendHost, setResponseStatus, setResponseData } = useContext(DataContext)
 
     const [isLoadingCourse, setIsLoadingCourse] = useState(false);
     const [courses, setCourses] = useState([])
-    useEffect(() => {
-        (async () => {
-            try {
-                setIsLoadingCourse(true)
-                const fetching = await fetch(`${backendHost}/course/admin`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await fetching.json();
-                if (fetching.status === 200) {
-                    setCourses(data?.courses)
-                }
-            } catch (error) {
-                console.log(error, 'COURSES_LOAD_ERROR');
-            } finally {
-                setIsLoadingCourse(false);
-            }
-        })()
 
-    }, [backendHost]);
 
+    const [isLoadingModule, setIsLoadingModule] = useState(false)
     const getCourseModule = async (courseId) => {
-        let moduleArr = courses.filter((ele) => { return ele._id === courseId })[0].modules
-        let fetching = await fetch(`${backendHost}/course/modules`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                module_arr: moduleArr
-            })
-        })
+        try {
+            setIsLoadingModule(true)
+            let moduleArr = courses.filter((ele) => ele?._id === courseId)[0].modules
 
-        return fetching
+            const fetching = await axios.post(`${backendHost}/api/client/course/modules`, {
+                module_arr: moduleArr
+            }, { withCredentials: true })
+
+            setIsLoadingModule(false)
+            return fetching?.data
+        } catch (error) {
+            return null
+        }
     }
 
-    const [edditTargetedCourse, setEdditTargetedCourse] = useState(null)
+
+    const [deletestatus, setDeletestatus] = useState({
+        isDeleting: false,
+        id: ''
+    })
+
+
+    const handleDeleteModule = async (courseId, moduleId) => {
+        setDeletestatus({
+            isDeleting: true,
+            id: moduleId
+        })
+
+        try {
+
+            const fetching = await axios.post(`${backendHost}/api/admin/course/module`, {
+                course_id: courseId,
+                module_id: moduleId
+            }, { withCredentials: true })
+
+            return fetching
+
+        } catch (error) {
+
+            console.log(error)
+            setResponseStatus(true)
+            setResponseData({
+                isLoading: false,
+                heading: 'Module deletion failed!',
+                message: error.message
+            })
+
+            return null
+
+        } finally {
+            setDeletestatus({})
+            setTimeout(() => {
+                setResponseStatus(false)
+                setResponseData({})
+            }, 10000);
+        }
+    }
+
 
     const [isUpdating, setIsUpdating] = useState(false)
     const handleChangeStatus = async (e, id) => {
         try {
             setIsUpdating(true)
-            let res = await fetch(`${backendHost}/course/update_status/`, {
-                method: 'PUT',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    course_id: id,
-                    update: e.target.checked
-                })
-            })
 
-            if (res.ok) {
-                let curr = courses.find((ele) => { return ele._id === id })
+            const res = await axios.put(`${backendHost}/api/admin/update_status`, {
+                course_id: id,
+                update: e.target.checked
+            }, { withCredentials: true })
+
+            if (res.status === 200) {
+                let curr = courses.find((ele) => ele._id === id)
                 curr.status = e.target.checked
 
-                let restArr = courses.filter((ele) => {
-                    return ele._id !== id
-                })
+                let restArr = courses.filter((ele) => ele._id !== id)
 
                 restArr.push(curr)
-                restArr.sort((a, b) => { return Date(a.createdAt) - Date(b.createdAt) })
+                restArr.sort((a, b) => Date(a.createdAt) - Date(b.createdAt))
                 setCourses(restArr)
 
             } else {
@@ -102,8 +125,9 @@ const AdminState = (props) => {
         }
     }
 
-    const [editData, setEditData] = useState(null)
+
     const [addCourseresetForm, setaddCourseresetForm] = useState(false)
+
 
     const [editModule, setEditModule] = useState({
         flag: false,
@@ -111,10 +135,6 @@ const AdminState = (props) => {
         course_id: null
     })
 
-    const [editPage, setEditPage] = useState({
-        flag: false,
-        data: null
-    })
 
     const [isLoadingCurrData, setIsLoadingCurrData] = useState(false)
     const [currData, setCurrData] = useState({
@@ -122,11 +142,81 @@ const AdminState = (props) => {
         pages: []
     })
 
+
+    const [allPages, setAllPages] = useState([])
+    const [isLoadingPages, setIsLoadingPages] = useState(false)
+    const getAllPages = async (moduleId) => {
+        setIsLoadingPages(true)
+
+        if (!moduleId)
+            return null
+        try {
+            const response = await axios.post(`${backendHost}/api/client/course/modules/pages`, {
+                module_id: moduleId
+            }, { withCredentials: true })
+
+            response?.data.sort((a, b) => {
+                return a?.page_number - b?.page_number
+            })
+
+            setAllPages(response?.data)
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoadingPages(false)
+        }
+    }
+
+    const [deletePageStatus, setDeletePageStatus] = useState({ isDeleting: false, id: '' })
+    const handleDeletePage = async (module, page) => {
+        let confirmation = window.confirm('Are you sure want to delete page')
+        if (confirmation === true) {
+            setDeletePageStatus({ isDeleting: true, id: page })
+            try {
+                let fetching = await axios.post(`${backendHost}/api/admin/course/modules/page`, {
+                    module_id: module,
+                    page_id: page
+                }, { withCredentials: true })
+
+                if (fetching.status === 200) {
+                    setResponseData({
+                        isLoading: false,
+                        heading: "Status",
+                        message: fetching?.data
+                    })
+
+                    setAllPages(allPages.filter(ele => ele._id !== page))
+                    if (removeSlash(location?.pathname).indexOf("edit-content") >= 0) {
+                        navigate("admin/course")
+                    }
+
+                } else {
+                    console.log(fetching);
+                }
+
+            } catch (error) {
+                console.log(error);
+                setResponseStatus(true);
+                setResponseData({
+                    isLoading: false,
+                    heading: 'Error occured while deleting page from module',
+                    message: error.message
+                })
+            }
+        } else {
+            return;
+        }
+    }
+
+    const [authorityMode, setAuthorityMode] = useState(null)
+
     return (
         <AdminContext.Provider value={{
-            isLoadingCourse, courses, setCourses, getCourseModule, edditTargetedCourse, setEdditTargetedCourse,
-            handleChangeStatus, isUpdating, editData, setEditData, addCourseresetForm, setaddCourseresetForm,
-            editModule, setEditModule, editPage, setEditPage, currData, setCurrData, isLoadingCurrData, setIsLoadingCurrData
+            isLoadingCourse, courses, setCourses, getCourseModule, handleChangeStatus, isUpdating,
+            addCourseresetForm, setaddCourseresetForm, editModule, setEditModule, currData, setCurrData,
+            isLoadingCurrData, setIsLoadingCurrData, deletestatus, setDeletestatus, handleDeleteModule,
+            isLoadingModule, allPages, setAllPages, isLoadingPages, getAllPages, handleDeletePage,
+            deletePageStatus, authorityMode, setAuthorityMode, setIsLoadingCourse
         }}>
             {props.children}
         </AdminContext.Provider>

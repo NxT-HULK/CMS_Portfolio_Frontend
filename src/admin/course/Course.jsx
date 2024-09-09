@@ -1,15 +1,30 @@
-import React, { useState } from 'react'
-import { FaFolderPlus } from 'react-icons/fa'
-import { HiDocumentPlus } from "react-icons/hi2";
-import { CourseCard, LoadingDataSpinner } from '../../components/Utility';
-import { LuFolderCog } from "react-icons/lu";
+import React, { useEffect, useState } from 'react'
+import { CourseCard } from '../../components/Utility';
+import axios from 'axios';
+import { ImSpinner4 } from 'react-icons/im';
 
-const Course = ({
-    setWorkspace, DataContext, AdminContext
-}) => {
+const Course = ({ DataContext, AdminContext }) => {
 
-    let { courses, setCourses, isLoadingCourse, setEdditTargetedCourse } = AdminContext
+    let { courses, setCourses, isLoadingCourse, setIsLoadingCourse } = AdminContext
     let { backendHost, setResponseStatus, setResponseData } = DataContext
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setIsLoadingCourse(true)
+                const fetch = await axios.get(`${backendHost}/api/admin/course`, { withCredentials: true })
+                if (fetch.status === 200) {
+                    setCourses(fetch?.data)
+                }
+            } catch (error) {
+                console.log(error, 'COURSES_LOAD_ERROR');
+            } finally {
+                setIsLoadingCourse(false);
+            }
+
+        })();
+    }, [])
+
 
     const [deleteInfo, setDeleteInfo] = useState({
         isDeleting: false,
@@ -26,17 +41,11 @@ const Course = ({
 
             try {
 
-                let fetching = await fetch(`${backendHost}/course`, {
-                    method: 'DELETE',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        course_id: courseId
-                    })
-                })
+                const fetch = await axios.post(`${backendHost}/api/admin/course/delete-course`, {
+                    course_id: courseId
+                }, { withCredentials: true })
 
-                if (fetching.ok) {
+                if (fetch.status === 200) {
                     setCourses(courses.filter(ele => ele._id !== courseId))
                 }
 
@@ -45,7 +54,7 @@ const Course = ({
                 setResponseData({
                     isLoading: false,
                     heading: 'Error while deleting course',
-                    message: error.message
+                    message: error.response?.data
                 })
             } finally {
                 setDeleteInfo({})
@@ -59,28 +68,14 @@ const Course = ({
 
     return (
         <div className='w-100 mb-auto'>
-            <div className='w-100 mb-4'>
-                <div className='my-4'>
-                    <div className='d-flex gap-3 flex-wrap'>
-                        <button type="button" className='simleButton-with-shaded width-fit px-2' onClick={() => { setWorkspace('create_course') }}>
-                            <FaFolderPlus className='text-white me-1' />
-                            Create Course
-                        </button>
-                        <button type="button" className='simleButton-with-shaded width-fit px-2' onClick={() => { setWorkspace('create_course_module') }}>
-                            <LuFolderCog className='text-white me-1' />
-                            Create new module
-                        </button>
-                        <button type="button" className='simleButton-with-shaded width-fit px-2' onClick={() => { setWorkspace('add_course_pages') }}>
-                            <HiDocumentPlus className='text-white me-1' />
-                            Add Pages
-                        </button>
-                    </div>
-                </div>
-            </div>
-
             <div className='w-100 d-flex flex-wrap gap-4 justify-content-md-start justify-content-center'>
                 {isLoadingCourse ?
-                    <LoadingDataSpinner />
+                    <div className='d-flex align-items-center'>
+                        <div className="spinner-border border-0 d-flex align-items-center justify-content-center" role="status">
+                            <ImSpinner4 className='text-theam fs-5' />
+                        </div>
+                        <span>Loading Data</span>
+                    </div>
                     :
                     courses.map((ele) => {
                         return (
@@ -90,10 +85,8 @@ const Course = ({
                                 id={ele._id}
                                 img={ele.img}
                                 adminComponent={true}
-                                onClick={() => { setWorkspace('edit_course_pages') }}
                                 deleteCourse={() => { handleDeleteCourse(ele._id) }}
                                 deleteStatus={deleteInfo}
-                                editSetter={setEdditTargetedCourse}
                             />
                         )
                     })

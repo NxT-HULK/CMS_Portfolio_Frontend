@@ -1,42 +1,37 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import { FirstLetterEffectText } from '../components/Utility'
-import DataContext from '../context/data/DataContext'
-import FunctionContext from '../context/function/FunctionContext'
-import { useNavigate } from 'react-router-dom'
+import { FirstLetterEffectText } from '../../components/Utility'
+import DataContext from '../../context/data/DataContext'
+import FunctionContext from '../../context/function/FunctionContext'
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const AuthenticateAdmin = () => {
-  const { setResponseStatus, setResponseData, backendHost, getToken } = useContext(DataContext)
+  const { setResponseStatus, setResponseData, backendHost } = useContext(DataContext)
   const { handleOnChange } = useContext(FunctionContext)
 
-  const navigate = useNavigate("")
-
   const [eyemode, setEyemode] = useState(false)
-  const [data, setData] = useState({})
+  const [formdata, setFormdata] = useState({})
+
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const gettingToken = async () => {
+    (async () => {
       try {
-        let response = await getToken()
-        if (response === "OK") {
-          navigate('/admin')
-        } else {
-          navigate('/auth')
+        let fetch = await axios.post(`${backendHost}/api/admin/login`, {}, { withCredentials: true })
+        if (fetch.status === 200) {
+          navigate("/admin")
         }
       } catch (error) {
-        navigate('/auth')
+        console.error(error)
       }
-    }
+    })();
+  }, [])
 
-    (async () => {
-      await gettingToken()
-    })()
-  }, [getToken, navigate])
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     setResponseStatus(true)
     setResponseData({
       isLoading: true,
@@ -45,52 +40,41 @@ const AuthenticateAdmin = () => {
     })
 
     try {
-
-      let raw = await fetch(`${backendHost}/admin/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          id: data.adminID,
-          key: data.adminPass
-        })
+      let fetch = await axios.post(`${backendHost}/api/admin/login`, formdata, {
+        withCredentials: true
       })
-      let response = await raw.json()
 
-      if (response.length > 100) {
-        localStorage.setItem('auth-token', response)
-        setResponseStatus(false)
+      if (fetch.status === 200) {
         setResponseData({
           isLoading: false,
-          heading: "",
-          message: ""
+          heading: "Login Status",
+          message: fetch?.data
         })
-        navigate('/admin')
+
+        navigate("/admin")
+
+        setFormdata({})
+        e.target.reset()
+
       } else {
         setResponseData({
           isLoading: false,
-          heading: "Admin Login",
-          message: response
+          heading: "Error",
+          message: fetch?.data
         })
       }
-
     } catch (error) {
-      console.error(error)
       setResponseData({
-        isLoading: true,
-        heading: "Error - Admin Login",
-        message: error.message
+        isLoading: false,
+        heading: "Validation Failed",
+        message: error?.response?.data ?? "Server Error"
       })
-
+      console.error(error);
+    } finally {
       setTimeout(() => {
         setResponseStatus(false)
-        setResponseData({
-          isLoading: false,
-          heading: "",
-          message: ""
-        })
-      }, 3000);
+        setResponseData({})
+      }, 4000);
     }
   }
 
@@ -111,10 +95,10 @@ const AuthenticateAdmin = () => {
               <FirstLetterEffectText text="Admin Login" className2={'text-white'} />
               <form className='rounded-3' onSubmit={handleLogin}>
                 <div className="mb-2">
-                  <input type="text" className="bg-white rounded-1 custom-input-style" placeholder="Admin ID ?" name="adminID" onChange={(e) => { handleOnChange(e, data, setData) }} />
+                  <input type="email" className="bg-white rounded-1 custom-input-style" placeholder="Admin ID ?" name="email" onChange={(e) => { handleOnChange(e, formdata, setFormdata) }} />
                 </div>
                 <div className="position-relative d-flex align-items-center justify-content-end mb-2">
-                  <input type={eyemode === true ? 'text' : 'password'} className="bg-white rounded-1 custom-input-style" placeholder="Your Password" name="adminPass" onChange={(e) => { handleOnChange(e, data, setData) }} />
+                  <input type={eyemode === true ? 'text' : 'password'} className="bg-white rounded-1 custom-input-style" placeholder="Your Password" name="password" onChange={(e) => { handleOnChange(e, formdata, setFormdata) }} />
                   <div className='position-absolute me-3'>
                     <button type="button" className='btn-reset' onClick={() => { setEyemode(!eyemode) }}>
                       {eyemode === true ?
@@ -126,13 +110,9 @@ const AuthenticateAdmin = () => {
                   </div>
                 </div>
                 <div className="position-relative ms-1 mb-2">
-                  <span className="text-white fw-light" style={{ fontSize: '14px' }}>
-                    Forgot Password ?
-                  </span>
+                  <span className="text-white fw-light" style={{ fontSize: '14px' }}> Forgot Password ? </span>
                 </div>
-                <button type="submit" className='simleButton-with-shaded'>
-                  Login
-                </button>
+                <button type="submit" className='simleButton-with-shaded'> Login </button>
               </form>
             </div>
           </div>
