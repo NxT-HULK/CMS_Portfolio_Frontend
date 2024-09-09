@@ -10,7 +10,7 @@ const CreateCourse = ({ DataContext, FunctionContext, AdminContext }) => {
 
   const { handleOnChange, removeSlash } = FunctionContext
   const { backendHost, setResponseStatus, setResponseData } = DataContext
-  const { courses, setCourses, fetchAndSetCourse } = AdminContext
+  const { courses, setCourses } = AdminContext
 
   const [addCourseFormData, setaddCourseFormData] = useState({
     name: '',
@@ -27,8 +27,15 @@ const CreateCourse = ({ DataContext, FunctionContext, AdminContext }) => {
   useEffect(() => {
     (async () => {
       if (removeSlash(location.pathname).indexOf("edit-details") > 0) {
-        if (!courses) {
-          await fetchAndSetCourse()
+        if (courses.length === 0) {
+          try {
+            const fetch = await axios.get(`${backendHost}/api/admin/course`, { withCredentials: true })
+            if (fetch.status === 200) {
+              setCourses(fetch?.data)
+            }
+          } catch (error) {
+            console.log(error);
+          }
         }
 
         setaddCourseFormData(() => {
@@ -50,7 +57,7 @@ const CreateCourse = ({ DataContext, FunctionContext, AdminContext }) => {
         })
       }
     })();
-  }, [courses, params])
+  }, [courses, params, setCourses, backendHost])
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();

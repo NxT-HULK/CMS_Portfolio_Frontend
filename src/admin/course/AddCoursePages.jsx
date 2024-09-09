@@ -15,6 +15,9 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
   const { backendHost, setResponseData, setResponseStatus } = DataContext
 
   const navigate = useNavigate()
+  const [formData, setFormData] = useState({})
+  const [params] = useSearchParams()
+  const location = useLocation()
 
   useEffect(() => {
     (async () => {
@@ -46,10 +49,6 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
     course: false,
     module: false
   })
-
-  const [formData, setFormData] = useState({})
-  const [params] = useSearchParams()
-  const location = useLocation()
 
   // edit page logic start here
   const [editPage, setEditPage] = useState(false)
