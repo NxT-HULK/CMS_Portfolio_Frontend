@@ -113,7 +113,7 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
         setAllPages(fetchAllPages?.data)
       }
     })();
-  }, [isSelected?.module, backendHost, formData?.module, setAllPages])
+  }, [isSelected?.module, backendHost, formData?.module, setAllPages, editPage])
 
 
   const handleSubmitForm = async (e) => {

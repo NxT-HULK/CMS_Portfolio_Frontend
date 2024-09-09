@@ -57,7 +57,7 @@ const CreateCourse = ({ DataContext, FunctionContext, AdminContext }) => {
         })
       }
     })();
-  }, [courses, params, setCourses, backendHost])
+  }, [courses, params, setCourses, backendHost, location?.pathname, navigate, removeSlash])
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
