@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTrash } from 'react-icons/fa'
 import { ImSpinner4 } from 'react-icons/im'
 
@@ -37,7 +37,8 @@ const Contact = ({ DataContext, FunctionContext }) => {
         console.error(error)
       }
     })()
-  }, [backendHost])
+    // eslint-disable-next-line
+  }, [backendHost, backendHost])
 
   const handleDeleteData = async (id) => {
     let confirmation = window.confirm('Are you sure want to delete page')

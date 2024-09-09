@@ -39,7 +39,7 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
         console.error(error);
       }
     })();
-  }, [courses])
+  }, [courses, backendHost, params, setAllPages, setCourses])
 
   const [allModules, setAllModules] = useState([])
   const [isSelected, setIsSelected] = useState({
@@ -114,7 +114,7 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
         setAllPages(fetchAllPages?.data)
       }
     })();
-  }, [isSelected?.module])
+  }, [isSelected?.module, backendHost, formData?.module, setAllPages])
 
 
   const handleSubmitForm = async (e) => {

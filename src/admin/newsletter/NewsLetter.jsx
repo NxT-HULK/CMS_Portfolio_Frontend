@@ -29,7 +29,7 @@ const NewsLetter = ({ DataContext, FunctionContext }) => {
                 console.error(error);
             }
         })()
-    }, [backendHost])
+    }, [backendHost, setResponseData, setResponseStatus])
 
     return (
         <>

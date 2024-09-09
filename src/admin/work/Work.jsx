@@ -63,7 +63,7 @@ const Work = ({ DataContext, FunctionContext }) => {
                 console.error(error);
             }
         })()
-    }, [backendHost])
+    }, [backendHost, setResponseData, setResponseStatus])
 
     const handleSetData__modalData = (html) => {
         setResponseStatus(true)

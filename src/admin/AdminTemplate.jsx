@@ -227,7 +227,7 @@ const AdminTemplate = (mainProps) => {
             const temp = menu.find((ele) => removeSlash(location?.pathname).indexOf(removeSlash(ele?.link)) >= 0)
             return "Admin - " + temp?.name
         })
-    }, [location?.pathname])
+    }, [location?.pathname, menu, removeSlash])
 
 
     return (

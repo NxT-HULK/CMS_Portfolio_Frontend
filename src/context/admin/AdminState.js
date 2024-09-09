@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AdminContext from './AdminContext'
 import { useContext } from 'react';
 import DataContext from '../data/DataContext';

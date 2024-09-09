@@ -13,7 +13,7 @@ const CourseModule = ({ FunctionContext, DataContext, AdminContext }) => {
   const [data, setdata] = useState({})
   let { handleOnChange, removeSlash } = FunctionContext
   let { backendHost, setResponseStatus, setResponseData } = DataContext
-  let { courses, setCourses, getCourseModule, fetchAndSetCourse, isLoadingCourse, deletestatus, handleDeleteModule } = AdminContext
+  let { courses, setCourses, getCourseModule, isLoadingCourse, deletestatus, handleDeleteModule } = AdminContext
 
   const navigate = useNavigate()
   const [allModules, setAllModules] = useState(null)

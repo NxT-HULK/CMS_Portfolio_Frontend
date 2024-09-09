@@ -23,7 +23,8 @@ const Course = ({ DataContext, AdminContext }) => {
             }
 
         })();
-    }, [])
+        // eslint-disable-next-line
+    }, [backendHost, setCourses])
 
 
     const [deleteInfo, setDeleteInfo] = useState({

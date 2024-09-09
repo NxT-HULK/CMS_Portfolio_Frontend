@@ -27,7 +27,7 @@ const AuthenticateAdmin = () => {
         console.error(error)
       }
     })();
-  }, [])
+  }, [backendHost, navigate])
 
 
   const handleLogin = async (e) => {
