@@ -1,0 +1,36 @@
+.blur-white {
+    backdrop-filter: blur(7px);
+    background-color: #ffffff4e;
+}
+
+.form-card {
+    background-color: #fff;
+    border: 1px solid #e4e4e4;
+
+    .card-label .required {
+        &::after {
+            content: "*";
+            color: #f00;
+        }
+    }
+
+    .card-input {
+        margin: 1.5rem 0 1rem 0;
+
+        input,
+        textarea {
+            border: 0;
+            border-bottom: 1px solid #aaa;
+            min-width: 300px;
+            width: 100%;
+            outline: 0;
+        }
+    }
+
+    .info {
+        .text {
+            font-size: 13px;
+            color: var(--bs-secondary);
+        }
+    }
+}

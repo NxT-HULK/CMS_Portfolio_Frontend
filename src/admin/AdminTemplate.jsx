@@ -5,7 +5,7 @@ import { FaBarsStaggered, FaBookmark, FaBullhorn, FaFire, FaNewspaper } from "re
 import { IoMdLogOut } from "react-icons/io";
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { FaBookReader } from "react-icons/fa";
-import { MdContacts } from 'react-icons/md';
+import { MdContacts, MdFeedback } from 'react-icons/md';
 import { RiFeedbackFill } from "react-icons/ri";
 import { LuFolderCog } from 'react-icons/lu';
 import { HiDocumentPlus } from 'react-icons/hi2';
@@ -132,6 +132,11 @@ const AdminTemplate = (mainProps) => {
                     name: 'New Work',
                     link: '/admin/work/new-work',
                     icon: <FaBookmark />
+                },
+                {
+                    name: 'Feedback Management',
+                    link: '/admin/work/feedback',
+                    icon: <MdFeedback />
                 },
             ],
             renderTooltip: (props) => {

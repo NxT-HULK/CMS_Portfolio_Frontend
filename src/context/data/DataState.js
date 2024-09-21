@@ -24,8 +24,8 @@ const DataState = (props) => {
         message: ''
     })
 
-    const backendHost = "https://backend-portfolio-pous.onrender.com"
-    // const backendHost = "http://localhost:5000"
+    // const backendHost = "https://backend-portfolio-pous.onrender.com"
+    const backendHost = "http://localhost:5000"
     // const backendHost = "http://192.168.43.41:5000"
 
     const [responseStatus, setResponseStatus] = useState(false)
@@ -133,12 +133,22 @@ const DataState = (props) => {
         }
     }
 
+    const [feedbackModal, setFeedbackModal] = useState({
+        show: false,
+        title: ""
+    })
+
+    const [feedbackAdminMode, setFeedbackAdminMode] = useState(false)
+    const [currFeedbackProjectId, setcurrFeedbackProjectId] = useState(null)
+
     return (
         <DataContext.Provider value={{
             socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData,
             responseStatus, setResponseStatus, responseData, setResponseData, backendHost,
             isLoadingCourse, courses, setCourses, getCourseModule, notify, setNotify,
-            courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag, noNav, handleSubmitSubscriptionForm
+            courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag, noNav, handleSubmitSubscriptionForm,
+            feedbackModal, setFeedbackModal, feedbackAdminMode, setFeedbackAdminMode, currFeedbackProjectId,
+            setcurrFeedbackProjectId
         }}>
             {props.children}
         </DataContext.Provider>

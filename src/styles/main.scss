@@ -101,15 +101,16 @@ ul {
     box-shadow: 3px 3px 0 rgba($color: $theam-color, $alpha: 0.5);
     transition: 0.1s;
 
-    span {
-        color: #fff;
+    .text,
+    .icon {
+        color: #fff !important;
         font-size: 23px;
         line-height: 1;
+    }
 
-        &:nth-child(2) {
-            font-size: 16px;
-            @include center-center();
-        }
+    .text {
+        font-size: 16px;
+        @include center-center();
     }
 
     &:hover,

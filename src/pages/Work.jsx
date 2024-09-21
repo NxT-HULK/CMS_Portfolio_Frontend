@@ -62,7 +62,7 @@ const Work = () => {
                         <source src={require('../assets/work.mp4')} type='video/mp4' />
                     </video>
 
-                    <div className="nav-padding h-100 z-2">
+                    <div className="nav-padding h-100 z-2 col-12">
                         <div className="ms-md-5 ms-3 d-flex d-flex align-items-end justify-content-md-center justify-content-start">
                             <div className="col-md-6 col-12 mt-5 pt-5 d-md-block d-none">
                                 <div className="transparent-effect py-4 px-3 rounded-2 mb-3 col-10">
@@ -94,7 +94,7 @@ const Work = () => {
                             </div>
                         </div>
 
-                        <div className="vw-100-2 left-0 position-relative z-2 px-2 mt-4" style={{ marginBottom: '-80px' }}>
+                        <div className="col-12 left-0 position-relative z-2 px-2 mt-4" style={{ marginBottom: '-80px' }}>
                             <div className='w-100 d-flex justify-content-between align-items-center'>
                                 <FirstLetterEffectText text="Professional Works" className2={'text-white'} />
                                 <div className='text-white fs-4 fw-bold bg-white px-4 lh-1 rounded-pill bg-theam py-2'>
@@ -114,7 +114,7 @@ const Work = () => {
                                 <StripedSliderCustom data={professionalData} />
                             }
 
-                            <div className='d-md-none d-flex gap-2 align-items-center position-absolute top-0' id="responsive_speaker_btn" style={{ right: '-15px', marginTop: '-50px' }}>
+                            <div className='d-md-none d-flex gap-2 align-items-center position-absolute top-0' id="responsive_speaker_btn" style={{ right: 0, marginTop: '-50px' }}>
                                 <button type="button" className="btn-reset border border-2 border-theam rounded-circle transparent-effect lh-1 p-2" onClick={() => { setAudioFlag(!audioFlag) }}>
                                     {audioFlag === true ?
                                         <GiSpeakerOff className='fs-3 text-white' />

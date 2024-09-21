@@ -3,6 +3,7 @@ import { IoCloseOutline } from 'react-icons/io5'
 import DataContext from '../context/data/DataContext'
 import { ButtonShaded } from './Utility'
 import FunctionContext from '../context/function/FunctionContext'
+import FeedbackComponents from './FeedbackComponents'
 
 const WhatIProvideModal = ({ modalId, modalTitle }) => {
     return (
@@ -159,6 +160,7 @@ const BootstrapModal = () => {
             <InformationModal />
             <NewsLetterSubscribe />
             <ResponseBox />
+            <FeedbackComponents />
         </>
     )
 }

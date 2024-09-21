@@ -5,13 +5,14 @@ import { formatDistance } from 'date-fns'
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { FaEdit, FaInfo, FaLink, FaLongArrowAltRight, FaPlay, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaInfo, FaLink, FaLongArrowAltRight, FaTrash } from 'react-icons/fa'
 import { MdDelete, MdOutlineChecklistRtl } from 'react-icons/md'
 import { ImSpinner4 } from 'react-icons/im'
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import FunctionContext from '../context/function/FunctionContext'
 import AdminContext from '../context/admin/AdminContext';
+import { FaMessage } from 'react-icons/fa6';
 
 export const IcoBtn = ({ link, icon }) => {
   return (
@@ -29,8 +30,8 @@ export const BtnBig = ({ text, icon, link, target }) => {
   return (
     <>
       <Link to={link} type="button" className='theam-btn-big user-select-none' target={target === true ? '_blank' : ''}>
-        <span>{icon}</span>
-        <span>{text}</span>
+        <span className='icon'>{icon}</span>
+        <span className='text'>{text}</span>
       </Link>
     </>
   )
@@ -40,8 +41,8 @@ export const CustomBtn = ({ text, icon, type, className }) => {
   return (
     <>
       <button type={type === 'submit' ? 'submit' : 'button'} className={`btn-reset user-select-none theam-btn-big ${className}`}>
-        <span>{icon}</span>
-        <span>{text}</span>
+        <span className='icon'>{icon}</span>
+        <span className='text'>{text}</span>
       </button>
     </>
   )
@@ -309,7 +310,7 @@ export const ButtonShaded = ({ type, className, text, onClick }) => {
 
 export const StripedSliderCustom = ({ data }) => {
 
-  const { setResponseStatus, setResponseData } = useContext(DataContext)
+  const { setResponseStatus, setResponseData, setFeedbackModal } = useContext(DataContext)
   const hanleSetInformationData = (projectName, html) => {
     setResponseStatus(true)
     setResponseData({
@@ -377,8 +378,14 @@ export const StripedSliderCustom = ({ data }) => {
                   <a href={ele.link} target="_blank" rel="noopener noreferrer" className="controller-btn">
                     <FaLink />
                   </a>
-                  <button type="button" className="controller-btn d-none">
-                    <FaPlay className='ms-1' />
+                  <button type="button" className='btn-reset bg-theam rounded-circle d-flex align-items-center justify-content-center' style={{ height: '35px', width: '35px' }} onClick={() => {
+                    setFeedbackModal({
+                      show: true,
+                      title: `All Feedback - ${ele?.name}`,
+                      id: ele?._id
+                    })
+                  }}>
+                    <FaMessage className='text-white' />
                   </button>
                 </div>
               </div>
@@ -442,7 +449,7 @@ export const CourseCard = ({ courseTitle, img, adminComponent, id, deleteCourse,
 
   const { setResponseData, setResponseStatus, courses } = useContext(DataContext)
   const getOverview = () => {
-    let selectedCourse = courses.find(ele =>  ele._id === id)
+    let selectedCourse = courses.find(ele => ele._id === id)
     setResponseStatus(true)
     setResponseData({
       isLoadingData: false,

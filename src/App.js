@@ -25,6 +25,7 @@ import CourseLearning from './pages/CourseLearning';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import Unsubscribe from './pages/Unsubscribe.jsx'
+import ProjectFeedback from './pages/ProjectFeedback.jsx';
 
 import AuthenticateSupperAdmin from './admin/account/AuthenticateSupperAdmin.jsx';
 import AccountCreate from './admin/account/AccountCreate.jsx'
@@ -37,6 +38,7 @@ import AdminNewPages from './admin/course/AddCoursePages.jsx'
 import AdminModifyCourse from './admin/course/EditCoursePage.jsx'
 
 import AdminWork from './admin/work/Work.jsx'
+import AdminFeedbackManager from './admin/work/FeedbackManagement.jsx'
 import AdminNewWork from './admin/work/AddWork.jsx'
 import AdminNewsLetter from './admin/newsletter/NewsLetter.jsx'
 import AdminMailNews from './admin/newsletter/MailNewsletter.jsx'
@@ -64,6 +66,7 @@ const App = () => {
               <Route path="/blogs" element={<CommingSoon />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/unsubscribe" element={<Unsubscribe />} />
+              <Route path="/feedback" element={<ProjectFeedback />} />
               <Route path="/account">
                 <Route index element={<AuthenticateSupperAdmin />} />
                 <Route path="create" element={<AccountCreate />} />
@@ -85,6 +88,7 @@ const App = () => {
                 <Route path="work">
                   <Route index element={<AdminRoute element={AdminWork} />} />
                   <Route path='new-work' element={<AdminRoute element={AdminNewWork} />} />
+                  <Route path="feedback" element={<AdminRoute element={AdminFeedbackManager} />} />
                 </Route>
                 <Route path="news-letter">
                   <Route index element={<AdminRoute element={AdminNewsLetter} />} />
