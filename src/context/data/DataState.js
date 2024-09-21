@@ -24,8 +24,8 @@ const DataState = (props) => {
         message: ''
     })
 
-    // const backendHost = "https://backend-portfolio-pous.onrender.com"
-    const backendHost = "http://localhost:5000"
+    const backendHost = "https://backend-portfolio-pous.onrender.com"
+    // const backendHost = "http://localhost:5000"
     // const backendHost = "http://192.168.43.41:5000"
 
     const [responseStatus, setResponseStatus] = useState(false)
