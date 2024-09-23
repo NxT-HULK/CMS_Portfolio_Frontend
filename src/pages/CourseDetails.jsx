@@ -12,7 +12,7 @@ import axios from 'axios';
 const CourseDetails = () => {
     const [params] = useSearchParams()
     const course_id = params.get('course')
-    const { courses, isLoadingCourse, backendHost } = useContext(DataContext);
+    const { courses, setCourses, isLoadingCourse, backendHost } = useContext(DataContext);
     const navigate = useNavigate();
 
     const [sanitizedHtml, setSanitizedHtml] = useState('');
@@ -24,9 +24,14 @@ const CourseDetails = () => {
             let content = DOMPurify.sanitize(course?.information)
             setSanitizedHtml(content);
         } else {
-            navigate("/")
+            (async () => {
+                let fetching = await axios.get(`${backendHost}/api/client/course`)
+                if (fetching.status === 200) {
+                    setCourses(fetching?.data)
+                }
+            })();
         }
-    }, [course_id, courses, navigate]);
+    }, [backendHost, course_id, courses, setCourses, navigate]);
 
     // get last updated on api call
     const [date, setDate] = useState({})

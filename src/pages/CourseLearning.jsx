@@ -32,7 +32,7 @@ const CourseLearning = () => {
     useEffect(() => {
         (async () => {
             try {
-                let response = await axios.get(`${backendHost}/api/client/course/learning-matarial/${course_id}`)
+                let response = await axios.get(`${backendHost}/api/client/course/learning-material/${course_id}`)
                 if (response.status === 200) {
                     setModules(response?.data?.modules)
                     setPages(response?.data.pages)
