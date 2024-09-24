@@ -37,12 +37,20 @@ const CourseDetails = () => {
     const [date, setDate] = useState({})
     useEffect(() => {
         (async () => {
-            let fetching = await axios.post(`${backendHost}/api/client/course/last-updated`, { course_id })
-            if (fetching.status === 200) {
-                setDate(fetching?.data)
+            try {
+                let fetching = await axios.post(`${backendHost}/api/client/course/last-updated`, { course_id })
+                if (fetching.status === 200) {
+                    setDate(fetching?.data)
+                }
+            } catch (error) {
+                console.error(error);
+                if (error?.response?.data === "Course ID not valid!") {
+                    window.alert("URL is not valid! Redirecting to all courses.")
+                    navigate("/course")
+                }
             }
         })();
-    }, [backendHost, course_id, setDate])
+    }, [backendHost, course_id, setDate, navigate])
 
     return (
         <>
