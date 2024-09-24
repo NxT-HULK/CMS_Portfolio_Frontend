@@ -23,7 +23,7 @@ const CourseLearning = () => {
     const [pageData, setPageData] = useState("")
     const [isLoadingData, setIsLoadingData] = useState(true)
     const [modules, setModules] = useState([])
-    const [pages, setPages] = useState([])        
+    const [pages, setPages] = useState([])
 
     const [currentPage, setCurrentPage] = useState(null)
     const [currentModule, setCurrentModule] = useState(null)

@@ -3,6 +3,32 @@ import { AccordianCustom, LoadingDataSpinner, SidebarAccordianList } from '../..
 import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 
+const Help = ({ allPages, pages, course_id, ofModule }) => {
+
+  const [data] = useState(() => {
+    let temp = allPages?.filter((page) => pages?.includes(page?._id))
+    temp.sort((a, b) => a?.page_number - b?.page_number)
+    return temp
+  })
+
+  return (
+    data?.map((page, idx) => {
+      return (
+        <SidebarAccordianList
+          key={page?._id + `${idx}-page`}
+          id={page?._id}
+          name={page?.name}
+          page={page?.page_number}
+          lastUpdated={page?.updatedAt}
+          ofModule={ofModule}
+          adminMode={true}
+          course_id={course_id}
+        />
+      )
+    })
+  )
+}
+
 const EditCoursePage = ({ AdminContext, DataContext }) => {
 
   const { backendHost, setResponseStatus, setResponseData } = DataContext
@@ -106,9 +132,10 @@ const EditCoursePage = ({ AdminContext, DataContext }) => {
             :
             <div className='d-flex flex-column gap-3 my-3'>
               {Array.isArray(currData.modules) && currData.modules.map((ele, index) => {
-                let lastUpdate = currData?.pages.find((pages) => {
-                  return pages._id === ele?.pages[ele?.pages?.length - 1]
-                })
+                let lastUpdate = currData?.pages?.filter((page) => page?.of_module === ele?._id) || []
+                if (lastUpdate.length > 0) {
+                  lastUpdate.sort((a, b) => new Date(b?.updatedAt) - new Date(a?.updatedAt))
+                }
 
                 return (
                   <AccordianCustom
@@ -117,33 +144,17 @@ const EditCoursePage = ({ AdminContext, DataContext }) => {
                     name={ele?.module_name}
                     subModuleLen={ele?.pages?.length}
                     key={ele._id + `${index}-module`}
-                    lastUpdated={lastUpdate?.updatedAt}
+                    lastUpdated={lastUpdate?.[0]?.updatedAt}
                     adminMode={true}
                     adminCurrData={currData}
                     course_id={selectedCourse?._id}
-
                     setCurrModuleData={setCurrData}
                     deletestatus={deletestatus}
                     handleDeleteModule={handleDeleteModule}
                     setResponseStatus={setResponseStatus}
                     setResponseData={setResponseData}
                   >
-                    {ele.pages.map((page, idx) => {
-                      let data = currData?.pages?.find((val) => val?._id === page)
-                      return (
-                        <SidebarAccordianList
-                          id={data?._id}
-                          ofModule={ele?._id}
-                          course_id={selectedCourse?._id}
-                          name={data?.name}
-                          page={idx + 1}
-                          lastUpdated={data?.updatedAt}
-                          key={page?._id + `${idx}-page`}
-                          adminMode={true}
-                          adminCurrData={currData}
-                        />
-                      )
-                    })}
+                    <Help ofModule={ele?._id} allPages={currData?.pages} pages={ele?.pages} course_id={selectedCourse?._id} />
                   </AccordianCustom>
                 )
               })}

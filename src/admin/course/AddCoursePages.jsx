@@ -4,7 +4,7 @@ import { HiDocumentPlus } from "react-icons/hi2";
 import { GrPowerReset } from 'react-icons/gr';
 import JoditEditor from 'jodit-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { FaEdit } from 'react-icons/fa';
+import { FaAngleDown, FaAngleUp, FaEdit } from 'react-icons/fa';
 import { ImSpinner4 } from 'react-icons/im';
 import { MdDelete } from 'react-icons/md';
 import axios from 'axios';
@@ -37,7 +37,11 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
           return a?.page_number - b?.page_number
         })
 
-        setAllPages(fetchAllPages?.data)
+        setAllPages(() => {
+          let temp = fetchAllPages?.data
+          temp.sort((a, b) => a?.page_number - b?.page_number)
+          return temp
+        })
       } catch (error) {
         console.error(error);
       }
@@ -110,7 +114,11 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
           module_id: formData?.module
         }, { withCredentials: true })
 
-        setAllPages(fetchAllPages?.data)
+        setAllPages(() => {
+          let temp = fetchAllPages?.data
+          temp.sort((a, b) => a?.page_number - b?.page_number)
+          return temp
+        })
       }
     })();
   }, [isSelected?.module, backendHost, formData?.module, setAllPages, editPage])
@@ -184,73 +192,106 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
     })
     setFormData({ html: '' });
     setEditPage(null);
+    setAllModules(null)
+    setAllPages(null)
     navigate("/admin/course/new-pages")
   }
+
+  const [tillNowWeHaveState, setTillNowWeHaveState] = useState(false)
+  const [previewPageState, setPreviewPageState] = useState(false)
 
   return (
     <>
       {isLoadingCourse ?
         <LoadingDataSpinner className={'text-theam'} />
         :
-        <div className={`pb-md-5 pb-3 d-flex ${editPage ? 'flex-wrap-reverse gap-5' : 'flex-wrap gap-3'}`}>
+        <div className={`pb-md-5 pb-3 d-flex flex-wrap`}>
           <div className='col-12 mb-4'>
             {editPage ?
-              <div className='p-3 border rounded-2 shadow-sm col-12 mb-3' style={{ whiteSpace: 'break-space', wordBreak: 'break-word' }} dangerouslySetInnerHTML={{ __html: formData?.html ?? '' }}></div>
+              <div className='col-12'>
+                <div className={`d-flex col-12 align-items-center justify-content-between cursor-pointer bg-body-tertiary border px-3 ${previewPageState === true ? 'rounded rounded-bottom-0' : 'rounded'}`} onClick={() => setPreviewPageState(!previewPageState)}>
+                  <span className='d-block user-select-none'>
+                    <FirstLetterEffectText text={"Preview Page"} className={'text-truncate col-12 d-block'} />
+                  </span>
+
+                  <button type='button'
+                    className={`text-white btn-reset bg-theam rounded-circle d-flex align-items-center justify-content-center lh-1`}
+                    style={{ height: '35px', width: '35px' }}
+                  >
+                    {previewPageState === true ?
+                      <FaAngleUp />
+                      :
+                      <FaAngleDown className='mt-1' />
+                    }
+                  </button>
+                </div>
+                {previewPageState === true &&
+                  <div className='p-3 border rounded rounded-top-0 border-top-0 shadow-sm col-12 mb-3' style={{ whiteSpace: 'break-space', wordBreak: 'break-word' }} dangerouslySetInnerHTML={{ __html: formData?.html ?? '' }}></div>
+                }
+              </div>
               :
               <div className="bg-body-tertiary p-3 border rounded-1">
-                <div className='mb-3'>
+                <div className={isSelected?.course === true && isSelected?.module === true && 'mb-3'}>
                   <span className="d-block text-center fs-5 fw-bold text-capitalize mt-3">
-                    {isSelected?.course === false ? 'Select course first' : isSelected?.module === false && 'Now, Select module'}
+                    {isSelected?.course === false && isSelected?.module === false ? 'Select course first' : isSelected?.module === false && 'Now, Select module'}
                   </span>
                 </div>
 
-                {isSelected?.course === true && isSelected?.module === true && isLoadingPages === false &&
+                {isSelected?.course === true && isSelected?.module === true && isLoadingPages === false && allPages?.length > 0 &&
+                  isLoadingPages === true ?
                   <>
-                    {allPages?.length > 0 ?
-                      <>
-                        {
-                          isLoadingPages === true ?
-                            <>
-                              <LoadingDataSpinner className={'text-theam'} />
-                            </>
-                            :
-                            <>
-                              <FirstLetterEffectText text={"Till Now We've"} className={'text-truncate col-12 d-block'} />
-                              <div className='d-flex flex-column gap-2'>
-                                {allPages?.map(page => {
-                                  return (
-                                    <div key={page._id} className='d-flex justify-content-between align-items-stretch bg-white border border-theam ps-2 rounded-1'>
-                                      <div className='col-md-10 col-8 d-flex fw-semibold'>
-                                        <span className='d-inline-flex text-theam py-2'>
-                                          <span>{page?.page_number}</span>
-                                          <span>.&nbsp;</span>
-                                        </span>
-                                        <span className='d-block text-truncate py-2'>{page?.name}</span>
-                                      </div>
+                    <LoadingDataSpinner className={'text-theam'} />
+                  </>
+                  :
+                  <>
+                    <div className='d-flex align-items-center justify-content-between cursor-pointer' onClick={() => setTillNowWeHaveState(!tillNowWeHaveState)}>
+                      <span className='d-block user-select-none'>
+                        <FirstLetterEffectText text={"Till Now We've"} className={'text-truncate col-12 d-block'} />
+                      </span>
 
-                                      <div className='d-flex col-auto'>
-                                        <button className='h-100 d-flex align-items-center justify-content-center px-2 bg-success border-0' onClick={() => { navigate(`/admin/course/edit-page?course=${formData?.course}&module=${formData?.module}&page=${page?._id}`) }}>
-                                          <FaEdit size={16} className='text-white mx-1' />
-                                        </button>
-                                        <button className='h-100 d-flex align-items-center justify-content-center px-2 bg-danger border-0' onClick={() => { handleDeletePage(formData?.module, page?._id) }}>
-                                          {deletePageStatus?.isDeleting === true && deletePageStatus?.id === page._id ?
-                                            <div className="spinner-border border-0 d-flex align-items-center justify-content-center">
-                                              <ImSpinner4 size={16} className={`text-white`} />
-                                            </div>
-                                            :
-                                            <MdDelete size={16} className='text-white mx-1' />
-                                          }
-                                        </button>
-                                      </div>
-                                    </div>
-                                  )
-                                })}
-                              </div>
-                            </>
+                      <button type='button'
+                        className={`text-white btn-reset bg-theam rounded-circle d-flex align-items-center justify-content-center lh-1`}
+                        style={{ height: '35px', width: '35px' }}
+                      >
+                        {tillNowWeHaveState === true ?
+                          <FaAngleUp />
+                          :
+                          <FaAngleDown className='mt-1' />
                         }
-                      </>
-                      :
-                      <span className='fs-5 fw-bold text-capitalize d-block text-center my-3'>Current module is empty</span>
+                      </button>
+                    </div>
+
+                    {tillNowWeHaveState === true &&
+                      <div className='d-flex flex-column gap-2'>
+                        {allPages?.map(page => {
+                          return (
+                            <div key={page._id} className='d-flex justify-content-between align-items-stretch bg-white border border-theam ps-2 rounded-1'>
+                              <div className='col-md-10 col-8 d-flex fw-semibold'>
+                                <span className='d-inline-flex text-theam py-2'>
+                                  <span>{page?.page_number}</span>
+                                  <span>.&nbsp;</span>
+                                </span>
+                                <span className='d-block text-truncate py-2'>{page?.name}</span>
+                              </div>
+
+                              <div className='d-flex col-auto'>
+                                <button className='h-100 d-flex align-items-center justify-content-center px-2 bg-success border-0' onClick={() => { navigate(`/admin/course/edit-page?course=${formData?.course}&module=${formData?.module}&page=${page?._id}`) }}>
+                                  <FaEdit size={16} className='text-white mx-1' />
+                                </button>
+                                <button className='h-100 d-flex align-items-center justify-content-center px-2 bg-danger border-0' onClick={() => { handleDeletePage(formData?.module, page?._id) }}>
+                                  {deletePageStatus?.isDeleting === true && deletePageStatus?.id === page._id ?
+                                    <div className="spinner-border border-0 d-flex align-items-center justify-content-center">
+                                      <ImSpinner4 size={16} className={`text-white`} />
+                                    </div>
+                                    :
+                                    <MdDelete size={16} className='text-white mx-1' />
+                                  }
+                                </button>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
                     }
                   </>
                 }
@@ -325,11 +366,11 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
                 </div>
               </div>
 
-              <div className='d-flex gap-3 mt-2 align-items-center justify-content-center'>
+              <div className='d-flex gap-3 mt-5 align-items-center justify-content-center'>
                 <CustomBtn text={editPage ? 'Make Changes' : 'Add Page'} icon={<HiDocumentPlus />} type={'submit'} />
                 <button type="reset" className={`btn-reset user-select-none theam-btn-big`} onClick={handleResetForm}>
-                  <span><GrPowerReset /> </span>
-                  <span className='fs-6'>Reset Form</span>
+                  <span className='icon'><GrPowerReset /> </span>
+                  <span className='fs-6 text'>Reset Form</span>
                 </button>
               </div>
             </form>

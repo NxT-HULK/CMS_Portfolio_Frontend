@@ -169,13 +169,15 @@ const Work = ({ DataContext, FunctionContext }) => {
                     {Object.keys(mainData).map((ele) => {
                         return (
                             <div className='w-100 mb-4 overflow-auto' key={`work-main-div-${ele}`}>
-                                <div className={`user-select-none d-flex align-items-center justify-content-between ${accordianStatus[ele] === false && 'border-bottom'}`}>
+                                <div
+                                    className={`user-select-none cursor-pointer d-flex align-items-center justify-content-between ${accordianStatus[ele] === false && 'border-bottom'}`}
+                                    onClick={() => setAccordianStatus({ ...accordianStatus, [ele]: !accordianStatus[ele] })}
+                                >
                                     <FirstLetterEffectText text={ele} />
                                     <button
                                         type="button"
                                         className={`text-white btn-reset bg-theam rounded-circle d-flex align-items-center justify-content-center lh-1`}
                                         style={{ height: '35px', width: '35px' }}
-                                        onClick={() => setAccordianStatus({ ...accordianStatus, [ele]: !accordianStatus[ele] })}
                                     >
                                         {accordianStatus[ele] === true ?
                                             <FaAngleUp />

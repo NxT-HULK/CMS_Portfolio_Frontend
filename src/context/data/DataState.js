@@ -145,7 +145,7 @@ const DataState = (props) => {
         <DataContext.Provider value={{
             socialLinks, informationModalData, setInformationModalData, ToastModalData, setToastModalData,
             responseStatus, setResponseStatus, responseData, setResponseData, backendHost,
-            isLoadingCourse, courses, setCourses, getCourseModule, notify, setNotify,
+            isLoadingCourse, setIsLoadingCourse, courses, setCourses, getCourseModule, notify, setNotify,
             courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag, noNav, handleSubmitSubscriptionForm,
             feedbackModal, setFeedbackModal, feedbackAdminMode, setFeedbackAdminMode, currFeedbackProjectId,
             setcurrFeedbackProjectId
