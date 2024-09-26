@@ -32,7 +32,7 @@ const CourseLearning = () => {
     useEffect(() => {
         (async () => {
             try {
-                let response = await axios.get(`${backendHost}/api/client/course/learning-material/${course_id}`)
+                let response = await axios.get(`${backendHost}/api/client/course/learning-material/${params.get("course")}`)
                 if (response.status === 200) {
                     setModules(response?.data?.modules)
                     setPages(response?.data.pages)
@@ -42,8 +42,6 @@ const CourseLearning = () => {
                             page: response?.data.pages[0]._id
                         })
                     }
-                } else {
-                    // navigate('/course')
                 }
             } catch (error) {
                 navigate('/course')
@@ -130,7 +128,7 @@ const CourseLearning = () => {
                 </div>
                 :
                 <>
-                    <div id="learning-mai-wrapper" className='px-md-0 px-2 py-3'>
+                    <div id="learning-mai-wrapper" className='px-md-0 px-2 py-3 col-12'>
                         <div className='d-lg-block d-none align-self-start position-sticky py-2' style={{ top: '57px' }} id='learning-sidebar'>
                             <div className='border-bottom px-3 py-2'>
                                 <FirstLetterEffectText text={"Chapters / Module"} />
@@ -159,7 +157,7 @@ const CourseLearning = () => {
                                         <span className='lh-1 fs-4 fw-semibold d-block'> <FirstLetterEffectText2 text={currentPage?.name ?? ''} /> </span>
                                         <span style={{ fontSize: '14px' }}>Last updated {formatDistance(currentPage?.updatedAt || new Date(), new Date(), { addSuffix: true })}</span>
                                     </div>
-                                    <div id='course-learning-main-container' dangerouslySetInnerHTML={{ __html: pageData ?? '' }} ></div>
+                                    <div id='course-learning-main-container' className='col-12' dangerouslySetInnerHTML={{ __html: pageData ?? '' }} ></div>
                                     <hr />
                                     <div className='d-flex flex-column gap-3'>
                                         <div className="d-flex justify-content-between flex-wrap gap-md-0 gap-3">

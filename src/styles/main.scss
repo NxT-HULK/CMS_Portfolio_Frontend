@@ -664,6 +664,12 @@ ul {
     }
 }
 
+@media screen and (max-width: 320px) {
+    .more-blog-card {
+        height: 170px;
+    }
+}
+
 .simleButton-with-shaded {
     width: 100%;
     border: 1px solid $theam-color;

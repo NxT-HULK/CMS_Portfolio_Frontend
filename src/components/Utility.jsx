@@ -624,7 +624,7 @@ export const SidebarAccordianList = ({
 }) => {
 
   let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true })
-  const [params, setParams] = useSearchParams()
+  const [params] = useSearchParams()
   let currpage = params.get('page')
 
   const navigate = useNavigate()
@@ -640,11 +640,7 @@ export const SidebarAccordianList = ({
     <>
       <div className={`bg-white border border-theam rounded-1 overflow-hidden d-flex gap-2 cursor-pointer`} onClick={() => {
         if (adminMode === false) {
-          setParams({
-            course: course_id,
-            module: ofModule,
-            page: id
-          })
+          navigate(`/course/learning?course=${params.get("course")}&module=${ofModule}&page=${id}`)
         }
 
         setCourseLearning_offCanvasFlag(false); scrollTop();
@@ -689,7 +685,7 @@ export const SidebarAccordianList = ({
   )
 }
 
-export const FirstLetterEffectText2 = ({ text }) => {
+export const FirstLetterEffectText2 = ({ text, className }) => {
 
   const [textArr, setTextArr] = useState([])
   useEffect(() => {
@@ -699,7 +695,7 @@ export const FirstLetterEffectText2 = ({ text }) => {
 
   return (
     <>
-      <span>
+      <span className={className}>
         {textArr.map((ele, idx) => {
           return (
             <span className={`themed-first-letter`} key={`${ele}-idx-${idx}`}>{ele}&nbsp;</span>

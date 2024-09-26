@@ -42,6 +42,17 @@
     grid-template-columns: 350px calc(100vw - 360px);
 }
 
+#learning-main-body {
+    border: unset !important;
+    display: flex;
+    flex-direction: column;
+
+    table {
+        overflow: auto !important;
+        display: block;
+    }
+}
+
 @media screen and (max-width: 992px) {
     #learning-mai-wrapper {
         display: block;
@@ -70,6 +81,7 @@ pre {
 
 @media screen and (max-width: 768px) {
     #course-learning-main-container {
+
         ul,
         ol {
             padding-left: 15px;
