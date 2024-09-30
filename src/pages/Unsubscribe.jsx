@@ -53,6 +53,10 @@ const Unsubscribe = () => {
                 })
 
                 e.target.reset()
+
+                setTimeout(() => {
+                    navigate("/")
+                }, 3000);
             }
         } catch (error) {
             if (error.status === 404) {                

@@ -784,3 +784,21 @@ span.role.block.my-2.p-0.fw-bold>span {
         margin-bottom: 0 !important;
     }
 }
+
+.list-style-disk {
+    li {
+        display: flex;
+        gap: .5rem;
+        line-height: 1;
+        margin-bottom: .5rem;
+
+        &::before {
+            content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%236a59d1" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>') !important;
+            display: block;
+            color: $theam-color;
+            height: 1rem;
+            width: 1rem;
+            flex-shrink: 0;
+        }
+    }
+}

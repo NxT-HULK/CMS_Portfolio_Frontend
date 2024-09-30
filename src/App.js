@@ -25,7 +25,9 @@ import CourseLearning from './pages/CourseLearning';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import Unsubscribe from './pages/Unsubscribe.jsx'
-import ProjectFeedback from './pages/ProjectFeedback.jsx';
+
+import ProjectFeedback from './forms/ProjectFeedback.jsx';
+import NewsLetterForm from './forms/NewsLetter.jsx'
 
 import AuthenticateSupperAdmin from './admin/account/AuthenticateSupperAdmin.jsx';
 import AccountCreate from './admin/account/AccountCreate.jsx'
@@ -67,6 +69,7 @@ const App = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/unsubscribe" element={<Unsubscribe />} />
               <Route path="/feedback" element={<ProjectFeedback />} />
+              <Route path="/subscribe-newsletter" element={<NewsLetterForm />} />
               <Route path="/account">
                 <Route index element={<AuthenticateSupperAdmin />} />
                 <Route path="create" element={<AccountCreate />} />
