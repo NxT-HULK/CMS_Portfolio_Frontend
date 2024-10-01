@@ -5,7 +5,7 @@ import { formatDistance } from 'date-fns'
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { FaEdit, FaInfo, FaLink, FaLongArrowAltRight, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaEye, FaEyeSlash, FaInfo, FaLink, FaLongArrowAltRight, FaTrash } from 'react-icons/fa'
 import { MdDelete, MdOutlineChecklistRtl } from 'react-icons/md'
 import { ImSpinner4 } from 'react-icons/im'
 import { IoIosArrowDropdownCircle } from "react-icons/io";
@@ -522,13 +522,16 @@ export const AccordianCustom = ({
   })
 
   useEffect(() => {
-    if (currModule === id) {
+    if (currModule === id && !urlThreaten) {
       setIsOpen(true)
+    } else {
+      setIsOpen(false)
     }
-  }, [currModule, id, setIsOpen])
+  }, [currModule, id, urlThreaten])
 
   let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true });
-  const handleEditButton = () => {
+  const handleEditButton = (e) => {
+    e.stopPropagation()
     navigate(`/admin/course/edit-module?course=${course_id}&module=${id}`)
   }
 
@@ -620,7 +623,7 @@ export const AccordianCustom = ({
 }
 
 export const SidebarAccordianList = ({
-  id, name, page, lastUpdated, ofModule, adminMode, course_id
+  id, name, page, lastUpdated, ofModule, adminMode, course_id, pageStatus, handleTogglePageStatus
 }) => {
 
   let lastUpdatedStr = formatDistance(lastUpdated || new Date(), new Date(), { addSuffix: true })
@@ -656,6 +659,16 @@ export const SidebarAccordianList = ({
           <div className='d-flex gap-3'>
             {adminMode &&
               <>
+                <button type="button"
+                  className='btn-reset bg-light shadow-sm border rounded-circle lh-1 d-flex align-items-center justify-content-center'
+                  style={{ height: '30px', width: '30px' }}
+                  onClick={() => handleTogglePageStatus(id, !pageStatus)}>
+                  {pageStatus === true ?
+                    <FaEye className='text-info' size={16} />
+                    :
+                    <FaEyeSlash className='text-danger' size={16} />
+                  }
+                </button>
                 <button type="button"
                   className='btn-reset bg-warning rounded-circle lh-1 d-flex align-items-center justify-content-center'
                   style={{ height: '30px', width: '30px' }}

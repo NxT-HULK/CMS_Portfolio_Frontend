@@ -32,26 +32,30 @@ const LearningSidebar = ({ course_id, modules, pages, urlThreaten }) => {
 
     return (
         <div className='d-flex flex-column gap-3 my-3'>
-            {Array.isArray(modules) && modules.map((ele, index) => {
+            {modules?.map((ele, index) => {
                 let lastUpdate = pages?.filter((page) => page?.of_module === ele?._id) || []
                 if (lastUpdate.length > 0) {
                     lastUpdate.sort((a, b) => new Date(b?.updatedAt) - new Date(a?.updatedAt))
                 }
 
-                return (
-                    <AccordianCustom
-                        id={ele._id}
-                        idx={index + 1}
-                        name={ele.module_name}
-                        subModuleLen={ele.pages.length}
-                        key={ele._id + `${index}-module`}
-                        urlThreaten={urlThreaten}
-                        lastUpdated={lastUpdate?.[0]?.updatedAt}
-                        adminMode={false}
-                    >
-                        <Help allPages={pages} pages={ele?.pages} urlThreaten={urlThreaten} course_id={course_id} ofModule={ele?._id} />
-                    </AccordianCustom>
-                )
+                if (pages.filter(inner => inner?.of_module === ele?._id).length > 0) {
+                    return (
+                        <AccordianCustom
+                            id={ele._id}
+                            idx={index + 1}
+                            name={ele.module_name}
+                            subModuleLen={ele.pages.length}
+                            key={ele._id + `${index}-module`}
+                            urlThreaten={urlThreaten}
+                            lastUpdated={lastUpdate?.[0]?.updatedAt}
+                            adminMode={false}
+                        >
+                            <Help allPages={pages} pages={ele?.pages} urlThreaten={urlThreaten} course_id={course_id} ofModule={ele?._id} />
+                        </AccordianCustom>
+                    )
+                } else {
+                    return <></>
+                }
             })}
         </div>
     )

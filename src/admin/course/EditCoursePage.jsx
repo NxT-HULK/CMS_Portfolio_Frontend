@@ -1,15 +1,77 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AccordianCustom, LoadingDataSpinner, SidebarAccordianList } from '../../components/Utility'
 import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
+import DataContext from '../../context/data/DataContext'
 
-const Help = ({ allPages, pages, course_id, ofModule }) => {
+const Help = ({ allPages, pages, course_id, ofModule, setCurrData }) => {
 
-  const [data] = useState(() => {
+  const [data, setData] = useState(() => {
     let temp = allPages?.filter((page) => pages?.includes(page?._id))
     temp.sort((a, b) => a?.page_number - b?.page_number)
     return temp
   })
+
+  const { backendHost, setResponseData, setResponseStatus } = useContext(DataContext)
+
+  const handleTogglePageStatus = async (id, flag) => {
+    try {
+      setResponseStatus(true)
+      setResponseData({
+        isLoading: true,
+        heading: "Updating Page Visibility",
+        message: ""
+      })
+
+      const fetching = await axios.post(`${backendHost}/api/admin/course/toggle-page-status`, { id, flag }, {
+        withCredentials: true
+      })
+
+      if (fetching?.status === 200) {
+        setResponseData({
+          isLoading: false,
+          heading: "Updating Page Visibility",
+          message: fetching?.data
+        })
+
+        setCurrData((prev) => {
+          return {
+            ...prev, pages: prev?.pages?.map(ele => {
+              if (ele?._id === id) {
+                return { ...ele, status: flag };  // Update status here
+              }
+              return ele;
+            })
+          };
+        })
+
+        setData((prev) => {
+          return prev?.map(ele => {
+            if (ele?._id === id)
+              return { ...ele, status: flag }
+            return ele
+          })
+        })
+      }
+
+    } catch (error) {
+
+      setResponseData({
+        isLoading: false,
+        heading: error?.response?.status === 400 || error?.response?.status === 404
+          ? "Validation Failed"
+          : "Error",
+        message: error?.response?.data || "Server Error"
+      });
+
+      console.error(error);
+
+    } finally {
+      setTimeout(() => {
+        setResponseStatus(false)
+      }, 5000);
+    }
+  }
 
   return (
     data?.map((page, idx) => {
@@ -23,6 +85,8 @@ const Help = ({ allPages, pages, course_id, ofModule }) => {
           ofModule={ofModule}
           adminMode={true}
           course_id={course_id}
+          pageStatus={page?.status}
+          handleTogglePageStatus={handleTogglePageStatus}
         />
       )
     })
@@ -131,7 +195,7 @@ const EditCoursePage = ({ AdminContext, DataContext }) => {
             </div>
             :
             <div className='d-flex flex-column gap-3 my-3'>
-              {Array.isArray(currData.modules) && currData.modules.map((ele, index) => {
+              {currData?.modules?.map((ele, index) => {
                 let lastUpdate = currData?.pages?.filter((page) => page?.of_module === ele?._id) || []
                 if (lastUpdate.length > 0) {
                   lastUpdate.sort((a, b) => new Date(b?.updatedAt) - new Date(a?.updatedAt))
@@ -154,7 +218,7 @@ const EditCoursePage = ({ AdminContext, DataContext }) => {
                     setResponseStatus={setResponseStatus}
                     setResponseData={setResponseData}
                   >
-                    <Help ofModule={ele?._id} allPages={currData?.pages} pages={ele?.pages} course_id={selectedCourse?._id} />
+                    <Help ofModule={ele?._id} allPages={currData?.pages} pages={ele?.pages} course_id={selectedCourse?._id} setCurrData={setCurrData} />
                   </AccordianCustom>
                 )
               })}

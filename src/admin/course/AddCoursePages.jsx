@@ -163,12 +163,13 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
           heading: 'Update Status: Success',
           message: response?.message
         })
-        e.target.reset()
-        setIsSelected({ course: false });
-        setFormData({ html: '' })
-        setTimeout(() => {
-          navigate(`/admin/course/edit-content?id=${params.get("course")}`)
-        }, 2000);
+        
+        // e.target.reset()
+        // setIsSelected({ course: false });
+        // setFormData({ html: '' })
+        // setTimeout(() => {
+        //   navigate(`/admin/course/edit-content?id=${params.get("course")}`)
+        // }, 2000);
       }
 
     } catch (error) {
