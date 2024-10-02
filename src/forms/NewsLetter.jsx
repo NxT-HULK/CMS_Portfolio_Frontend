@@ -102,7 +102,7 @@ const ProjectFeedback = () => {
                                     <div className="card-input">
                                         <input type="email" name="email" id="" placeholder='Your Email' onChange={(e) => handleOnChange(e, formData, setFormData)} />
                                     </div>
-                                    <div className="info"><span className='text'>We'll never share you email address</span></div>
+                                    <div className="info"><span className='text'>We'll never share your email address with someone else</span></div>
                                 </div>
 
                                 <div className='form-card p-3 rounded'>
