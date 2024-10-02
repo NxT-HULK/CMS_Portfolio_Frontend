@@ -29,7 +29,7 @@ const AddCoursePages = ({ FunctionContext, DataContext, AdminContext }) => {
           }
         }
 
-        const fetchAllPages = await axios.post(`${backendHost}/api/client/course/modules/pages`, {
+        const fetchAllPages = await axios.post(`${backendHost}/api/admin/course/modules/pages`, {
           module_id: params.get("module")
         }, { withCredentials: true })
 

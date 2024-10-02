@@ -44,7 +44,7 @@ const LearningSidebar = ({ course_id, modules, pages, urlThreaten }) => {
                             id={ele._id}
                             idx={index + 1}
                             name={ele.module_name}
-                            subModuleLen={ele.pages.length}
+                            subModuleLen={pages.filter(page => page?.of_module === ele?._id).length}
                             key={ele._id + `${index}-module`}
                             urlThreaten={urlThreaten}
                             lastUpdated={lastUpdate?.[0]?.updatedAt}
