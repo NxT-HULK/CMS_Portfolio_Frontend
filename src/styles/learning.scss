@@ -45,10 +45,50 @@
 #learning-main-body {
     display: flex;
     flex-direction: column;
+}
 
-    table {
-        overflow: auto !important;
-        display: block;
+img {
+    border: 1px solid var(--bs-secondary) !important;
+}
+
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: 1px solid $theam-color !important;
+    table-layout: auto !important;
+
+    thead {
+        background-color: $theam-color !important;
+        color: #fff !important;
+        font-weight: 500 !important;
+
+        th {
+            padding: 10px 15px !important;
+            border: 1px solid $theam-color !important;
+            text-align: left !important;
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                padding: 5px 15px !important;
+                border: 1px solid $theam-color !important;
+                text-align: left !important;
+                word-wrap: break-word !important;
+                white-space: normal !important;
+
+                &:last-child {
+                    border-right: unset !important;
+                }
+            }
+        }
+    }
+
+    tbody tr:first-child td {
+        background-color: $theam-color-dark !important;
+        color: #fff !important;
+        font-weight: 500 !important;
     }
 }
 
