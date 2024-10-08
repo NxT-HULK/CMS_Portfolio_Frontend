@@ -129,7 +129,7 @@ const CourseLearning = () => {
                 :
                 <>
                     <div id="learning-mai-wrapper" className='px-md-0 px-2 py-3 col-12'>
-                        <div className='d-lg-block d-none align-self-start position-sticky py-2' style={{ top: '57px' }} id='learning-sidebar'>
+                        <div className='d-lg-block d-none align-self-start position-sticky pb-2 overflow-auto' style={{ top: '57px', height: 'calc(100vh - 100px)' }} id='learning-sidebar'>
                             <div className='border-bottom px-3 py-2'>
                                 <FirstLetterEffectText text={"Chapters / Module"} />
                             </div>
@@ -153,60 +153,62 @@ const CourseLearning = () => {
                                 </div>
                                 :
                                 <>
-                                    <div className='py-2 mb-4 border-bottom'>
-                                        <span className='lh-1 fs-4 fw-semibold d-block'> <FirstLetterEffectText2 text={currentPage?.name ?? ''} /> </span>
+                                    <div className='py-2 mb-4 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2'>
+                                        <div>
+                                            <span className='lh-1 d-block mb-1'> <FirstLetterEffectText2 text={currentModule?.module_name ?? ''} /> </span>
+                                            <span className='lh-1 fs-4 fw-semibold d-block'> <FirstLetterEffectText2 text={currentPage?.name ?? ''} /> </span>
+                                        </div>
                                         <span style={{ fontSize: '14px' }}>Last updated {formatDistance(currentPage?.updatedAt || new Date(), new Date(), { addSuffix: true })}</span>
                                     </div>
                                     <div id='course-learning-main-container' className='col-12' dangerouslySetInnerHTML={{ __html: pageData ?? '' }} ></div>
                                     <hr />
                                     <div className='d-flex flex-column gap-3'>
                                         <div className="d-flex justify-content-between flex-wrap gap-md-0 gap-3">
-                                            {nextPage &&
-                                                <div className="d-inline-block" onClick={() => { scrollTop() }}>
-                                                    <Link
-                                                        to={`/course/learning?course=${course_id}&module=${currentModule?._id}&page=${nextPage?._id}`}
-                                                        className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
-                                                    >
-                                                        NEXT PAGE
-                                                        <FaChevronRight />
-                                                    </Link>
-                                                </div>
-                                            }
-
                                             {prevPage &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
                                                         to={`/course/learning?course=${course_id}&module=${currentModule?._id}&page=${prevPage?._id}`}
-                                                        className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
+                                                        className="simleButton-with-shaded d-inline-flex align-items-center gap-1 text-decoration-none px-2 fw-medium"
                                                     >
                                                         <FaChevronLeft />
                                                         PREV PAGE
                                                     </Link>
                                                 </div>
                                             }
-                                        </div>
 
-                                        <div className="d-flex justify-content-between flex-wrap gap-md-0 gap-3">
-                                            {nextModule &&
+                                            {nextPage &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
-                                                        to={`/course/learning?course=${course_id}&module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })._id}`}
-                                                        className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
+                                                        to={`/course/learning?course=${course_id}&module=${currentModule?._id}&page=${nextPage?._id}`}
+                                                        className="simleButton-with-shaded d-inline-flex align-items-center gap-1 text-decoration-none px-2 fw-medium"
                                                     >
-                                                        NEXT MODULE
+                                                        NEXT PAGE
                                                         <FaChevronRight />
                                                     </Link>
                                                 </div>
                                             }
-
+                                        </div>
+                                        <div className="d-flex justify-content-between flex-wrap gap-md-0 gap-3">
                                             {prevModule &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
                                                         to={`/course/learning?course=${course_id}&module=${prevModule?._id}&page=${pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })._id}`}
-                                                        className="btn-reset text-white btn px-2 btn-primary bg-theam rounded-1 py-1 border-0 d-inline-flex align-items-center"
+                                                        className="simleButton-with-shaded d-inline-flex align-items-center gap-1 text-decoration-none px-2 fw-medium"
                                                     >
                                                         <FaChevronLeft />
-                                                        PREV MODULE
+                                                        PREV CHAPTER
+                                                    </Link>
+                                                </div>
+                                            }
+
+                                            {nextModule &&
+                                                <div className="d-inline-block" onClick={() => { scrollTop() }}>
+                                                    <Link
+                                                        to={`/course/learning?course=${course_id}&module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })._id}`}
+                                                        className="simleButton-with-shaded d-inline-flex align-items-center gap-1 text-decoration-none px-2 fw-medium"
+                                                    >
+                                                        NEXT CHAPTER
+                                                        <FaChevronRight />
                                                     </Link>
                                                 </div>
                                             }
