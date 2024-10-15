@@ -117,7 +117,12 @@ const AdminTemplate = (mainProps) => {
                     name: 'Add Page',
                     link: '/admin/course/new-pages',
                     icon: <HiDocumentPlus />
-                }
+                },
+                {
+                    name: 'Manage Messages',
+                    link: '/admin/course/manage-message',
+                    icon: <HiDocumentPlus />
+                }  
             ],
             renderTooltip: (props) => {
                 return <Tooltip {...props} id="Course"> Course </Tooltip>

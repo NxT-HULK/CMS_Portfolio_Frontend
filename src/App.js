@@ -38,6 +38,7 @@ import AdminNewCourse from './admin/course/CreateCourse.jsx'
 import AdminNewModule from './admin/course/CourseModule.jsx'
 import AdminNewPages from './admin/course/AddCoursePages.jsx'
 import AdminModifyCourse from './admin/course/EditCoursePage.jsx'
+import AdminManageMessage from './admin/course/ManageMessage.jsx'
 
 import AdminWork from './admin/work/Work.jsx'
 import AdminFeedbackManager from './admin/work/FeedbackManagement.jsx'
@@ -87,6 +88,7 @@ const App = () => {
                   <Route path="edit-content" element={<AdminRoute element={AdminModifyCourse} />} />
                   <Route path='edit-module' element={<AdminRoute element={AdminNewModule} />} />
                   <Route path='edit-page' element={<AdminRoute element={AdminNewPages} />} />
+                  <Route path='manage-message' element={<AdminRoute element={AdminManageMessage} />} />
                 </Route>
                 <Route path="work">
                   <Route index element={<AdminRoute element={AdminWork} />} />

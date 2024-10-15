@@ -5,7 +5,7 @@ import axios from 'axios'
 const DataState = (props) => {
 
     const socialLinks = {
-        linkedin: "https://www.linkedin.com/in/shivam-kumar-kashyap-382794249?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+        linkedin: "https://www.linkedin.com/in/shivam-kumar-kashyap-382794249",
         insta: "https://www.instagram.com/nxt_hulk/",
         facebook: "https://www.facebook.com/shivam.shivam.75033",
         github: "https://github.com/MernWala",

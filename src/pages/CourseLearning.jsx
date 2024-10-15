@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import LearningSidebar from '../components/LearningSidebar'
-import { FirstLetterEffectText, FirstLetterEffectText2, LoadingDataSpinner } from '../components/Utility'
+import { CustomBtn, FirstLetterEffectText, FirstLetterEffectText2, LoadingDataSpinner } from '../components/Utility'
 import { useNavigate } from 'react-router-dom'
 import DataContext from '../context/data/DataContext';
 import { formatDistance } from 'date-fns';
@@ -10,6 +10,44 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import FunctionContext from '../context/function/FunctionContext';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import axios from 'axios'
+import { BsFillSendFill } from 'react-icons/bs'
+import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
+import JoditEditor from 'jodit-react'
+
+const HelpComponent = ({ name, createdAt, message, replyData }) => {
+
+    const [replyState, setReplyState] = useState(false)
+    return (
+        <div className="p-3 border rounded bg-body-tertiary col-12 shadow-sm">
+            <div>
+                <div className='d-flex flex-wrap align-items-center justify-content-between mb-2 pb-1 border-bottom'>
+                    <span className="fw-medium fst-italic d-block">{name}</span>
+                    <span style={{ fontSize: '14px' }}>Posted at {formatDistance(createdAt || new Date(), new Date(), { addSuffix: true })}</span>
+                </div>
+                <div dangerouslySetInnerHTML={{ __html: message }}></div>
+            </div>
+            {replyData?.length > 0 &&
+                <div div className="pt-3 mt-3 border-top">
+                    <button
+                        type="button"
+                        className="simleButton-with-shaded d-inline-flex width-fit align-items-center gap-1 text-decoration-none px-2 fw-medium px-3 mb-3"
+                        onClick={() => setReplyState(!replyState)}
+                    >
+                        View Reply
+                        {replyState === true ?
+                            <IoIosArrowDropupCircle size={22} className='text-white' />
+                            :
+                            <IoIosArrowDropdownCircle size={22} className='text-white' />
+                        }
+                    </button>
+                    {replyState === true &&
+                        <div dangerouslySetInnerHTML={{ __html: replyData }}></div>
+                    }
+                </div>
+            }
+        </div>
+    )
+}
 
 const CourseLearning = () => {
 
@@ -17,8 +55,8 @@ const CourseLearning = () => {
     const course_id = params.get('course');
     const navigate = useNavigate()
 
-    const { backendHost, courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag } = useContext(DataContext)
-    const { scrollTop } = useContext(FunctionContext)
+    const { backendHost, courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag, setResponseStatus, setResponseData } = useContext(DataContext)
+    const { scrollTop, handleOnChange } = useContext(FunctionContext)
 
     const [pageData, setPageData] = useState("")
     const [isLoadingData, setIsLoadingData] = useState(true)
@@ -115,6 +153,55 @@ const CourseLearning = () => {
         })
     }, [currentPage, currentModule, modules, pages, course_id, params])
 
+    const [commentFormData, setCommentFormData] = useState({})
+    const [formState, setFormState] = useState(false)
+    const handleSubmitMessageForm = async (e) => {
+        e.preventDefault()
+
+        try {
+            setResponseStatus(true)
+            setResponseData({
+                isLoading: true,
+                heading: 'Submitting Request',
+            })
+
+            const fetching = await axios.post(`${backendHost}/api/client/course/ask`, { ...commentFormData, ofPage: currentPage?._id })
+            if (fetching?.status === 201) {
+                setResponseData({
+                    isLoading: false,
+                    heading: "Request Submitted",
+                    message: fetching?.data
+                })
+
+                setAllReplayData((prev) => {
+                    return [...prev, { ...commentFormData, ofPage: currentPage?._id }]
+                })
+            }
+        } catch (error) {
+            setResponseData({
+                isLoading: false,
+                heading: `Error - ${error?.response?.status}`,
+                message: error?.response?.data
+            })
+            console.error(error)
+        }
+    }
+
+    const [allReplayData, setAllReplayData] = useState(null)
+    useEffect(() => {
+        (async () => {
+            try {
+                const fetching = await axios.get(`${backendHost}/api/client/course/ask/${currentPage?._id}`)
+                if (fetching?.status === 200) {
+                    setAllReplayData(fetching?.data)
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, [backendHost, currentPage])
+
+
     return (
         <>
             <HelmetProvider>
@@ -192,7 +279,7 @@ const CourseLearning = () => {
                                             {prevModule &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
-                                                        to={`/course/learning?course=${course_id}&module=${prevModule?._id}&page=${pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })._id}`}
+                                                        to={`/course/learning?course=${course_id}&module=${prevModule?._id}&page=${pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })?._id}`}
                                                         className="simleButton-with-shaded d-inline-flex align-items-center gap-1 text-decoration-none px-2 fw-medium"
                                                     >
                                                         <FaChevronLeft />
@@ -204,7 +291,7 @@ const CourseLearning = () => {
                                             {nextModule &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
-                                                        to={`/course/learning?course=${course_id}&module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })._id}`}
+                                                        to={`/course/learning?course=${course_id}&module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })?._id}`}
                                                         className="simleButton-with-shaded d-inline-flex align-items-center gap-1 text-decoration-none px-2 fw-medium"
                                                     >
                                                         NEXT CHAPTER
@@ -214,13 +301,110 @@ const CourseLearning = () => {
                                             }
                                         </div>
                                     </div>
+                                    <hr className='mt-4' />
+                                    {allReplayData?.length > 0 &&
+                                        <div div className='d-flex flex-wrap mb-4'>
+                                            {allReplayData?.map(reply => {
+                                                return (
+                                                    <HelpComponent name={reply?.name} createdAt={reply?.createdAt} message={reply?.mess} replyData={reply?.reply} key={reply?._id} />
+                                                )
+                                            })}
+                                        </div>
+                                    }
+                                    <>
+                                        <div
+                                            className={`
+                                                    mb-3 bg-body-tertiary shadow-sm border py-2 px-3 rounded d-flex
+                                                    justify-content-between user-select-none cursor-pointer
+                                                    position-relative overflow-hidden
+                                                `}
+                                            onClick={() => setFormState(!formState)}
+                                        >
+                                            {formState === true && <p className={`m-0 p-0 border border-2 border-theam position-absolute w-100 top-0 left-0`}></p>}
+                                            <div>
+                                                <FirstLetterEffectText2 className={'fs-5 fw-medium'} text="Want to say somthing?" />
+                                                <span className="fs-6 d-sm-block d-none">Your doubts today are the foundation for your confidence tomorrow.</span>
+                                            </div>
+                                            <div className='d-flex align-items-center'>
+                                                <button type="button" className="btn-reset">
+                                                    {formState === true ?
+                                                        <IoIosArrowDropupCircle size={40} className='text-theam' />
+                                                        :
+                                                        <IoIosArrowDropdownCircle size={40} className='text-theam' />
+                                                    }
+                                                </button>
+                                            </div>
+                                        </div>
+                                        {formState === true &&
+                                            <div className='col-12'>
+                                                <form className='rounded-3' onSubmit={handleSubmitMessageForm}>
+                                                    <div className="mb-2 d-flex flex-wrap gap-md-0 gap-2">
+                                                        <input
+                                                            type="text"
+                                                            name="name"
+                                                            className="rounded-1 custom-input-style"
+                                                            placeholder="Your Name*"
+                                                            required
+                                                            onChange={(e) => { handleOnChange(e, commentFormData, setCommentFormData) }}
+                                                            autoComplete='name'
+                                                        />
+                                                    </div>
+                                                    <div className="mb-2">
+                                                        <input
+                                                            type="email"
+                                                            className="rounded-1 custom-input-style"
+                                                            placeholder="youremail@domain.com*"
+                                                            required
+                                                            name="email"
+                                                            onChange={(e) => { handleOnChange(e, commentFormData, setCommentFormData) }}
+                                                            autoComplete='email'
+                                                        />
+                                                    </div>
+                                                    <div className="mb-2">
+                                                        <input
+                                                            type="text"
+                                                            className="rounded-1 custom-input-style"
+                                                            placeholder="Your git repository link (Optional)"
+                                                            name="repository"
+                                                            onChange={(e) => { handleOnChange(e, commentFormData, setCommentFormData) }}
+                                                        />
+                                                    </div>
+                                                    <div className="mb-2">
+                                                        <JoditEditor
+                                                            value={commentFormData?.reply}
+                                                            onBlur={(value) => setCommentFormData({ ...commentFormData, mess: value })}
+                                                            config={{
+                                                                buttons: [
+                                                                    'bold',
+                                                                    'italic',
+                                                                    'ul',
+                                                                    'ol',
+                                                                    {
+                                                                        name: '</>',
+                                                                        tooltip: 'Insert Code',
+                                                                        exec: function (editor) {
+                                                                            editor.s.insertHTML('<pre></pre>');
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                toolbarSticky: false,
+                                                                readonly: false,
+                                                                placeholder: "Please may write your concern here..."
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <CustomBtn text="Send Message" icon={<BsFillSendFill />} type={'submit'} />
+                                                </form>
+                                            </div>
+                                        }
+                                    </>
                                 </>
                             }
                         </div>
                     </div >
 
                     <Offcanvas show={courseLearning_offCanvasFlag} onHide={() => { setCourseLearning_offCanvasFlag(false) }}>
-                        <Offcanvas.Header closeButton className='border-bottom'>
+                        <Offcanvas.Header closeButton={true} className='border-bottom'>
                             <Offcanvas.Title>
                                 <FirstLetterEffectText text={"Chapters / Module"} />
                             </Offcanvas.Title>

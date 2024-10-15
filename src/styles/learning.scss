@@ -42,10 +42,36 @@
     grid-template-columns: 350px calc(100vw - 360px);
 }
 
+@mixin backgroundPulse($color-1, $color-2) {
+    @keyframes backgroundPulse {
+        0% {
+            background-color: $color-1;
+        }
+
+        50% {
+            background-color: $color-2;
+        }
+
+        100% {
+            background-color: $color-1;
+        }
+    }
+
+    animation: backgroundPulse 1.5s infinite ease-in-out;
+}
+
 #learning-main-body {
     display: flex;
     flex-direction: column;
+
+    img {
+        @include backgroundPulse(#ccc, #f0f0f0);
+        display: inline-block;
+        width: fit-content !important;
+        margin: 0 auto !important;
+    }
 }
+
 
 table {
     width: 100% !important;
@@ -125,10 +151,6 @@ pre {
         p {
             &:has(img) {
                 margin: 0 !important;
-            }
-
-            img {
-                width: 100% !important;
             }
         }
 

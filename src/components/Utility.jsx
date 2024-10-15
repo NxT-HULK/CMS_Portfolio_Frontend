@@ -37,10 +37,10 @@ export const BtnBig = ({ text, icon, link, target }) => {
   )
 }
 
-export const CustomBtn = ({ text, icon, type, className }) => {
+export const CustomBtn = ({ text, icon, type, className, disabled }) => {
   return (
     <>
-      <button type={type === 'submit' ? 'submit' : 'button'} className={`btn-reset user-select-none theam-btn-big ${className}`}>
+      <button type={type === 'submit' ? 'submit' : 'button'} className={`btn-reset user-select-none theam-btn-big ${className}`} disabled={disabled}>
         <span className='icon'>{icon}</span>
         <span className='text'>{text}</span>
       </button>
