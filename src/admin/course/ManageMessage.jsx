@@ -138,6 +138,7 @@ const ManageMessage = ({ DataContext, FunctionContext }) => {
                 setIsLoading(false)
             }
         })();
+        // eslint-disable-next-line
     }, [backendHost])
 
     const [replyFormData, setReplyFormData] = useState(null)
