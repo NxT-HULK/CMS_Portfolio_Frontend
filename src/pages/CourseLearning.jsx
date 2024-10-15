@@ -276,7 +276,7 @@ const CourseLearning = () => {
                                             }
                                         </div>
                                         <div className="d-flex justify-content-between flex-wrap gap-md-0 gap-3">
-                                            {prevModule &&
+                                            {prevModule && pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })?._id &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
                                                         to={`/course/learning?course=${course_id}&module=${prevModule?._id}&page=${pages.find((ele) => { return (ele.of_module === prevModule?._id) && (ele.page_number === 1) })?._id}`}
@@ -288,7 +288,7 @@ const CourseLearning = () => {
                                                 </div>
                                             }
 
-                                            {nextModule &&
+                                            {nextModule && pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })?._id &&
                                                 <div className="d-inline-block" onClick={() => { scrollTop() }}>
                                                     <Link
                                                         to={`/course/learning?course=${course_id}&module=${nextModule?._id}&page=${pages.find((ele) => { return (ele.of_module === nextModule?._id) && (ele.page_number === 1) })?._id}`}
