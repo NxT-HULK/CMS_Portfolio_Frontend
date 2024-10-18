@@ -3,11 +3,13 @@
         -webkit-transform: scale3d(0.9, 0.9, 0.9);
         transform: scale3d(0.9, 0.9, 0.9);
     }
+
     55% {
         opacity: 1;
         -webkit-transform: scale3d(1.1, 1.1, 1.1);
         transform: scale3d(1.1, 1.1, 1.1);
     }
+
     100% {
         opacity: 0;
         -webkit-transform: scale3d(0.3, 0.3, 0.3);
@@ -23,6 +25,7 @@
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -42,4 +45,16 @@
     to {
         transform: scale(1);
     }
+}
+
+@keyframes spinnersFast {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-fast-spinner {
+    animation: spinnersFast 0.25s infinite linear;
 }

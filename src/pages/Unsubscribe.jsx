@@ -82,26 +82,26 @@ const Unsubscribe = () => {
 
     return (
         <section className='w-100 my-5 pt-3 pb-5'>
-            <div class="container">
-                <span class="fs-3 text-theam fw-semibold d-block mb-2 border-bottom">Are you sure ?</span>
-                <p class="lh-sm">After <span class="fw-semibold">unsubscribing,</span> you won't receive the latest<br />Information from <span class="fw-semibold">Shivam Kashyap</span>.</p>
+            <div className="container">
+                <span className="fs-3 text-theam fw-semibold d-block mb-2 border-bottom">Are you sure ?</span>
+                <p className="lh-sm">After <span className="fw-semibold">unsubscribing,</span> you won't receive the latest<br />Information from <span className="fw-semibold">Shivam Kashyap</span>.</p>
             </div>
 
-            <div class="container mt-4">
-                <div class="col-md-6 col-12">
+            <div className="container mt-4">
+                <div className="col-md-6 col-12">
                     <form onSubmit={handleSubmitForm}>
-                        <div class="col-12 pe-md-2 pe-0 mb-3">
+                        <div className="col-12 pe-md-2 pe-0 mb-3">
                             <input
                                 type="text"
                                 name="text"
-                                class="rounded-1 custom-input-style"
+                                className="rounded-1 custom-input-style"
                                 placeholder="Type 'Unsubscribe Now' to confirm*"
                                 required
                                 onChange={(e) => setConfirm(e.target.value)}
                             />
                         </div>
-                        <div class="col-12 pe-md-2 pe-0 mt-2">
-                            <button id="submit_btn" type="submit" class="simleButton-with-shaded px-3 width-fit">Unsubscribe Now</button>
+                        <div className="col-12 pe-md-2 pe-0 mt-2">
+                            <button id="submit_btn" type="submit" className="simleButton-with-shaded px-3 width-fit">Unsubscribe Now</button>
                         </div>
                     </form>
                 </div>

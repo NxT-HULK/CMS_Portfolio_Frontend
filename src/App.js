@@ -32,6 +32,8 @@ import NewsLetterForm from './forms/NewsLetter.jsx'
 import AuthenticateSupperAdmin from './admin/account/AuthenticateSupperAdmin.jsx';
 import AccountCreate from './admin/account/AccountCreate.jsx'
 import AuthenticateAdmin from './admin/account/AuthenticateAdmin.jsx';
+import AccountRecovery from './admin/account/AccountRecovery.jsx';
+import AccountPasswordReset from './admin/account/PasswordReset.jsx'
 import AdminRoute from './admin/WithAuthAdmin.jsx';
 import AdminCourse from './admin/course/Course.jsx'
 import AdminNewCourse from './admin/course/CreateCourse.jsx'
@@ -76,7 +78,11 @@ const App = () => {
                 <Route path="create" element={<AccountCreate />} />
                 <Route path="verify" element={<AccountVerify />} />
               </Route>
-              <Route path="/auth" element={<AuthenticateAdmin />} />
+              <Route path="/auth">
+                <Route index element={<AuthenticateAdmin />} />
+                <Route path='recover' element={<AccountRecovery />} />
+                <Route path='reset' element={<AccountPasswordReset />} />
+              </Route>
               <Route path='/admin'>
                 <Route index element={<Navigate to="/admin/course" />} />
                 <Route path='course'>

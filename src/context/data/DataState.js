@@ -90,7 +90,7 @@ const DataState = (props) => {
 
     const [courseLearning_offCanvasFlag, setCourseLearning_offCanvasFlag] = useState(false)
 
-    const noNav = ["", "work", "course", "coursedetails", "courselearning", "blogs", "contact", "editor", "unsubscribe", "accountcreate", "accountverify"]
+    const noNav = ["", "work", "course", "coursedetails", "courselearning", "blogs", "contact", "editor", "unsubscribe", "accountcreate", "accountverify", "authrecover", "authreset"]
 
     const handleSubmitSubscriptionForm = async (e, data) => {
         e.preventDefault();
