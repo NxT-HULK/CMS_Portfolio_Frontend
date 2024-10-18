@@ -188,24 +188,22 @@ const Work = ({ DataContext, FunctionContext }) => {
                                 </div>
 
                                 <table className={`w-100 border border-theam mb-auto ${accordianStatus[ele] === false && 'd-none'}`}>
-                                    <thead>
-                                        <tr className='bg-theam'>
-                                            <th className='py-2 text-white border-end text-center px-2'>Date</th>
-                                            <th className='py-2 text-white border-end text-center px-2'>Order</th>
-                                            <th className='py-2 text-white border-end text-center px-2'>Name</th>
-                                            <th className='py-2 text-white border-end text-center px-2'>Back Img</th>
-                                            <th className='py-2 text-white border-end text-center px-2'>Modal Data</th>
-                                            <th className='py-2 text-white border-end text-center px-2' style={{ minWidth: '400px' }}>Short Desc</th>
-                                            <th className='py-2 text-white border-end text-center px-2'>Tags</th>
-                                            <th className='py-2 text-white text-center px-4'>Action</th>
-                                        </tr>
-                                    </thead>
                                     <tbody>
+                                        <tr>
+                                            <td>Date</td>
+                                            <td>Order</td>
+                                            <td>Name</td>
+                                            <td>Back Img</td>
+                                            <td>Modal Data</td>
+                                            <td>Short Desc</td>
+                                            <td>Tags</td>
+                                            <td>Action</td>
+                                        </tr>
                                         {mainData && mainData[ele].map((inner) => {
                                             return (
                                                 <tr key={inner._id} className='border-bottom last-child-no-border'>
-                                                    <td className='py-1 px-2 border-end text-center'> {toSimpleDate(inner.createdAt)} </td>
-                                                    <td className='py-1 px-2 border-end text-center'>
+                                                    <td> {toSimpleDate(inner.createdAt)} </td>
+                                                    <td>
                                                         <select name="order" style={{ minWidth: '75px' }} className='rounded-1 custom-input-style' onChange={(e) => { handleWorkOrderChange(e, inner._id, ele) }} defaultValue={inner?.order ?? ""}>
                                                             <option value="">0</option>
                                                             {workRawData.map((ele, idx) => {
@@ -213,30 +211,30 @@ const Work = ({ DataContext, FunctionContext }) => {
                                                             })}
                                                         </select>
                                                     </td>
-                                                    <td className='py-1 px-2 border-end text-center'>
+                                                    <td>
                                                         <a href={inner.link} target="_blank" rel="noopener noreferrer" className='text-decoration-none'>
                                                             <ButtonShaded type="button" text={inner.name} className={'width-fit lh-1 px-1 d-block mx-auto'} />
                                                         </a>
                                                     </td>
-                                                    <td className='py-1 px-2 border-end text-center'>
+                                                    <td>
                                                         <a href={inner.background} target="_blank" rel="noopener noreferrer">
                                                             <ButtonShaded type="button" text={<FaExternalLinkAlt />} className={'width-fit lh-1 p-2 d-block mx-auto'} />
                                                         </a>
                                                     </td>
-                                                    <td className='py-1 px-2 border-end'>
+                                                    <td>
                                                         <button type='button' onClick={() => { handleSetData__modalData(inner.html) }} className='simleButton-with-shaded width-fit lh-1 p-1 d-block mx-auto fs-4'>
                                                             <IoOptions />
                                                         </button>
                                                     </td>
-                                                    <td className='py-1 px-2 border-end'> {inner.shortDesc} </td>
-                                                    <td className='py-1 px-2 border-end'>
+                                                    <td> {inner.shortDesc} </td>
+                                                    <td>
                                                         <div className="d-flex flex-wrap gap-1">
                                                             {inner.techUsed.map((tags, idx) => {
                                                                 return <span className="bg-theam text-white px-1 rounded-1" style={{ fontSize: "14px", whiteSpace: 'nowrap' }} key={`table-${ele}-tech-index-${idx}-name-${tags}`}>#{tags}</span>
                                                             })}
                                                         </div>
                                                     </td>
-                                                    <td className='py-1 px-2 text-center'>
+                                                    <td>
                                                         <div className="d-flex gap-3 w-100 justify-content-center align-items-center">
                                                             {isFormProcess.status && isFormProcess._id === inner._id ?
                                                                 <>

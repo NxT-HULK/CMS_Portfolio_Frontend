@@ -45,24 +45,22 @@ const NewsLetter = ({ DataContext, FunctionContext }) => {
                     {emailData.length !== 0 ?
                         <div className="w-100 d-block mb-auto">
                             <table className='w-100 border border-theam'>
-                                <thead>
-                                    <tr className='bg-theam'>
-                                        <th className='py-2 text-white border-end text-center px-2'>Date</th>
-                                        <th className='py-2 text-white border-end text-center px-2'>Type</th>
-                                        <th className='py-2 text-white border-end text-center px-2'>Name</th>
-                                        <th className='py-2 text-white border-end text-center px-2'>Email</th>
-                                        <th className='py-2 text-white border-end text-center px-2'>Status</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>Type</td>
+                                        <td>Name</td>
+                                        <td>Email</td>
+                                        <td>Status</td>
+                                    </tr>
                                     {emailData.map((ele, idx) => {
                                         return (
-                                            <tr className='border-bottom last-child-no-border' key={`news_letter_email_${idx}`}>
-                                                <td className='py-1 px-2 border-end text-center'> {toSimpleDate(ele.createdAt)} </td>
-                                                <td className='py-1 px-2 border-end text-center text-capitalize'> {ele.type} </td>
-                                                <td className='py-1 px-2 border-end text-center'> {ele.name} </td>
-                                                <td className='py-1 px-2 border-end'> {ele.email} </td>
-                                                <td className='py-1 px-2 border-end text-center text-capitalize'> {JSON.stringify(ele.status)} </td>
+                                            <tr key={`news_letter_email_${idx}`}>
+                                                <td> {toSimpleDate(ele.createdAt)} </td>
+                                                <td> {ele.type} </td>
+                                                <td> {ele.name} </td>
+                                                <td> {ele.email} </td>
+                                                <td> {JSON.stringify(ele.status)} </td>
                                             </tr>
                                         )
                                     })}

@@ -19,35 +19,56 @@ import { VscTriangleDown } from "react-icons/vsc";
 import axios from 'axios';
 
 const MenuList = ({ tooltip, icon, placement, name, full, link, setFalse, hasChild, menu }) => {
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992);
+    const [childState, setChildState] = useState(false);
+    const [childMenu, setChildMenu] = useState([]);
 
-    const [childState, setChildState] = useState(false)
-    const [child] = useState(() => {
+    // Update screen size on window resize
+    useEffect(() => {
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 992);
+        };
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
         if (hasChild) {
-            const temp = menu?.find((li => li?.name === name))
-            return [{ name, link, icon }, ...temp?.children]
+            const foundMenu = menu?.find((li) => li?.name === name);
+            if (foundMenu && foundMenu.children) {
+                setChildMenu([{ name, link, icon }, ...foundMenu.children]);
+            }
         }
-    })
+    }, [hasChild, menu, name, link, icon]);
+
+    // Function to show the tooltip only in desktop mode
+    const renderTooltip = () => {
+        return isDesktop && !full ? tooltip : <></>;
+    };
 
     return (
         <OverlayTrigger
-            placement={placement ? placement : "right"}
+            placement={placement || "right"}
             delay={{ show: 150, hide: 200 }}
-            overlay={full === true ? () => { return <></> } : tooltip}
+            overlay={renderTooltip()} // Render tooltip conditionally
         >
-            <>
+            <div>
                 <button
                     type="button"
                     className={`bg-transparent d-flex align-items-center ${hasChild && 'justify-content-between'} gap-2 ${full ? 'w-100 px-3 border py-1 rounded shadow-sm' : 'p-3 border-0'}`}
                     onClick={() => {
-                        if (link?.length > 0 && !hasChild) {
-                            navigate(link)
+                        if (link && !hasChild) {
+                            navigate(link);
                             if (setFalse) {
-                                setFalse()
+                                setFalse();
                             }
-                        } else if (hasChild === true) {
-                            setChildState(!childState)
+                        } else if (hasChild) {
+                            setChildState(!childState); // Toggle the collapse state
                         }
                     }}
                 >
@@ -56,37 +77,55 @@ const MenuList = ({ tooltip, icon, placement, name, full, link, setFalse, hasChi
                         <span className={`mt-1 ${full ? 'd-inline-block' : 'd-none'}`}>{name}</span>
                     </span>
                     {hasChild &&
-                        <span className='text-theam'> <VscTriangleDown size={20} /> </span>
+                        <span className='text-theam'>
+                            <VscTriangleDown size={20} />
+                        </span>
                     }
                 </button>
-                {hasChild === true &&
+
+                {/* Collapse component for the sub-menu */}
+                {hasChild && (
                     <Collapse in={childState}>
-                        <div id="example-collapse-text">
+                        <div>
                             <div className="p-2 d-flex flex-wrap gap-3">
-                                {child?.map(child => {
-                                    return (
-                                        <ChildMenuList setFalse={() => setFalse()} key={`${name}-child-${child?.name}`} link={child?.link} icon={child?.icon} text={child?.name} />
-                                    )
-                                })}
+                                {childMenu?.map((child, idx) => (
+                                    <ChildMenuList
+                                        key={`${name}-child-${idx}`}
+                                        setFalse={setFalse}
+                                        link={child?.link}
+                                        icon={child?.icon}
+                                        text={child?.name}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </Collapse>
-                }
-            </>
-        </OverlayTrigger >
-    )
-}
+                )}
+            </div>
+        </OverlayTrigger>
+    );
+};
 
 const ChildMenuList = ({ link, icon, text, setFalse }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
-        <button type="button" className='simleButton-with-shaded px-2 width-fit' onClick={() => { navigate(link); if (setFalse) { setFalse(); } }}>
+        <button
+            type="button"
+            className='simleButton-with-shaded px-2 width-fit '
+            style={{ whiteSpace: 'nowrap' }}
+            onClick={() => {
+                navigate(link);
+                if (setFalse) {
+                    setFalse();
+                }
+            }}
+        >
             <span className='text-white me-1'>{icon}</span>
             {text}
         </button>
-    )
-}
+    );
+};
 
 const AdminTemplate = (mainProps) => {
 
@@ -122,7 +161,7 @@ const AdminTemplate = (mainProps) => {
                     name: 'Manage Messages',
                     link: '/admin/course/manage-message',
                     icon: <HiDocumentPlus />
-                }  
+                }
             ],
             renderTooltip: (props) => {
                 return <Tooltip {...props} id="Course"> Course </Tooltip>
@@ -265,6 +304,12 @@ const AdminTemplate = (mainProps) => {
                                 )
                             }
                         })}
+
+                        <li className="d-md-none d-block">
+                            <button type="button" className="btn btn-danger" onClick={handleLogoutAdmin}>
+                                <IoMdLogOut className='text-white' /> Logout
+                            </button>
+                        </li>
                     </ul>
                 </Offcanvas.Body>
             </Offcanvas>
@@ -293,7 +338,7 @@ const AdminTemplate = (mainProps) => {
                 </nav>
                 <div className='w-100 ps-lg-5 ps-0'>
                     <div className='bg-body-secondary'>
-                        <div className={`d-flex gap-3 ${childrenMenu?.length > 0 && 'p-3'}`}>
+                        <div className={`d-flex gap-3 ${childrenMenu?.length > 0 && 'p-3'} overflow-auto`}>
                             {Array.isArray(childrenMenu) && childrenMenu?.map((ele) => {
                                 return (
                                     <ChildMenuList key={`${ele?.name}-subMenu`} link={ele?.link} icon={ele?.icon} text={ele?.name} />

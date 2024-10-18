@@ -69,26 +69,24 @@ const Contact = ({ DataContext, FunctionContext }) => {
         contactData?.length !== 0 ?
           <div className="w-100 d-block mb-auto pb-md-5 pb-3">
             <table className='w-100 border border-theam'>
-              <thead>
-                <tr className='bg-theam'>
-                  <th className='py-2 text-white border-end text-center px-2'>Date</th>
-                  <th className='py-2 text-white border-end text-center px-2'>Name</th>
-                  <th className='py-2 text-white border-end text-center px-2'>Email</th>
-                  <th className='py-2 text-white border-end text-center px-2'>Query</th>
-                  <th className='py-2 text-white border-end text-center px-2'>Message</th>
-                  <th className='py-2 text-white text-center px-4'>Action</th>
-                </tr>
-              </thead>
               <tbody>
+                <tr>
+                  <td>Date</td>
+                  <td>Name</td>
+                  <td>Email</td>
+                  <td>Query</td>
+                  <td>Message</td>
+                  <td>Action</td>
+                </tr>
                 {contactData.map((ele) => {
                   return (
                     <tr key={ele._id} className='border-bottom last-child-no-border'>
-                      <td className='py-1 px-2 border-end text-center'> {toSimpleDate(ele.createdAt)} </td>
-                      <td className='py-1 px-2 border-end text-center'> {ele.name} </td>
-                      <td className='py-1 px-2 border-end'> {ele.email} </td>
-                      <td className='py-1 px-2 border-end'> {ele.query} </td>
-                      <td className='py-1 px-2 border-end'> {ele.mess} </td>
-                      <td className='py-1 px-2 text-center'>
+                      <td> {toSimpleDate(ele.createdAt)} </td>
+                      <td> {ele.name} </td>
+                      <td> {ele.email} </td>
+                      <td> {ele.query} </td>
+                      <td> {ele.mess} </td>
+                      <td>
                         <div className="d-flex gap-3 w-100 justify-content-center align-items-center">
                           {(isFormProcess.status && isFormProcess._id === ele._id) === true ?
                             <div className="spinner-border border-0 d-flex align-items-center justify-content-center" role="status">
