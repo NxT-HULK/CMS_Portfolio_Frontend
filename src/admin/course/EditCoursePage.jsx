@@ -96,7 +96,7 @@ const Help = ({ allPages, pages, course_id, ofModule, setCurrData }) => {
 const EditCoursePage = ({ AdminContext, DataContext }) => {
 
   const { backendHost, setResponseStatus, setResponseData } = DataContext
-  const { edditTargetedCourse, courses, setCourses, isUpdating, handleChangeStatus, currData, setCurrData, isLoadingCurrData, setIsLoadingCurrData, deletestatus, handleDeleteModule } = AdminContext
+  const { courses, setCourses, isUpdating, handleChangeStatus, currData, setCurrData, isLoadingCurrData, setIsLoadingCurrData, deletestatus, handleDeleteModule } = AdminContext
   const [selectedCourse, setSelectedCourse] = useState(null)
 
   const [params] = useSearchParams()
@@ -179,8 +179,8 @@ const EditCoursePage = ({ AdminContext, DataContext }) => {
                       role="switch"
                       id='course_update'
                       checked={selectedCourse?.status || false}
-                      onChange={(e) => {
-                        handleChangeStatus(e, edditTargetedCourse)
+                      onChange={() => {
+                        handleChangeStatus(params.get("id"), edditTargetedCourse)
                       }}
                     />
                   </div>

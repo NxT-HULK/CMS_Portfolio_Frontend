@@ -80,12 +80,12 @@ const AdminState = (props) => {
 
 
     const [isUpdating, setIsUpdating] = useState(false)
-    const handleChangeStatus = async (e, id) => {
+    const handleChangeStatus = async (course_id, id, ) => {
         try {
             setIsUpdating(true)
 
             const res = await axios.put(`${backendHost}/api/admin/course/update_status`, {
-                course_id: id,
+                course_id,
                 update: e.target.checked
             }, { withCredentials: true })
 
