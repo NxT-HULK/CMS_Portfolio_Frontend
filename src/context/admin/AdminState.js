@@ -84,7 +84,7 @@ const AdminState = (props) => {
         try {
             setIsUpdating(true)
 
-            const res = await axios.put(`${backendHost}/api/admin/update_status`, {
+            const res = await axios.put(`${backendHost}/api/admin/course/update_status`, {
                 course_id: id,
                 update: e.target.checked
             }, { withCredentials: true })
