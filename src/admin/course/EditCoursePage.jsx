@@ -180,7 +180,7 @@ const EditCoursePage = ({ AdminContext, DataContext }) => {
                       id='course_update'
                       checked={selectedCourse?.status || false}
                       onChange={() => {
-                        handleChangeStatus(params.get("id"), edditTargetedCourse)
+                        handleChangeStatus(params.get("id"), !selectedCourse?.status)
                       }}
                     />
                   </div>

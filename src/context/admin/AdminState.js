@@ -80,18 +80,18 @@ const AdminState = (props) => {
 
 
     const [isUpdating, setIsUpdating] = useState(false)
-    const handleChangeStatus = async (course_id, id, ) => {
+    const handleChangeStatus = async (course_id, flag) => {
         try {
             setIsUpdating(true)
 
             const res = await axios.put(`${backendHost}/api/admin/course/update_status`, {
                 course_id,
-                update: e.target.checked
+                update: flag
             }, { withCredentials: true })
 
             if (res.status === 200) {
                 let curr = courses.find((ele) => ele._id === id)
-                curr.status = e.target.checked
+                curr.status = flag
 
                 let restArr = courses.filter((ele) => ele._id !== id)
 
