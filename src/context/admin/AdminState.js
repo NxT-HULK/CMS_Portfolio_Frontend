@@ -90,10 +90,10 @@ const AdminState = (props) => {
             }, { withCredentials: true })
 
             if (res.status === 200) {
-                let curr = courses.find((ele) => ele._id === id)
+                let curr = courses.find((ele) => ele._id === course_id)
                 curr.status = flag
 
-                let restArr = courses.filter((ele) => ele._id !== id)
+                let restArr = courses.filter((ele) => ele._id !== course_id)
 
                 restArr.push(curr)
                 restArr.sort((a, b) => Date(a.createdAt) - Date(b.createdAt))
